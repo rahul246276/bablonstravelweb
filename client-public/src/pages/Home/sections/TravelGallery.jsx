@@ -46,21 +46,21 @@ const galleryImages = [
 ]
 
 const TravelGallery = () => (
-  <section className="bg-white py-20">
+  <section className="bg-white py-24 lg:py-32">
     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-      <div className="mb-10 text-center">
-        <p className="text-xs font-bold uppercase tracking-[0.18em] text-primary-600">From the road</p>
-        <h2 className="mt-2 font-display text-3xl font-bold text-dark-900 md:text-4xl">Moments from our trips</h2>
-        <p className="mx-auto mt-3 max-w-2xl leading-7 text-dark-500">
+      <div className="mx-auto mb-14 max-w-3xl text-center">
+        <p className="section-eyebrow justify-center">From the road</p>
+        <h2 className="mt-3 font-display text-4xl font-bold leading-tight text-dark-900 md:text-5xl">Moments from our trips</h2>
+        <p className="mx-auto mt-5 max-w-2xl text-lg leading-8 text-dark-500">
           A glimpse of the places, people, and details that make each journey different.
         </p>
       </div>
 
-      <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+      <div className="grid grid-cols-1 gap-5 sm:grid-cols-3">
         {galleryImages.map((column, columnIndex) => (
-          <div key={columnIndex} className="flex flex-col gap-3">
+          <div key={columnIndex} className="flex flex-col gap-5">
             {column.map((image) => (
-              <Link key={image.src} to={ROUTES.DESTINATIONS} className="group relative overflow-hidden rounded-2xl shadow-lg shadow-dark-900/10">
+              <Link key={image.src} to={ROUTES.DESTINATIONS} className="group relative overflow-hidden rounded-[1.5rem] shadow-[0_18px_55px_rgba(16,39,36,0.12)]">
                 <img
                   src={image.src}
                   alt={image.alt}

@@ -37,14 +37,14 @@ const StarRow = () => (
 
 const TestimonialsSection = () => {
   return (
-    <section className="bg-sand-50 py-20">
+    <section className="bg-[#FAF8F4] py-24 lg:py-32">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="mb-10 grid gap-6 md:grid-cols-[0.85fr_1.15fr] md:items-end">
+        <div className="mb-14 grid gap-8 md:grid-cols-[0.85fr_1.15fr] md:items-end">
           <div>
-            <p className="text-xs font-bold uppercase tracking-[0.18em] text-primary-600">Traveler stories</p>
-            <h2 className="mt-2 font-display text-3xl font-bold text-dark-900 md:text-4xl">Smooth journeys, remembered well</h2>
+            <p className="section-eyebrow">Traveler stories</p>
+            <h2 className="mt-3 font-display text-4xl font-bold leading-tight text-dark-900 md:text-5xl">Smooth journeys, remembered well</h2>
           </div>
-          <div className="rounded-2xl border border-sand-200 bg-white p-5 shadow-lg shadow-dark-900/6 md:ml-auto md:max-w-xl">
+          <div className="rounded-3xl border border-sand-200 bg-white p-6 shadow-[0_18px_55px_rgba(16,39,36,0.1)] md:ml-auto md:max-w-xl">
             <div className="flex items-center gap-4">
               <span className="text-4xl font-bold text-primary-700">4.9</span>
               <div>
@@ -57,7 +57,7 @@ const TestimonialsSection = () => {
 
         <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
           {testimonials.map((testimonial) => (
-            <article key={testimonial.name} className="flex flex-col rounded-2xl border border-sand-200 bg-white p-6 shadow-lg shadow-dark-900/6 transition hover:-translate-y-1 hover:shadow-xl">
+            <article key={testimonial.name} className="flex flex-col rounded-3xl border border-sand-200 bg-white p-7 shadow-[0_18px_55px_rgba(16,39,36,0.08)] transition hover:-translate-y-1 hover:shadow-[0_26px_70px_rgba(16,39,36,0.14)]">
               <StarRow />
               <blockquote className="mt-4 flex-1 leading-7 text-dark-600">
                 &ldquo;{testimonial.content}&rdquo;

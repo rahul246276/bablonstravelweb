@@ -3,12 +3,12 @@ import { Link } from 'react-router-dom'
 import {
   FaArrowRight,
   FaCheckCircle,
-  FaConciergeBell,
-  FaGem,
+  FaHotel,
+  FaGlobeAsia,
   FaPlaneDeparture,
-  FaShieldAlt,
   FaStar,
   FaMagic,
+  FaPassport,
 } from 'react-icons/fa'
 
 import Button from '../../../components/common/Button/Button'
@@ -23,28 +23,28 @@ import heroShowcase2 from '../../../assets/images/Image 3 for Hero.jpg'
 const heroBackgrounds = [heroBg3, heroBg4, heroBg5, heroBg1]
 
 const highlights = [
-  { value: '120+', label: 'Tailored journeys', note: 'planned around your pace' },
-  { value: '4.9/5', label: 'Guest rating', note: 'from premium travelers' },
-  { value: '24/7', label: 'Concierge care', note: 'before and during travel' },
+  { value: '150+', label: 'International tours', note: 'across leading global routes' },
+  { value: '20+', label: 'Global destinations', note: 'from Asia to Europe' },
+  { value: '24/7', label: 'Travel support', note: 'before and during your trip' },
 ]
 
 const trustPoints = [
-  'Visa-ready guidance',
-  'Handpicked stays',
-  'Private local experts',
-  'Flexible itinerary design',
+  'Visa Assistance',
+  'International Flight Support',
+  'Handpicked Hotels',
+  '24/7 Travel Assistance',
 ]
 
 const heroBenefits = [
   {
-    icon: FaConciergeBell,
-    title: 'Personal planning',
-    description: 'Routes, stays, transfers, and experiences shaped around your travel style.',
+    icon: FaPassport,
+    title: 'Visa and flight guidance',
+    description: 'Get practical support for visas, international flights, routing, and travel documents.',
   },
   {
-    icon: FaShieldAlt,
-    title: 'Clear and comfortable',
-    description: 'Transparent pricing, trusted partners, and calm support at every stage.',
+    icon: FaHotel,
+    title: 'Comfort-first holiday plans',
+    description: 'Handpicked hotels, balanced itineraries, and experiences planned for value and ease.',
   },
 ]
 
@@ -113,20 +113,20 @@ const HeroSection = () => {
               <FaStar />
             </span>
             <div>
-              <span className="block text-[0.7rem] uppercase tracking-wider text-white/60 font-medium">Premium travel</span>
-              <span className="block text-white/95">Luxury holidays planned with expertise</span>
+              <span className="block text-[0.7rem] uppercase tracking-wider text-white/60 font-medium">International holidays from India</span>
+              <span className="block text-white/95">Expertly planned overseas holidays</span>
             </div>
           </div>
 
           {/* Main Title */}
           <h1 className="home-hero-title mb-2">
-            Effortless journeys,
-            <span className="home-hero-title-accent block">beautifully planned.</span>
+            The World Awaits.
+            <span className="home-hero-title-accent block">Travel Beyond Borders.</span>
           </h1>
 
           {/* Subtitle */}
           <p className="home-hero-text mb-10">
-            Explore Uzbekistan, Georgia, Azerbaijan, Turkey, Thailand, Dubai, and beyond through refined itineraries shaped around your pace, interests, and comfort.
+            Explore Dubai, Thailand, Turkey, Azerbaijan, Georgia, Uzbekistan, Bali, Europe, and beyond with expertly planned international holidays designed for comfort, value, and unforgettable experiences.
           </p>
 
           {/* Feature Cards */}
@@ -152,10 +152,10 @@ const HeroSection = () => {
           {/* Trust Points */}
           <div className="home-hero-trust mb-8 rounded-2xl border border-white/18 bg-gradient-to-br from-white/12 to-white/6 p-5 backdrop-blur-lg shadow-xl">
             <div className="mb-4 flex items-center justify-between gap-4">
-              <p className="text-xs font-bold uppercase tracking-wider text-white/60">Included care</p>
+              <p className="text-xs font-bold uppercase tracking-wider text-white/60">Included with your holiday</p>
               <span className="rounded-full bg-gradient-to-r from-amber-500/20 to-amber-400/10 px-3 py-1 text-xs font-semibold text-amber-200 border border-amber-400/30">
                 <FaMagic className="inline mr-1" />
-                No guesswork
+                Smooth overseas travel
               </span>
             </div>
             <div className="grid gap-2 sm:grid-cols-2">
@@ -195,7 +195,7 @@ const HeroSection = () => {
                 className="home-hero-primary-cta w-full rounded-full bg-gradient-to-r from-primary-600 to-primary-700 px-8 text-white shadow-lg hover:shadow-xl hover:from-primary-700 hover:to-primary-800 transition-all"
               >
                 <FaPlaneDeparture />
-                Explore Journeys
+                Explore International Tours
               </Button>
             </Link>
 
@@ -205,7 +205,7 @@ const HeroSection = () => {
                 variant="outline"
                 className="home-hero-secondary-cta w-full rounded-full border-white/50 bg-white/12 text-white shadow-lg backdrop-blur-sm hover:bg-white hover:text-dark-900 hover:border-white transition-all"
               >
-                Speak To An Expert
+                Plan My Overseas Holiday
                 <FaArrowRight />
               </Button>
             </Link>
@@ -219,8 +219,8 @@ const HeroSection = () => {
               <img src={heroShowcase1} alt="Premium curated travel inspiration" />
               <div className="home-hero-visual-overlay" />
               <div className="home-hero-visual-label">
-                <FaGem />
-                Signature holiday design
+                <FaGlobeAsia />
+                International holiday experts
               </div>
             </div>
 
@@ -229,10 +229,10 @@ const HeroSection = () => {
             </div>
 
             <div className="home-hero-visual-copy">
-              <p className="home-hero-card-kicker text-xs font-bold uppercase tracking-wider text-primary-600">Tailored with local expertise</p>
-              <h2 className="mt-2 text-xl font-bold text-dark-900">Travel that feels personal from the first plan.</h2>
+              <p className="home-hero-card-kicker text-xs font-bold uppercase tracking-wider text-primary-600">Overseas holidays made simple</p>
+              <h2 className="mt-2 text-xl font-bold text-dark-900">From India to the world, planned with care.</h2>
               <p className="mt-3 text-sm leading-6 text-dark-600">
-                Beautiful places, thoughtful pacing, trusted stays, and practical support arranged into one seamless journey.
+                Flights, visas, hotels, sightseeing, and on-trip assistance arranged into one seamless international holiday.
               </p>
             </div>
           </div>

@@ -10,7 +10,7 @@ import ContactCTASection from './sections/ContactCTASection'
 
 const HomePage = () => {
   return (
-    <div className="w-full bg-sand-50">
+    <div className="w-full overflow-hidden bg-[#FAF8F4] text-dark-900">
       <HeroSection />
       <SearchPackagesSection />
       <PopularDestinationsSection />

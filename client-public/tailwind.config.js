@@ -9,6 +9,18 @@ export default {
       colors: {
         // Brand Colors: deep travel teal, warm terracotta, muted gold, and soft sand
         primary: {
+          50: '#EDF5F2',
+          100: '#D7E7E2',
+          200: '#B3D0C8',
+          300: '#86B2A6',
+          400: '#5B8D81',
+          500: '#3C6F65',
+          600: '#2B554E',
+          700: '#1F433D',
+          800: '#14352F',
+          900: '#102724',
+        },
+        secondary: {
           50: '#FFF1EA',
           100: '#FEDBCB',
           200: '#F9B695',
@@ -59,7 +71,7 @@ export default {
       },
       fontFamily: {
         sans: ["Inter", "system-ui", "sans-serif"],
-        display: ["Fraunces", "Georgia", "serif"],
+        display: ["Playfair Display", "Georgia", "serif"],
       },
       spacing: {
         128: "32rem",
