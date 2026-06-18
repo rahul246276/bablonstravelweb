@@ -1,0 +1,127 @@
+@config "../../tailwind.config.js";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom Tailwind Components */
+
+@layer components {
+  .btn-primary {
+    background-color: #c2632f;
+    color: #ffffff;
+    padding: 0.625rem 1.25rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+  }
+
+  .btn-primary:hover {
+    background-color: #a8501f;
+    transform: translateY(-1px);
+  }
+
+  .btn-secondary {
+    background-color: #f3efe7;
+    color: #1c1410;
+    padding: 0.625rem 1.25rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    transition: background-color 0.2s ease;
+  }
+
+  .btn-secondary:hover {
+    background-color: #e8dcc8;
+  }
+
+  .card {
+    background-color: #ffffff;
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 6px -1px rgb(28 20 16 / 0.06);
+    padding: 1.5rem;
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+  }
+
+  .card:hover {
+    box-shadow: 0 16px 32px -8px rgb(28 20 16 / 0.12);
+  }
+
+  .section-title {
+    color: #1c1410;
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 1.875rem;
+    font-weight: 600;
+    line-height: 1.2;
+  }
+
+  @media (min-width: 768px) {
+    .section-title {
+      font-size: 2.5rem;
+    }
+  }
+
+  /*
+   * FIX: previously this class force-centered itself with auto margins,
+   * but every section in this codebase places it inside a left-aligned
+   * flex/grid header — the centering never had any visible effect and
+   * was dead code. Left as left-aligned by default; opt into centering
+   * explicitly with `.section-subtitle--center` where actually needed
+   * (e.g. a standalone centered hero subhead).
+   */
+  .section-subtitle {
+    color: #5b5048;
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+    max-width: 42rem;
+  }
+
+  .section-subtitle--center {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+  }
+
+  /* Small uppercase tracked label used above every section heading */
+  .section-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #a8501f;
+  }
+}
+
+@layer utilities {
+  .flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .flex-between {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .grid-responsive {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .grid-responsive {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .grid-responsive {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+}
