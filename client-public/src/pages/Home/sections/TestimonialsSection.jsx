@@ -1,4 +1,5 @@
-import { FaStar } from 'react-icons/fa'
+import { FaQuoteLeft, FaStar, FaUserCheck } from 'react-icons/fa'
+import testimonialBg from '../../../assets/images/testimonialsectionbg.jpg'
 
 const testimonials = [
   {
@@ -7,7 +8,7 @@ const testimonials = [
     destination: 'Uzbekistan',
     content: 'Bablons Travel made our Uzbekistan trip easy from start to finish. The hotels, guides, and timing were all thoughtfully arranged.',
     initials: 'SJ',
-    avatarClass: 'bg-primary-600',
+    accent: 'from-primary-700 to-primary-500',
   },
   {
     name: 'Ahmed Hassan',
@@ -15,7 +16,7 @@ const testimonials = [
     destination: 'Dubai',
     content: 'Reliable planning and quick support. They understood exactly what I needed for a short business trip with a leisure extension.',
     initials: 'AH',
-    avatarClass: 'bg-dark-800',
+    accent: 'from-dark-900 to-dark-700',
   },
   {
     name: 'Maria Garcia',
@@ -23,56 +24,124 @@ const testimonials = [
     destination: 'Georgia',
     content: 'The itinerary had the right balance of scenery, food, history, and free time. Nothing felt rushed or generic.',
     initials: 'MG',
-    avatarClass: 'bg-accent-600',
+    accent: 'from-secondary-700 to-accent-500',
+  },
+  {
+    name: 'Priya Mehta',
+    role: 'Couple getaway',
+    destination: 'Thailand',
+    content: 'Everything felt premium but still personal. The airport transfers, hotel choices, and island tours were handled beautifully.',
+    initials: 'PM',
+    accent: 'from-primary-700 to-secondary-500',
+  },
+  {
+    name: 'Daniel Reed',
+    role: 'Luxury holiday',
+    destination: 'Turkey',
+    content: 'The team planned our days with just the right pace. We had great guides, smooth transfers, and enough free time to explore.',
+    initials: 'DR',
+    accent: 'from-dark-900 to-primary-600',
+  },
+  {
+    name: 'Nadia Khan',
+    role: 'Family tour',
+    destination: 'Azerbaijan',
+    content: 'Clear communication, transparent pricing, and support whenever we needed it. It made international travel feel stress-free.',
+    initials: 'NK',
+    accent: 'from-secondary-700 to-accent-600',
   },
 ]
 
 const StarRow = ({ label = '5 out of 5 stars' }) => (
-  <div className="flex gap-0.5 text-accent-400" role="img" aria-label={label}>
+  <div className="flex gap-1 text-accent-400" role="img" aria-label={label}>
     {Array.from({ length: 5 }).map((_, index) => (
-      <FaStar key={index} className="h-3.5 w-3.5" aria-hidden="true" />
+      <FaStar key={index} className="h-4 w-4 drop-shadow-sm" aria-hidden="true" />
     ))}
   </div>
 )
 
 const TestimonialsSection = () => {
+  const sliderTestimonials = [...testimonials, ...testimonials]
+
   return (
-    <section className="section-shell bg-ivory">
-      <div className="section-container">
-        <div className="section-header grid gap-8 md:grid-cols-[0.85fr_1.15fr] md:items-end">
-          <div>
-            <p className="section-eyebrow">Traveler stories</p>
-            <h2 className="mt-3 section-heading">Smooth journeys, remembered well</h2>
+    <section className="section-shell relative overflow-hidden bg-dark-900 text-white">
+      <img
+        src={testimonialBg}
+        alt=""
+        className="absolute inset-0 h-full w-full object-cover opacity-55"
+        aria-hidden="true"
+      />
+      <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(1,42,35,0.86)_0%,rgba(1,42,35,0.74)_45%,rgba(1,42,35,0.58)_100%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_20%,rgba(244,159,54,0.2),transparent_32%),radial-gradient(circle_at_90%_62%,rgba(255,255,255,0.1),transparent_30%)]" />
+
+      <div className="section-container relative">
+        <div className="section-header grid gap-8 lg:grid-cols-[1fr_420px] lg:items-end">
+          <div className="max-w-3xl">
+            <p className="section-eyebrow text-accent-300">
+              <FaUserCheck className="text-accent-300" />
+              Traveler stories
+            </p>
+            <h2 className="mt-3 section-heading text-white">Smooth journeys, remembered well</h2>
+            <p className="mt-5 max-w-2xl text-lg leading-8 text-white/78">
+              Real experiences from travelers who trusted Bablons for seamless international holidays, thoughtful planning, and support at every step.
+            </p>
           </div>
-          <div className="rounded-card border border-sand-200 bg-white p-6 shadow-card md:ml-auto md:max-w-xl">
-            <div className="flex items-center gap-4">
-              <span className="text-4xl font-bold text-primary-700">4.9</span>
+
+          <div className="rounded-[2rem] border border-white/18 bg-white/12 p-6 shadow-[0_24px_70px_rgba(0,0,0,0.24)] backdrop-blur-md">
+            <div className="flex items-center gap-5">
+              <span className="font-display text-6xl font-bold leading-none text-accent-300">4.9</span>
               <div>
-              <StarRow label="4.9 out of 5 stars" />
-                <p className="mt-1 text-sm text-dark-500">Based on 746 traveler reviews</p>
+                <StarRow label="4.9 out of 5 stars" />
+                <p className="mt-2 text-sm font-semibold text-white">Traveler satisfaction rating</p>
+                <p className="mt-1 text-sm text-white/68">Based on 746 traveler reviews</p>
+              </div>
+            </div>
+            <div className="mt-6 grid grid-cols-3 gap-3 border-t border-white/14 pt-5 text-center">
+              <div>
+                <p className="text-2xl font-black text-white">120+</p>
+                <p className="mt-1 text-xs font-semibold uppercase tracking-[0.08em] text-white/58">Trips</p>
+              </div>
+              <div>
+                <p className="text-2xl font-black text-white">15+</p>
+                <p className="mt-1 text-xs font-semibold uppercase tracking-[0.08em] text-white/58">Countries</p>
+              </div>
+              <div>
+                <p className="text-2xl font-black text-white">24/7</p>
+                <p className="mt-1 text-xs font-semibold uppercase tracking-[0.08em] text-white/58">Support</p>
               </div>
             </div>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-          {testimonials.map((testimonial) => (
-            <article key={testimonial.name} className="flex flex-col rounded-card border border-sand-200 bg-white p-6 shadow-card transition hover:-translate-y-1 hover:shadow-card-hover lg:p-7">
-              <StarRow />
-              <blockquote className="mt-4 flex-1 leading-7 text-dark-600">
+        <div className="testimonial-slider-row overflow-hidden">
+          <div className="testimonial-slider-track flex gap-5">
+            {sliderTestimonials.map((testimonial, index) => (
+            <article
+              key={`${testimonial.name}-${index}`}
+              className="testimonial-slider-card group relative flex min-h-[330px] flex-col overflow-hidden rounded-[1.75rem] border border-white/18 bg-white/[0.13] p-6 shadow-[0_20px_65px_rgba(0,0,0,0.22)] backdrop-blur-md transition duration-500 hover:-translate-y-1 hover:border-accent-300/60 hover:bg-white/[0.17] lg:p-7"
+            >
+              <div className={`absolute left-0 top-0 h-1.5 w-full bg-gradient-to-r ${testimonial.accent}`} />
+              <div className="flex items-center justify-between gap-4">
+                <StarRow />
+                <span className="flex h-11 w-11 items-center justify-center rounded-full border border-accent-300/35 bg-accent-300/12 text-accent-300">
+                  <FaQuoteLeft className="h-4 w-4" aria-hidden="true" />
+                </span>
+              </div>
+              <blockquote className="mt-6 flex-1 text-lg font-medium leading-8 text-white/86">
                 &ldquo;{testimonial.content}&rdquo;
               </blockquote>
-              <div className="mt-6 flex items-center gap-3 border-t border-sand-200 pt-5">
-                <div className={`flex h-11 w-11 items-center justify-center rounded-xl text-sm font-bold text-white ${testimonial.avatarClass}`}>
+              <div className="mt-7 flex items-center gap-3 border-t border-white/14 pt-5">
+                <div className={`flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br ${testimonial.accent} text-sm font-black text-white shadow-lg`}>
                   {testimonial.initials}
                 </div>
                 <div>
-                  <p className="font-bold text-dark-900">{testimonial.name}</p>
-                  <p className="text-sm text-dark-500">{testimonial.role} / {testimonial.destination}</p>
+                  <p className="font-bold text-white">{testimonial.name}</p>
+                  <p className="text-sm text-white/62">{testimonial.role} / {testimonial.destination}</p>
                 </div>
               </div>
             </article>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
     </section>

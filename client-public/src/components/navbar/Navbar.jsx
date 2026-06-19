@@ -107,9 +107,9 @@ const Navbar = () => {
                 <img src={bablonsLogo} alt="Bablons Travel" className="site-logo-img" />
               </span>
               <span className="hidden leading-tight sm:block">
-                <span className="block font-display text-[1.32rem] font-bold text-dark-900 lg:text-[1.42rem]">Bablons Travel</span>
+                <span className="block font-display text-[1.32rem] font-bold text-dark-900 lg:text-[1.42rem]">Bablons Tours </span>
                 <span className="mt-1 block text-[0.66rem] font-extrabold uppercase tracking-[0.24em] text-secondary-400">
-                  Curated holidays
+                 & Entertainments
                 </span>
               </span>
             </Link>

@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import {
   FaArrowRight,
@@ -12,8 +13,18 @@ import {
 } from 'react-icons/fa'
 
 import { ROUTES } from '../../../constants/routes'
-import heroBg from '../../../assets/images/Hero Section Bg 3.png'
+import heroBg1 from '../../../assets/images/Hero Section Bg 3.png'
+import heroBg2 from '../../../assets/images/Hero Section Bg 1.png'
+import heroBg3 from '../../../assets/images/Hero Section Bg 4.jpg'
+import heroBg4 from '../../../assets/images/Hero Section Bg 5.jpg'
 import packageImage from '../../../assets/images/Image 1.png'
+
+const heroBackgrounds = [
+  { src: heroBg1, label: 'Airplane flying over a sunset coast' },
+  { src: heroBg2, label: 'Mountain lake travel landscape' },
+  { src: heroBg3, label: 'International landmarks and suitcase' },
+  { src: heroBg4, label: 'Scenic international holiday view' },
+]
 
 const trustItems = [
   { icon: FaShieldAlt, title: 'IATA', label: 'Certified' },
@@ -26,21 +37,70 @@ const trustItems = [
 const packageIncludes = ['5 Nights & 6 Days', 'Luxury Hotels', 'Daily Breakfast', 'Airport Transfers', 'City Tours']
 
 const HeroSection = () => {
+  const [activeBgIndex, setActiveBgIndex] = useState(0)
+
+  useEffect(() => {
+    const intervalId = window.setInterval(() => {
+      setActiveBgIndex((currentIndex) => (currentIndex + 1) % heroBackgrounds.length)
+    }, 4500)
+
+    return () => window.clearInterval(intervalId)
+  }, [])
+
   return (
     <section className="home-hero relative isolate overflow-hidden text-white">
-      <img
-        src={heroBg}
-        alt=""
-        aria-hidden="true"
-        className="absolute inset-0 h-full w-full object-cover object-center"
-      />
-      <div className="absolute inset-0 bg-gradient-to-r from-dark-900/94 via-dark-900/62 to-dark-900/12" />
-      <div className="absolute inset-0 bg-gradient-to-t from-dark-900/82 via-transparent to-dark-900/12" />
+      <div className="absolute inset-0 overflow-hidden">
+        <div
+          className="flex h-full transition-transform duration-[1400ms] ease-in-out"
+          style={{
+            width: `${heroBackgrounds.length * 100}%`,
+            transform: `translateX(-${activeBgIndex * (100 / heroBackgrounds.length)}%)`,
+          }}
+        >
+          {heroBackgrounds.map((background, index) => (
+            <div
+              key={background.src}
+              className="h-full shrink-0"
+              style={{ width: `${100 / heroBackgrounds.length}%` }}
+            >
+              <img
+                src={background.src}
+                alt=""
+                aria-hidden="true"
+                className="h-full w-full object-cover object-center"
+                loading={index === 0 ? 'eager' : 'lazy'}
+              />
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <span className="sr-only" role="status" aria-live="polite">
+        Showing {heroBackgrounds[activeBgIndex].label}
+      </span>
+
+      <div className="absolute inset-0 bg-gradient-to-r from-dark-900/72 via-dark-900/42 to-dark-900/5" />
+      <div className="absolute inset-0 bg-gradient-to-t from-dark-900/68 via-dark-900/8 to-transparent" />
       <div className="grain-overlay" />
+
+      <div className="absolute bottom-8 left-1/2 z-20 flex -translate-x-1/2 gap-2">
+        {heroBackgrounds.map((background, index) => (
+          <button
+            key={background.src}
+            type="button"
+            onClick={() => setActiveBgIndex(index)}
+            className={`rounded-full transition-all duration-300 ${
+              activeBgIndex === index ? 'h-2 w-9 bg-white' : 'h-2 w-2.5 bg-white/45 hover:bg-white/75'
+            }`}
+            aria-label={`Show ${background.label}`}
+            aria-pressed={activeBgIndex === index}
+          />
+        ))}
+      </div>
 
       <div className="home-hero-inner relative z-10 mx-auto grid items-center">
         <div className="home-hero-copy">
-          <div className="home-hero-badge mb-8 inline-flex items-center gap-3 rounded-full border border-white/28 bg-white/10 px-5 py-3 text-xs font-extrabold uppercase tracking-[0.08em] text-white/90 backdrop-blur-md">
+          <div className="home-hero-badge mb-8 inline-flex items-center gap-3 rounded-full border border-white/28 bg-dark-900/26 px-5 py-3 text-xs font-extrabold uppercase tracking-[0.08em] text-white/95 backdrop-blur-md">
             <FaStar className="text-accent-300" />
             International holidays from India
           </div>
@@ -64,14 +124,14 @@ const HeroSection = () => {
             </Link>
             <Link
               to={ROUTES.CONTACT}
-              className="inline-flex h-14 items-center justify-center gap-3 rounded-full border border-white/55 bg-white/8 px-9 text-sm font-extrabold uppercase tracking-[0.04em] text-white backdrop-blur-md transition hover:-translate-y-0.5 hover:bg-white hover:text-dark-900"
+              className="inline-flex h-14 items-center justify-center gap-3 rounded-full border border-white/55 bg-dark-900/20 px-9 text-sm font-extrabold uppercase tracking-[0.04em] text-white backdrop-blur-md transition hover:-translate-y-0.5 hover:bg-white hover:text-dark-900"
             >
               Get Free Travel Plan
               <FaCalendarAlt />
             </Link>
           </div>
 
-          <div className="mt-12 grid max-w-[44rem] grid-cols-2 overflow-hidden rounded-2xl border border-white/18 bg-dark-900/36 shadow-2xl shadow-black/20 backdrop-blur-md sm:grid-cols-5">
+          <div className="mt-12 grid max-w-[44rem] grid-cols-2 overflow-hidden rounded-2xl border border-white/18 bg-dark-900/28 shadow-2xl shadow-black/20 backdrop-blur-md sm:grid-cols-5">
             {trustItems.map((item) => {
               const Icon = item.icon
 
@@ -110,7 +170,7 @@ const HeroSection = () => {
                 <div className="mt-auto pt-7">
                   <p className="text-sm font-semibold text-dark-400">Starting From</p>
                   <div className="mt-1 flex items-end gap-1.5">
-                    <strong className="text-3xl font-extrabold text-dark-900">₹89,999</strong>
+                    <strong className="text-3xl font-extrabold text-dark-900">Rs 89,999</strong>
                     <span className="pb-1 text-sm text-dark-500">/person</span>
                   </div>
                   <Link

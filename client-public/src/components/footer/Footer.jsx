@@ -127,9 +127,10 @@ const Footer = () => {
             <Link to={ROUTES.HOME} className="inline-flex items-center gap-4">
               <img src={bablonsLogo} alt="Bablons Travel" className="h-16 w-16 object-contain" />
               <span>
-                <span className="block font-display text-3xl font-bold leading-none text-primary-900">Bablons Travel</span>
-                <span className="mt-2 block text-sm font-extrabold uppercase tracking-[0.28em] text-accent-500">Curated holidays</span>
-              </span>
+                <span className="block font-display text-3xl font-bold leading-none text-primary-900">Bablons Tours</span>
+                <span className="mt-2 block text-sm font-extrabold uppercase tracking-[0.28em] text-accent-500">& Entertainments</span>
+                </span>
+              
             </Link>
             <p className="mt-7 max-w-sm text-base leading-8 text-dark-600">
               Premium international travel experiences across Central Asia, the Middle East, the Caucasus, and Asia, crafted with precision and personal care.
