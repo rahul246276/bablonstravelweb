@@ -24,12 +24,12 @@ const SearchPackagesSection = () => {
   }
 
   return (
-    <section className="relative z-20 -mt-16 px-4 pb-24 sm:px-6 lg:px-8">
-      <div className="mx-auto max-w-6xl rounded-[2rem] border border-sand-200 bg-[#fffdf9] p-6 shadow-[0_28px_80px_rgba(16,39,36,0.16)] lg:p-8">
+    <section className="relative z-20 -mt-12 px-4 pb-16 sm:-mt-14 sm:px-6 lg:-mt-16 lg:px-8 lg:pb-24">
+      <div className="mx-auto max-w-6xl rounded-4xl border border-sand-200 bg-[#fffdf9] p-5 shadow-elevated sm:p-6 lg:p-8">
         <div className="mb-8 grid gap-4 lg:grid-cols-[1fr_0.9fr] lg:items-end">
           <div>
             <p className="section-eyebrow">Concierge trip finder</p>
-            <h2 className="mt-3 font-display text-3xl font-bold leading-tight text-dark-900 md:text-4xl">
+            <h2 className="mt-3 font-display text-3xl font-bold leading-tight text-dark-900 md:text-4xl lg:text-[2.5rem]">
               Start with your travel essentials
             </h2>
           </div>
@@ -78,7 +78,7 @@ const SearchPackagesSection = () => {
             </select>
           </label>
 
-          <Button type="submit" size="lg" className="h-14 rounded-2xl bg-dark-800 px-8 text-white hover:bg-dark-900">
+          <Button type="submit" size="lg" className="h-14 w-full rounded-2xl bg-dark-800 px-8 text-white hover:bg-dark-900 lg:w-auto">
             <FaSearch />
             Search
           </Button>

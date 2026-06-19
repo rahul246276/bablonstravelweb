@@ -20,7 +20,12 @@ import heroBg1 from '../../../assets/images/Hero Section Bg 1.png'
 import heroShowcase1 from '../../../assets/images/Image 1.png'
 import heroShowcase2 from '../../../assets/images/Image 3 for Hero.jpg'
 
-const heroBackgrounds = [heroBg3, heroBg4, heroBg5, heroBg1]
+const heroBackgrounds = [
+  { src: heroBg3, label: 'Coastal sunset scene' },
+  { src: heroBg4, label: 'Mountain valley scene' },
+  { src: heroBg5, label: 'Desert landscape scene' },
+  { src: heroBg1, label: 'Historic city scene' },
+]
 
 const highlights = [
   { value: '150+', label: 'International tours', note: 'across leading global routes' },
@@ -50,17 +55,28 @@ const heroBenefits = [
 
 const HeroSection = () => {
   const [activeBgIndex, setActiveBgIndex] = useState(0)
+  const [isPaused, setIsPaused] = useState(false)
 
   useEffect(() => {
+    if (isPaused) return undefined
+
     const intervalId = window.setInterval(() => {
       setActiveBgIndex((currentIndex) => (currentIndex + 1) % heroBackgrounds.length)
     }, 4800)
 
     return () => window.clearInterval(intervalId)
-  }, [])
+  }, [isPaused])
 
   return (
-    <section className="home-hero relative isolate overflow-hidden text-white">
+    <section
+      className="home-hero relative isolate overflow-hidden text-white"
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
+      onFocus={() => setIsPaused(true)}
+      onBlur={(event) => {
+        if (!event.currentTarget.contains(event.relatedTarget)) setIsPaused(false)
+      }}
+    >
       <div className="absolute inset-0 overflow-hidden">
         <div
           className="flex h-full transition-transform duration-[1400ms] ease-in-out"
@@ -69,14 +85,14 @@ const HeroSection = () => {
             transform: `translateX(-${activeBgIndex * (100 / heroBackgrounds.length)}%)`,
           }}
         >
-          {heroBackgrounds.map((backgroundImage, index) => (
+          {heroBackgrounds.map((background, index) => (
             <div
-              key={backgroundImage}
+              key={background.src}
               className="relative h-full shrink-0"
               style={{ width: `${100 / heroBackgrounds.length}%` }}
             >
               <img
-                src={backgroundImage}
+                src={background.src}
                 alt=""
                 aria-hidden="true"
                 className="h-full w-full object-cover object-center"
@@ -87,20 +103,27 @@ const HeroSection = () => {
         </div>
       </div>
 
+      {/* Announces background changes to screen reader users without
+          interrupting them — visually hidden, decorative carousel only */}
+      <span className="sr-only" role="status" aria-live="polite">
+        Showing {heroBackgrounds[activeBgIndex].label}
+      </span>
+
       <div className="absolute inset-0 bg-gradient-to-r from-dark-900/92 via-dark-900/70 to-dark-900/30" />
       <div className="absolute inset-0 bg-gradient-to-t from-dark-900/80 via-dark-900/20 to-transparent" />
 
       {/* Animated dots indicator */}
       <div className="home-hero-dots absolute bottom-8 left-1/2 z-20 flex -translate-x-1/2 gap-2">
-        {heroBackgrounds.map((backgroundImage, index) => (
+        {heroBackgrounds.map((background, index) => (
           <button
-            key={backgroundImage}
+            key={background.src}
             type="button"
             onClick={() => setActiveBgIndex(index)}
             className={`transition-all duration-300 rounded-full ${
               activeBgIndex === index ? 'h-2 w-9 bg-white' : 'h-2 w-2.5 bg-white/40 hover:bg-white/70'
             }`}
-            aria-label={`Show hero background ${index + 1}`}
+            aria-label={`Show ${background.label}`}
+            aria-pressed={activeBgIndex === index}
           />
         ))}
       </div>
@@ -125,12 +148,12 @@ const HeroSection = () => {
           </h1>
 
           {/* Subtitle */}
-          <p className="home-hero-text mb-10">
+          <p className="home-hero-text mb-8 lg:mb-10">
             Explore Dubai, Thailand, Turkey, Azerbaijan, Georgia, Uzbekistan, Bali, Europe, and beyond with expertly planned international holidays designed for comfort, value, and unforgettable experiences.
           </p>
 
           {/* Feature Cards */}
-          <div className="home-hero-features mb-8 grid gap-4 sm:grid-cols-2">
+          <div className="home-hero-features mb-6 grid gap-4 sm:grid-cols-2 lg:mb-8">
             {heroBenefits.map((benefit) => {
               const Icon = benefit.icon
 
@@ -230,7 +253,7 @@ const HeroSection = () => {
 
             <div className="home-hero-visual-copy">
               <p className="home-hero-card-kicker text-xs font-bold uppercase tracking-wider text-primary-600">Overseas holidays made simple</p>
-              <h2 className="mt-2 text-xl font-bold text-dark-900">From India to the world, planned with care.</h2>
+              <h2 className="home-hero-visual-title mt-2 font-display text-xl font-bold text-dark-900">From India to the world, planned with care.</h2>
               <p className="mt-3 text-sm leading-6 text-dark-600">
                 Flights, visas, hotels, sightseeing, and on-trip assistance arranged into one seamless international holiday.
               </p>

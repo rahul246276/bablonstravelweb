@@ -1,3 +1,24 @@
+import { twMerge } from 'tailwind-merge'
+
+/**
+ * FIX: the previous version built buttonClass via plain string
+ * concatenation (`${baseStyles} ${variants[variant]} ${sizes[size]} ${className}`).
+ * That looks like "className wins because it's last," but Tailwind doesn't
+ * work that way — two utility classes that target the same CSS property
+ * (e.g. variants.outline's `border-primary-800` vs a caller's
+ * `border-dark-800`) have equal specificity, so the winner is whichever
+ * rule appears later in the COMPILED stylesheet, not later in this string.
+ * That happened to work across the app so far purely because of Tailwind's
+ * build-time class insertion order — fragile, and the exact kind of
+ * "looks right today, breaks silently tomorrow" issue worth closing off
+ * at the source rather than re-discovering per call site.
+ *
+ * twMerge resolves this correctly: it understands which utilities
+ * conflict and always keeps the rightmost one, regardless of how the
+ * compiled CSS happens to be ordered. Every existing call site
+ * (Button variant="outline" className="border-dark-800 ...") now
+ * resolves deterministically.
+ */
 const Button = ({
   children,
   variant = 'primary',
@@ -26,13 +47,13 @@ const Button = ({
     xl: 'px-8 py-4 text-lg',
   }
 
-  const buttonClass = `
-    ${baseStyles}
-    ${variants[variant] || variants.primary}
-    ${sizes[size] || sizes.md}
-    ${disabled || loading ? 'opacity-60 cursor-not-allowed' : 'cursor-pointer'}
-    ${className}
-  `.trim().replace(/\s+/g, ' ')
+  const buttonClass = twMerge(
+    baseStyles,
+    variants[variant] || variants.primary,
+    sizes[size] || sizes.md,
+    disabled || loading ? 'opacity-60 cursor-not-allowed' : 'cursor-pointer',
+    className
+  )
 
   return (
     <button

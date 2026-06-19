@@ -1,48 +1,51 @@
 import { Link } from 'react-router-dom'
-import { FaClock, FaMapMarkedAlt, FaStar } from 'react-icons/fa'
+import { FaArrowRight, FaClock, FaMapMarkedAlt, FaStar } from 'react-icons/fa'
 import Button from '../../../components/common/Button/Button'
 import { ROUTES } from '../../../constants/routes'
 
-const FeaturedPackagesSection = () => {
-  const packages = [
-    {
-      name: 'Uzbekistan Silk Road',
-      price: '$1,299',
-      duration: '7 Days',
-      rating: 4.8,
-      reviews: 245,
-      image: 'https://images.unsplash.com/photo-1518002054494-3a6f94352e9d?auto=format&fit=crop&w=900&q=80',
-      route: 'Tashkent, Samarkand, Bukhara',
-    },
-    {
-      name: 'Georgia Mountain Escape',
-      price: '$1,599',
-      duration: '10 Days',
-      rating: 4.9,
-      reviews: 189,
-      image: 'https://images.unsplash.com/photo-1557589196-410b97900060?auto=format&fit=crop&w=900&q=80',
-      route: 'Tbilisi, Kazbegi, Kakheti',
-    },
-    {
-      name: 'Dubai Luxury Break',
-      price: '$2,199',
-      duration: '5 Days',
-      rating: 4.7,
-      reviews: 312,
-      image: 'https://images.unsplash.com/photo-1518684079-3c830dcef090?auto=format&fit=crop&w=900&q=80',
-      route: 'Downtown, Marina, Desert',
-    },
-  ]
+const packages = [
+  {
+    name: 'Uzbekistan Silk Road',
+    price: '$1,299',
+    duration: '7 Days',
+    rating: 4.8,
+    reviews: 245,
+    image: 'https://images.unsplash.com/photo-1518002054494-3a6f94352e9d?auto=format&fit=crop&w=900&q=80',
+    route: 'Tashkent → Samarkand → Bukhara',
+    tag: 'Heritage',
+  },
+  {
+    name: 'Georgia Mountain Escape',
+    price: '$1,599',
+    duration: '10 Days',
+    rating: 4.9,
+    reviews: 189,
+    image: 'https://images.unsplash.com/photo-1557589196-410b97900060?auto=format&fit=crop&w=900&q=80',
+    route: 'Tbilisi → Kazbegi → Kakheti',
+    tag: 'Most booked',
+  },
+  {
+    name: 'Dubai Luxury Break',
+    price: '$2,199',
+    duration: '5 Days',
+    rating: 4.7,
+    reviews: 312,
+    image: 'https://images.unsplash.com/photo-1518684079-3c830dcef090?auto=format&fit=crop&w=900&q=80',
+    route: 'Downtown → Marina → Desert',
+    tag: 'Short break',
+  },
+]
 
+const FeaturedPackagesSection = () => {
   return (
-    <section className="bg-white py-24 lg:py-32">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="mb-14 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+    <section className="section-shell bg-white">
+      <div className="section-container">
+        <div className="section-header flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <div>
             <p className="section-eyebrow">Signature itineraries</p>
-            <h2 className="mt-3 max-w-2xl font-display text-4xl font-bold leading-tight text-dark-900 md:text-5xl">Featured Packages</h2>
+            <h2 className="mt-3 max-w-2xl section-heading">Featured Packages</h2>
             <p className="mt-5 max-w-2xl text-lg leading-8 text-dark-500">
-              Handpicked journeys with elevated stays, balanced pacing, private guidance options, and reliable local support.
+              Handpicked journeys with elevated stays, balanced pacing, and reliable local support — built route-first, not room-first.
             </p>
           </div>
           <Link to={ROUTES.PACKAGES}>
@@ -50,46 +53,58 @@ const FeaturedPackagesSection = () => {
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
-          {packages.map((pkg) => (
+        {/* Itinerary strip: each package reads as a numbered leg of a journey
+            rather than an isolated product card — ties to the route theme
+            and gives the section its own identity vs. the grid sections. */}
+        <div className="flex flex-col divide-y divide-sand-200 border-y border-sand-200">
+          {packages.map((pkg, index) => (
             <article
               key={pkg.name}
-              className="group overflow-hidden rounded-[1.75rem] border border-sand-200 bg-white shadow-[0_18px_55px_rgba(16,39,36,0.1)] transition duration-500 hover:-translate-y-2 hover:shadow-[0_28px_80px_rgba(16,39,36,0.16)]"
+              className="group grid grid-cols-1 items-center gap-6 py-8 transition hover:bg-sand-50/60 lg:grid-cols-[64px_280px_1fr_auto] lg:gap-8 lg:py-10"
             >
-              <div className="relative aspect-[4/3] overflow-hidden">
-                <img src={pkg.image} alt={pkg.name} className="h-full w-full object-cover transition duration-700 group-hover:scale-105" loading="lazy" />
-                <div className="absolute left-4 top-4 rounded-full bg-white/95 px-3 py-2 text-sm font-bold text-primary-700 shadow">
-                  From {pkg.price}
-                </div>
-                <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-dark-900/60 to-transparent" />
+              <div className="hidden items-center justify-center lg:flex">
+                <span className="font-display text-3xl font-bold text-sand-300 transition group-hover:text-accent-400">
+                  {String(index + 1).padStart(2, '0')}
+                </span>
               </div>
-              <div className="p-7">
-                <div className="mb-3 flex items-center gap-2 text-sm text-dark-500">
+
+              <div className="relative aspect-[4/3] overflow-hidden rounded-2xl lg:aspect-[5/4]">
+                <img src={pkg.image} alt={pkg.name} className="h-full w-full object-cover transition duration-700 group-hover:scale-105" loading="lazy" />
+                <span className="absolute left-3 top-3 rounded-full bg-white/95 px-3 py-1.5 text-xs font-bold text-primary-700 shadow">
+                  {pkg.tag}
+                </span>
+              </div>
+
+              <div className="min-w-0">
+                <div className="mb-2 flex items-center gap-2 text-sm text-dark-500">
                   <span className="flex items-center gap-1 font-semibold text-accent-600">
-                    <FaStar />
+                    <FaStar className="h-3.5 w-3.5" />
                     {pkg.rating}
                   </span>
                   <span>({pkg.reviews} reviews)</span>
                 </div>
-                <h3 className="mb-3 font-display text-2xl font-bold text-dark-900">{pkg.name}</h3>
-                <div className="mb-5 space-y-2 text-sm text-dark-500">
-                  <p className="flex items-center gap-2">
+                <h3 className="mb-2 font-display text-2xl font-bold text-dark-900 lg:text-[1.65rem]">{pkg.name}</h3>
+                <div className="flex flex-wrap items-center gap-x-5 gap-y-1.5 text-sm text-dark-500">
+                  <span className="flex items-center gap-2">
                     <FaClock className="text-primary-600" />
                     {pkg.duration}
-                  </p>
-                  <p className="flex items-center gap-2">
+                  </span>
+                  <span className="flex items-center gap-2">
                     <FaMapMarkedAlt className="text-primary-600" />
                     {pkg.route}
-                  </p>
+                  </span>
                 </div>
-                <div className="flex items-center gap-3">
-                  <Link to={ROUTES.PACKAGES} className="flex-1">
-                    <Button size="md" className="w-full rounded-full bg-dark-800 hover:bg-dark-900">View Details</Button>
-                  </Link>
-                  <Link to={ROUTES.CONTACT} className="text-sm font-bold text-primary-700 hover:text-primary-800">
-                    Customize
-                  </Link>
+              </div>
+
+              <div className="flex flex-row items-center justify-between gap-4 lg:flex-col lg:items-end lg:justify-center lg:gap-3">
+                <div className="text-right">
+                  <span className="block text-xs font-bold uppercase tracking-wide text-dark-400">From</span>
+                  <span className="font-display text-2xl font-bold text-primary-700">{pkg.price}</span>
                 </div>
+                <Link to={ROUTES.PACKAGES} className="inline-flex items-center gap-2 rounded-full bg-dark-800 px-5 py-2.5 text-sm font-bold text-white transition hover:bg-dark-900 lg:w-full lg:justify-center">
+                  View Details
+                  <FaArrowRight className="h-3 w-3 transition group-hover:translate-x-0.5" />
+                </Link>
               </div>
             </article>
           ))}

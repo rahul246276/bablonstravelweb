@@ -1,6 +1,7 @@
 import HeroSection from './sections/HeroSection'
 import SearchPackagesSection from './sections/SearchPackagesSection'
 import PopularDestinationsSection from './sections/PopularDestinationsSection'
+import RouteDivider from './sections/RouteDivider'
 import FeaturedPackagesSection from './sections/FeaturedPackagesSection'
 import WhyChooseUsSection from './sections/WhyChooseUsSection'
 import TravelGallery from './sections/TravelGallery'
@@ -14,6 +15,7 @@ const HomePage = () => {
       <HeroSection />
       <SearchPackagesSection />
       <PopularDestinationsSection />
+      <RouteDivider />
       <FeaturedPackagesSection />
       <WhyChooseUsSection />
       <TravelGallery />

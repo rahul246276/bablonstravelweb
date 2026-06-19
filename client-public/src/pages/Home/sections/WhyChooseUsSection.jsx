@@ -16,14 +16,14 @@ const features = [
 
 const WhyChooseUsSection = () => {
   return (
-    <section className="relative overflow-hidden bg-dark-900 py-24 text-white lg:py-32">
+    <section className="section-shell relative overflow-hidden bg-dark-900 text-white">
       <div className="absolute inset-0 bg-gradient-to-br from-primary-900/20 via-transparent to-accent-900/18" />
       <div className="grain-overlay" />
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="section-container relative">
         <div className="relative grid gap-16 lg:grid-cols-[0.85fr_1.15fr] lg:items-start">
           <div>
-            <p className="text-xs font-bold uppercase tracking-[0.18em] text-accent-300">Why choose us</p>
-            <h2 className="mt-3 max-w-xl font-display text-4xl font-bold leading-tight md:text-5xl">A calm planning process for complex journeys</h2>
+            <p className="section-eyebrow text-accent-300">Why choose us</p>
+            <h2 className="mt-3 max-w-xl section-heading text-white">A calm planning process for complex journeys</h2>
             <p className="mt-6 text-lg leading-8 text-white/72">
               Premium travel is not only beautiful hotels. It is the quiet confidence that every transfer, timing, guide, and detail has been considered before you leave home.
             </p>

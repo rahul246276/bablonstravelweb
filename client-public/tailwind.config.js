@@ -68,6 +68,8 @@ export default {
           800: '#483B2D',
           900: '#30281F',
         },
+        ivory: '#FAF8F4',
+        ink: '#1C1410',
       },
       fontFamily: {
         sans: ["Inter", "system-ui", "sans-serif"],
@@ -79,6 +81,8 @@ export default {
       },
       borderRadius: {
         "4xl": "2rem",
+        card: "1.75rem",
+        "card-sm": "1.5rem",
       },
       boxShadow: {
         sm: "0 1px 2px 0 rgb(0 0 0 / 0.05)",
@@ -87,6 +91,9 @@ export default {
         xl: "0 20px 25px -5px rgb(0 0 0 / 0.1)",
         "2xl": "0 25px 50px -12px rgb(0 0 0 / 0.25)",
         elevation: "0 8px 32px rgba(0, 0, 0, 0.08)",
+        card: "0 18px 55px rgba(16, 39, 36, 0.08)",
+        "card-hover": "0 28px 80px rgba(16, 39, 36, 0.14)",
+        elevated: "0 28px 80px rgba(16, 39, 36, 0.16)",
       },
       animation: {
         fadeIn: "fadeIn 0.5s ease-in-out",

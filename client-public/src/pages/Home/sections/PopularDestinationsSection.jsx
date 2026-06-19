@@ -40,12 +40,12 @@ const PopularDestinationsSection = () => {
   const [featured, ...rest] = destinations
 
   return (
-    <section className="bg-[#FAF8F4] py-24 lg:py-32">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="mb-14 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+    <section className="section-shell bg-ivory">
+      <div className="section-container">
+        <div className="section-header flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <div>
             <p className="section-eyebrow">Where travelers go next</p>
-            <h2 className="mt-3 max-w-3xl font-display text-4xl font-bold leading-tight text-dark-900 md:text-5xl">
+            <h2 className="mt-3 max-w-3xl section-heading">
               Destinations with room for wonder
             </h2>
             <p className="mt-5 max-w-2xl text-lg leading-8 text-dark-500">
@@ -63,7 +63,7 @@ const PopularDestinationsSection = () => {
         <div className="grid grid-cols-1 gap-6 lg:auto-rows-[230px] lg:grid-cols-4">
           <Link
             to={ROUTES.DESTINATIONS}
-            className="group relative overflow-hidden rounded-[1.75rem] shadow-[0_24px_70px_rgba(16,39,36,0.16)] transition duration-500 hover:-translate-y-1 lg:col-span-2 lg:row-span-2"
+            className="group relative overflow-hidden rounded-card shadow-card transition duration-500 hover:-translate-y-1 hover:shadow-card-hover lg:col-span-2 lg:row-span-2"
           >
             <img src={featured.image} alt={featured.name} className="h-[360px] w-full object-cover transition duration-500 group-hover:scale-105 lg:h-full" loading="lazy" />
             <div className="absolute inset-0 bg-gradient-to-t from-dark-900/85 via-dark-900/20 to-transparent" />
@@ -81,7 +81,7 @@ const PopularDestinationsSection = () => {
             <Link
               key={destination.name}
               to={ROUTES.DESTINATIONS}
-              className="group relative overflow-hidden rounded-[1.5rem] shadow-[0_18px_50px_rgba(16,39,36,0.14)] transition duration-500 hover:-translate-y-1"
+              className="group relative overflow-hidden rounded-card-sm shadow-card transition duration-500 hover:-translate-y-1 hover:shadow-card-hover"
             >
               <img src={destination.image} alt={destination.name} className="h-64 w-full object-cover transition duration-500 group-hover:scale-105 lg:h-full" loading="lazy" />
               <div className="absolute inset-0 bg-gradient-to-t from-dark-900/82 via-dark-900/15 to-transparent" />

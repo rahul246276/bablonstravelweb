@@ -12,7 +12,7 @@ const ContactCTASection = () => {
   const navigate = useNavigate()
 
   return (
-    <section className="relative overflow-hidden bg-dark-900 py-24 text-white lg:py-32">
+    <section className="section-shell relative overflow-hidden bg-dark-900 text-white">
       <img
         src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1800&q=85"
         alt=""
@@ -23,11 +23,11 @@ const ContactCTASection = () => {
       <div className="absolute inset-0 bg-gradient-to-r from-dark-900 via-dark-900/92 to-dark-900/72" />
       <div className="grain-overlay" />
 
-      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="section-container relative">
         <div className="grid items-center gap-12 lg:grid-cols-[1fr_360px]">
           <div>
-            <p className="text-xs font-bold uppercase tracking-[0.18em] text-accent-300">Start with a conversation</p>
-            <h2 className="mt-4 max-w-3xl font-display text-4xl font-bold leading-tight md:text-6xl">
+            <p className="section-eyebrow text-accent-300">Start with a conversation</p>
+            <h2 className="mt-4 max-w-3xl font-display text-4xl font-bold leading-tight md:text-5xl lg:text-6xl">
               Your next journey should feel effortless before it begins.
             </h2>
             <p className="mt-6 max-w-2xl text-lg leading-8 text-white/70">
