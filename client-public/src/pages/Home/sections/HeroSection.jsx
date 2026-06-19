@@ -1,264 +1,133 @@
-import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import {
   FaArrowRight,
-  FaCheckCircle,
+  FaCalendarAlt,
+  FaCheck,
+  FaHeadset,
   FaHotel,
-  FaGlobeAsia,
-  FaPlaneDeparture,
-  FaStar,
-  FaMagic,
   FaPassport,
+  FaShieldAlt,
+  FaStar,
+  FaTags,
 } from 'react-icons/fa'
 
-import Button from '../../../components/common/Button/Button'
 import { ROUTES } from '../../../constants/routes'
-import heroBg3 from '../../../assets/images/Hero Section Bg 3.png'
-import heroBg4 from '../../../assets/images/Hero Section Bg 4.jpg'
-import heroBg5 from '../../../assets/images/Hero Section Bg 5.jpg'
-import heroBg1 from '../../../assets/images/Hero Section Bg 1.png'
-import heroShowcase1 from '../../../assets/images/Image 1.png'
-import heroShowcase2 from '../../../assets/images/Image 3 for Hero.jpg'
+import heroBg from '../../../assets/images/Hero Section Bg 3.png'
+import packageImage from '../../../assets/images/Image 1.png'
 
-const heroBackgrounds = [
-  { src: heroBg3, label: 'Coastal sunset scene' },
-  { src: heroBg4, label: 'Mountain valley scene' },
-  { src: heroBg5, label: 'Desert landscape scene' },
-  { src: heroBg1, label: 'Historic city scene' },
+const trustItems = [
+  { icon: FaShieldAlt, title: 'IATA', label: 'Certified' },
+  { icon: FaPassport, title: 'Visa', label: 'Assistance' },
+  { icon: FaHotel, title: 'Handpicked', label: 'Hotels' },
+  { icon: FaHeadset, title: '24/7', label: 'Support' },
+  { icon: FaTags, title: 'Best Price', label: 'Guarantee' },
 ]
 
-const highlights = [
-  { value: '150+', label: 'International tours', note: 'across leading global routes' },
-  { value: '20+', label: 'Global destinations', note: 'from Asia to Europe' },
-  { value: '24/7', label: 'Travel support', note: 'before and during your trip' },
-]
-
-const trustPoints = [
-  'Visa Assistance',
-  'International Flight Support',
-  'Handpicked Hotels',
-  '24/7 Travel Assistance',
-]
-
-const heroBenefits = [
-  {
-    icon: FaPassport,
-    title: 'Visa and flight guidance',
-    description: 'Get practical support for visas, international flights, routing, and travel documents.',
-  },
-  {
-    icon: FaHotel,
-    title: 'Comfort-first holiday plans',
-    description: 'Handpicked hotels, balanced itineraries, and experiences planned for value and ease.',
-  },
-]
+const packageIncludes = ['5 Nights & 6 Days', 'Luxury Hotels', 'Daily Breakfast', 'Airport Transfers', 'City Tours']
 
 const HeroSection = () => {
-  const [activeBgIndex, setActiveBgIndex] = useState(0)
-  const [isPaused, setIsPaused] = useState(false)
-
-  useEffect(() => {
-    if (isPaused) return undefined
-
-    const intervalId = window.setInterval(() => {
-      setActiveBgIndex((currentIndex) => (currentIndex + 1) % heroBackgrounds.length)
-    }, 4800)
-
-    return () => window.clearInterval(intervalId)
-  }, [isPaused])
-
   return (
-    <section
-      className="home-hero relative isolate overflow-hidden text-white"
-      onMouseEnter={() => setIsPaused(true)}
-      onMouseLeave={() => setIsPaused(false)}
-      onFocus={() => setIsPaused(true)}
-      onBlur={(event) => {
-        if (!event.currentTarget.contains(event.relatedTarget)) setIsPaused(false)
-      }}
-    >
-      <div className="absolute inset-0 overflow-hidden">
-        <div
-          className="flex h-full transition-transform duration-[1400ms] ease-in-out"
-          style={{
-            width: `${heroBackgrounds.length * 100}%`,
-            transform: `translateX(-${activeBgIndex * (100 / heroBackgrounds.length)}%)`,
-          }}
-        >
-          {heroBackgrounds.map((background, index) => (
-            <div
-              key={background.src}
-              className="relative h-full shrink-0"
-              style={{ width: `${100 / heroBackgrounds.length}%` }}
-            >
-              <img
-                src={background.src}
-                alt=""
-                aria-hidden="true"
-                className="h-full w-full object-cover object-center"
-                loading={index === 0 ? 'eager' : 'lazy'}
-              />
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Announces background changes to screen reader users without
-          interrupting them — visually hidden, decorative carousel only */}
-      <span className="sr-only" role="status" aria-live="polite">
-        Showing {heroBackgrounds[activeBgIndex].label}
-      </span>
-
-      <div className="absolute inset-0 bg-gradient-to-r from-dark-900/92 via-dark-900/70 to-dark-900/30" />
-      <div className="absolute inset-0 bg-gradient-to-t from-dark-900/80 via-dark-900/20 to-transparent" />
-
-      {/* Animated dots indicator */}
-      <div className="home-hero-dots absolute bottom-8 left-1/2 z-20 flex -translate-x-1/2 gap-2">
-        {heroBackgrounds.map((background, index) => (
-          <button
-            key={background.src}
-            type="button"
-            onClick={() => setActiveBgIndex(index)}
-            className={`transition-all duration-300 rounded-full ${
-              activeBgIndex === index ? 'h-2 w-9 bg-white' : 'h-2 w-2.5 bg-white/40 hover:bg-white/70'
-            }`}
-            aria-label={`Show ${background.label}`}
-            aria-pressed={activeBgIndex === index}
-          />
-        ))}
-      </div>
+    <section className="home-hero relative isolate overflow-hidden text-white">
+      <img
+        src={heroBg}
+        alt=""
+        aria-hidden="true"
+        className="absolute inset-0 h-full w-full object-cover object-center"
+      />
+      <div className="absolute inset-0 bg-gradient-to-r from-dark-900/94 via-dark-900/62 to-dark-900/12" />
+      <div className="absolute inset-0 bg-gradient-to-t from-dark-900/82 via-transparent to-dark-900/12" />
+      <div className="grain-overlay" />
 
       <div className="home-hero-inner relative z-10 mx-auto grid items-center">
         <div className="home-hero-copy">
-          {/* Badge */}
-          <div className="home-hero-badge mb-8 inline-flex items-center gap-3 rounded-full border border-white/25 bg-white/12 px-5 py-3 text-sm font-semibold backdrop-blur-md shadow-xl">
-            <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-amber-400 to-amber-500 text-white text-lg">
-              <FaStar />
-            </span>
-            <div>
-              <span className="block text-[0.7rem] uppercase tracking-wider text-white/60 font-medium">International holidays from India</span>
-              <span className="block text-white/95">Expertly planned overseas holidays</span>
-            </div>
+          <div className="home-hero-badge mb-8 inline-flex items-center gap-3 rounded-full border border-white/28 bg-white/10 px-5 py-3 text-xs font-extrabold uppercase tracking-[0.08em] text-white/90 backdrop-blur-md">
+            <FaStar className="text-accent-300" />
+            International holidays from India
           </div>
 
-          {/* Main Title */}
-          <h1 className="home-hero-title mb-2">
-            The World Awaits.
-            <span className="home-hero-title-accent block">Travel Beyond Borders.</span>
+          <h1 className="home-hero-title max-w-3xl">
+            Discover The World,
+            <span className="home-hero-title-accent block">Without The Hassle.</span>
           </h1>
 
-          {/* Subtitle */}
-          <p className="home-hero-text mb-8 lg:mb-10">
-            Explore Dubai, Thailand, Turkey, Azerbaijan, Georgia, Uzbekistan, Bali, Europe, and beyond with expertly planned international holidays designed for comfort, value, and unforgettable experiences.
+          <p className="home-hero-text mt-6 max-w-2xl">
+            From visa to flights, stays to experiences, we handle every detail with care. You just enjoy a perfectly planned international journey.
           </p>
 
-          {/* Feature Cards */}
-          <div className="home-hero-features mb-6 grid gap-4 sm:grid-cols-2 lg:mb-8">
-            {heroBenefits.map((benefit) => {
-              const Icon = benefit.icon
+          <div className="home-hero-actions mt-10 flex flex-col gap-4 sm:flex-row">
+            <Link
+              to={ROUTES.PACKAGES}
+              className="inline-flex h-14 items-center justify-center gap-3 rounded-full bg-secondary-500 px-9 text-sm font-extrabold uppercase tracking-[0.04em] text-white shadow-[0_18px_38px_rgba(217,111,58,0.32)] transition hover:-translate-y-0.5 hover:bg-secondary-600 hover:shadow-[0_24px_48px_rgba(217,111,58,0.38)]"
+            >
+              Explore Tours
+              <FaArrowRight />
+            </Link>
+            <Link
+              to={ROUTES.CONTACT}
+              className="inline-flex h-14 items-center justify-center gap-3 rounded-full border border-white/55 bg-white/8 px-9 text-sm font-extrabold uppercase tracking-[0.04em] text-white backdrop-blur-md transition hover:-translate-y-0.5 hover:bg-white hover:text-dark-900"
+            >
+              Get Free Travel Plan
+              <FaCalendarAlt />
+            </Link>
+          </div>
+
+          <div className="mt-12 grid max-w-[44rem] grid-cols-2 overflow-hidden rounded-2xl border border-white/18 bg-dark-900/36 shadow-2xl shadow-black/20 backdrop-blur-md sm:grid-cols-5">
+            {trustItems.map((item) => {
+              const Icon = item.icon
 
               return (
-                <div
-                  key={benefit.title}
-                  className="group rounded-2xl border border-white/18 bg-gradient-to-br from-white/16 to-white/8 p-6 backdrop-blur-lg transition-all hover:border-white/30 hover:bg-gradient-to-br hover:from-white/20 hover:to-white/12 hover:shadow-lg"
-                >
-                  <div className="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-amber-400/25 to-amber-500/15 text-amber-300 transition-transform group-hover:scale-110">
-                    <Icon />
-                  </div>
-                  <h3 className="text-base font-bold text-white">{benefit.title}</h3>
-                  <p className="mt-2 text-sm leading-6 text-white/70">{benefit.description}</p>
+                <div key={item.title} className="flex min-h-28 flex-col items-center justify-center border-b border-r border-white/12 px-4 py-5 text-center last:border-r-0 even:border-r-0 sm:border-b-0 sm:even:border-r sm:last:border-r-0">
+                  <Icon className="mb-3 h-6 w-6 text-secondary-400" />
+                  <strong className="text-sm font-extrabold leading-tight text-white">{item.title}</strong>
+                  <span className="mt-1 text-sm font-semibold text-white/78">{item.label}</span>
                 </div>
               )
             })}
           </div>
-
-          {/* Trust Points */}
-          <div className="home-hero-trust mb-8 rounded-2xl border border-white/18 bg-gradient-to-br from-white/12 to-white/6 p-5 backdrop-blur-lg shadow-xl">
-            <div className="mb-4 flex items-center justify-between gap-4">
-              <p className="text-xs font-bold uppercase tracking-wider text-white/60">Included with your holiday</p>
-              <span className="rounded-full bg-gradient-to-r from-amber-500/20 to-amber-400/10 px-3 py-1 text-xs font-semibold text-amber-200 border border-amber-400/30">
-                <FaMagic className="inline mr-1" />
-                Smooth overseas travel
-              </span>
-            </div>
-            <div className="grid gap-2 sm:grid-cols-2">
-              {trustPoints.map((point) => (
-                <span
-                  key={point}
-                  className="home-hero-trust-pill inline-flex items-center gap-2 rounded-lg border border-white/12 bg-white/8 px-3 py-2 text-sm font-medium text-white/85 transition-colors hover:bg-white/15 hover:border-white/20"
-                >
-                  <FaCheckCircle className="shrink-0 text-emerald-400" />
-                  {point}
-                </span>
-              ))}
-            </div>
-          </div>
-
-          {/* Stats */}
-          <div className="home-hero-stats mb-8 grid max-w-2xl grid-cols-1 overflow-hidden rounded-2xl border border-white/18 bg-gradient-to-r from-white/12 to-white/6 backdrop-blur-lg shadow-xl sm:grid-cols-3">
-            {highlights.map((item, idx) => (
-              <div
-                key={item.label}
-                className={`border-b border-white/10 px-5 py-6 last:border-b-0 sm:border-b-0 sm:border-r sm:last:border-r-0 transition-all hover:bg-white/8 ${
-                  idx !== 0 ? 'sm:border-l border-white/10' : ''
-                }`}
-              >
-                <div className="text-4xl font-extrabold text-white">{item.value}</div>
-                <div className="mt-2 text-xs font-bold uppercase tracking-wider text-amber-300">{item.label}</div>
-                <p className="mt-2 text-xs leading-5 text-white/60">{item.note}</p>
-              </div>
-            ))}
-          </div>
-
-          {/* CTA Buttons */}
-          <div className="home-hero-actions flex flex-col gap-4 sm:flex-row">
-            <Link to={ROUTES.PACKAGES} className="flex-1 sm:flex-none">
-              <Button
-                size="lg"
-                className="home-hero-primary-cta w-full rounded-full bg-gradient-to-r from-primary-600 to-primary-700 px-8 text-white shadow-lg hover:shadow-xl hover:from-primary-700 hover:to-primary-800 transition-all"
-              >
-                <FaPlaneDeparture />
-                Explore International Tours
-              </Button>
-            </Link>
-
-            <Link to={ROUTES.CONTACT} className="flex-1 sm:flex-none">
-              <Button
-                size="lg"
-                variant="outline"
-                className="home-hero-secondary-cta w-full rounded-full border-white/50 bg-white/12 text-white shadow-lg backdrop-blur-sm hover:bg-white hover:text-dark-900 hover:border-white transition-all"
-              >
-                Plan My Overseas Holiday
-                <FaArrowRight />
-              </Button>
-            </Link>
-          </div>
         </div>
 
-        {/* Right Side Visual Card */}
-        <div className="home-hero-card-wrap mx-auto w-full max-w-md">
-          <div className="home-hero-visual-card">
-            <div className="home-hero-visual-main">
-              <img src={heroShowcase1} alt="Premium curated travel inspiration" />
-              <div className="home-hero-visual-overlay" />
-              <div className="home-hero-visual-label">
-                <FaGlobeAsia />
-                International holiday experts
+        <div className="home-hero-card-wrap mx-auto hidden w-full max-w-[28rem] lg:block">
+          <article className="overflow-hidden rounded-[2rem] bg-white text-dark-900 shadow-[0_34px_90px_rgba(0,0,0,0.32)]">
+            <div className="grid min-h-[28rem] grid-cols-[1fr_0.9fr]">
+              <div className="flex flex-col p-7">
+                <span className="mb-4 w-max rounded-full bg-sand-100 px-3 py-2 text-[0.68rem] font-extrabold uppercase tracking-[0.08em] text-dark-700">
+                  Popular destination
+                </span>
+                <h2 className="font-display text-4xl font-bold leading-none text-dark-900">Thailand</h2>
+                <p className="mt-2 font-display-label text-xl text-secondary-500">The Land of Smiles</p>
+
+                <ul className="mt-7 grid gap-3">
+                  {packageIncludes.map((item) => (
+                    <li key={item} className="flex items-center gap-3 text-sm font-semibold text-dark-700">
+                      <span className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-dark-900 text-[0.65rem] text-white">
+                        <FaCheck />
+                      </span>
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+
+                <div className="mt-auto pt-7">
+                  <p className="text-sm font-semibold text-dark-400">Starting From</p>
+                  <div className="mt-1 flex items-end gap-1.5">
+                    <strong className="text-3xl font-extrabold text-dark-900">₹89,999</strong>
+                    <span className="pb-1 text-sm text-dark-500">/person</span>
+                  </div>
+                  <Link
+                    to={ROUTES.PACKAGES}
+                    className="mt-6 inline-flex h-12 items-center justify-center gap-3 rounded-full bg-secondary-500 px-7 text-sm font-extrabold uppercase tracking-[0.04em] text-white transition hover:bg-secondary-600"
+                  >
+                    View Package
+                    <FaArrowRight />
+                  </Link>
+                </div>
+              </div>
+
+              <div className="relative min-h-full overflow-hidden">
+                <img src={packageImage} alt="Thailand travel package" className="h-full w-full object-cover object-center" />
               </div>
             </div>
-
-            <div className="home-hero-visual-floating">
-              <img src={heroShowcase2} alt="Luxury travel planning detail" />
-            </div>
-
-            <div className="home-hero-visual-copy">
-              <p className="home-hero-card-kicker text-xs font-bold uppercase tracking-wider text-primary-600">Overseas holidays made simple</p>
-              <h2 className="home-hero-visual-title mt-2 font-display text-xl font-bold text-dark-900">From India to the world, planned with care.</h2>
-              <p className="mt-3 text-sm leading-6 text-dark-600">
-                Flights, visas, hotels, sightseeing, and on-trip assistance arranged into one seamless international holiday.
-              </p>
-            </div>
-          </div>
+          </article>
         </div>
       </div>
     </section>
