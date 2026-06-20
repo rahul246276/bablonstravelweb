@@ -21,7 +21,7 @@ const blogs = [
     readTime: '8 min read',
     category: 'Destination Guide',
     date: 'June 18, 2026',
-    image: 'https://images.unsplash.com/photo-1600100592759-0941ef9c0325?auto=format&fit=crop&w=1400&q=80',
+    image: 'https://images.unsplash.com/photo-1705077016068-0613769219a7?q=80&w=812&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     featured: true,
     meta: 'Silk Road planning',
   },

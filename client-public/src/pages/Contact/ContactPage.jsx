@@ -1,68 +1,45 @@
-import { FaEnvelope, FaMapMarkerAlt, FaPhoneAlt, FaWhatsapp } from 'react-icons/fa'
-import Button from '../../components/common/Button/Button'
+import ContactHero from './sections/ContactHero'
+import ContactForm from './sections/ContactForm'
+import GoogleMap from './sections/GoogleMap'
+import OfficeInfo from './sections/OfficeInfo'
+import SocialLinks from './sections/SocialLinks'
+import WhatsappSection from './sections/WhatsappSection'
+
+const contactDetails = {
+  company: 'Bablons Tours & Entertainments',
+  phone: '+91 98102 12399',
+  phoneHref: 'tel:+919810212399',
+  email: 'info@bablonstravelent.com',
+  emailHref: 'mailto:info@bablonstravelent.com',
+  address: '28.6292858, 77.0755844',
+  mapUrl: 'https://www.google.com/maps/place/28%C2%B037%2745.4%22N+77%C2%B004%2732.1%22E/@28.6292858,77.0730095,17z/data=!3m1!4b1!4m4!3m3!8m2!3d28.6292858!4d77.0755844?hl=en&entry=ttu',
+  mapEmbedUrl: 'https://www.google.com/maps?q=28.6292858,77.0755844&z=17&output=embed',
+  hours: 'Mon - Sat : 10 AM - 7 PM',
+  whatsappUrl: 'https://whatsapp.com',
+}
 
 const ContactPage = () => {
-  const handleSubmit = (event) => {
-    event.preventDefault()
-  }
-
-  const contactItems = [
-    { icon: FaPhoneAlt, label: 'Phone', value: '+1-800-TRAVEL-1' },
-    { icon: FaEnvelope, label: 'Email', value: 'hello@bablonstravel.com' },
-    { icon: FaWhatsapp, label: 'WhatsApp', value: 'Chat with a travel expert' },
-    { icon: FaMapMarkerAlt, label: 'Service Area', value: 'Available for travelers worldwide' },
-  ]
-
   return (
-    <div className="bg-gray-50">
-      <section className="bg-white px-4 py-16 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-7xl text-center">
-          <p className="mb-2 text-sm font-bold uppercase tracking-wide text-primary-600">Contact us</p>
-          <h1 className="text-4xl font-bold leading-tight text-gray-950 md:text-5xl">Tell us where you want to go</h1>
-          <p className="mx-auto mt-4 max-w-2xl text-gray-600">
-            Share your travel dates, style, and questions. We will help shape the route and next steps.
-          </p>
+    <div className="bg-[#FFFCF7] text-dark-900">
+      <ContactHero />
+      <section className="relative overflow-hidden py-14 md:py-16 lg:py-20">
+        <div className="absolute left-0 top-12 hidden h-72 w-72 rounded-full bg-secondary-500/10 blur-3xl lg:block" />
+        <div className="absolute right-0 top-0 hidden h-[28rem] w-[38rem] bg-[radial-gradient(circle_at_center,rgba(16,39,36,0.08),transparent_65%)] lg:block" />
+
+        <div className="section-container relative">
+          <div className="grid gap-9 lg:grid-cols-[0.82fr_1.18fr] lg:items-start">
+            <OfficeInfo contactDetails={contactDetails} />
+            <ContactForm contactDetails={contactDetails} />
+          </div>
+
+          <GoogleMap contactDetails={contactDetails} />
         </div>
       </section>
-
-      <section className="mx-auto grid max-w-7xl gap-8 px-4 pb-16 sm:px-6 lg:grid-cols-[0.85fr_1.15fr] lg:px-8">
-        <div className="space-y-4">
-          {contactItems.map((item) => {
-            const Icon = item.icon
-
-            return (
-              <div key={item.label} className="rounded-lg border border-gray-100 bg-white p-5 shadow-sm">
-                <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-lg bg-primary-50 text-primary-700">
-                  <Icon />
-                </div>
-                <p className="text-sm font-semibold uppercase tracking-wide text-gray-500">{item.label}</p>
-                <p className="mt-1 font-semibold text-gray-950">{item.value}</p>
-              </div>
-            )
-          })}
+      <section className="bg-dark-900 py-10 text-white">
+        <div className="section-container grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
+          <WhatsappSection contactDetails={contactDetails} />
+          <SocialLinks />
         </div>
-
-        <form onSubmit={handleSubmit} className="rounded-lg border border-gray-100 bg-white p-6 shadow-md">
-          <div className="grid gap-4 md:grid-cols-2">
-            <div>
-              <label className="mb-2 block text-sm font-semibold text-gray-700">Your Name</label>
-              <input type="text" className="h-11 w-full rounded-lg border border-gray-300 px-4 focus:border-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-100" />
-            </div>
-            <div>
-              <label className="mb-2 block text-sm font-semibold text-gray-700">Email Address</label>
-              <input type="email" className="h-11 w-full rounded-lg border border-gray-300 px-4 focus:border-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-100" />
-            </div>
-          </div>
-          <div className="mt-4">
-            <label className="mb-2 block text-sm font-semibold text-gray-700">Destination</label>
-            <input type="text" placeholder="Example: Georgia, Dubai, Uzbekistan" className="h-11 w-full rounded-lg border border-gray-300 px-4 focus:border-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-100" />
-          </div>
-          <div className="mt-4">
-            <label className="mb-2 block text-sm font-semibold text-gray-700">Message</label>
-            <textarea rows="5" className="w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-100" />
-          </div>
-          <Button type="submit" size="lg" className="mt-5 w-full md:w-auto">Send Inquiry</Button>
-        </form>
       </section>
     </div>
   )
