@@ -37,7 +37,7 @@ const values = [
 const Mission = () => {
   return (
     <section className="relative overflow-hidden bg-dark-900 py-16 text-white md:py-20 lg:py-24">
-      <img src={missionBg} alt="" aria-hidden="true" className="absolute inset-0 h-full w-full object-cover opacity-38" />
+      <img src={missionBg} alt="" aria-hidden="true" className="absolute inset-0 h-full w-full object-cover opacity-100" />
       <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(1,42,35,0.94)_0%,rgba(1,42,35,0.82)_45%,rgba(1,42,35,0.7)_100%)]" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_15%_20%,rgba(231,188,96,0.18),transparent_30%),radial-gradient(circle_at_90%_60%,rgba(255,255,255,0.08),transparent_28%)]" />
       <div className="grain-overlay" />

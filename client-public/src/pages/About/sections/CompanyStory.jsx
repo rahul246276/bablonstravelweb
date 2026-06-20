@@ -84,7 +84,7 @@ const CompanyStory = () => {
             <img src={storyImage} alt="Premium travel experience planned by Bablons Tours" className="h-[360px] w-full rounded-[1.25rem] object-cover sm:h-[420px] lg:h-[460px]" />
           </div>
 
-          
+        
         </div>
       </div>
     </section>

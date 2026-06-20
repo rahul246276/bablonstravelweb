@@ -3,6 +3,7 @@ import { ROUTES } from '../../constants/routes'
 import MainLayout from '../layouts/MainLayout'
 import HomePage from '../../pages/Home/HomePage'
 import DestinationsListPage from '../../pages/Destinations/DestinationsListPage'
+import DestinationDetailsPage from '../../pages/Destinations/DestinationDetailsPage'
 import PackagesListPage from '../../pages/Packages/PackagesListPage'
 import BlogsListPage from '../../pages/Blogs/BlogsListPage'
 import GalleryPage from '../../pages/Gallery/GalleryPage'
@@ -31,7 +32,7 @@ const AppRouter = () => {
           <Route path={ROUTES.TERMS} element={<TermsPage />} />
 
           {/* Placeholder routes - will be implemented */}
-          <Route path={ROUTES.DESTINATION_DETAILS} element={<div className="min-h-screen flex items-center justify-center">Destination Details - Coming Soon</div>} />
+          <Route path={ROUTES.DESTINATION_DETAILS} element={<DestinationDetailsPage />} />
           <Route path={ROUTES.PACKAGE_DETAILS} element={<div className="min-h-screen flex items-center justify-center">Package Details - Coming Soon</div>} />
           <Route path={ROUTES.BLOG_DETAILS} element={<div className="min-h-screen flex items-center justify-center">Blog Details - Coming Soon</div>} />
           <Route path={ROUTES.GALLERY_DESTINATION} element={<div className="min-h-screen flex items-center justify-center">Destination Gallery - Coming Soon</div>} />

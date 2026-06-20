@@ -1,81 +1,86 @@
-import { Link } from 'react-router-dom'
-import { FaArrowRight, FaMapMarkerAlt } from 'react-icons/fa'
+import { FaHeadset } from 'react-icons/fa'
 import Button from '../../components/common/Button/Button'
 import { ROUTES } from '../../constants/routes'
+import { destinationCountries } from './destinationsData'
+import CountrySection from './sections/CountrySection'
 
-const destinations = [
-  {
-    name: 'Uzbekistan',
-    image: 'https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=900&q=80',
-    summary: 'Tilework, Silk Road history, bazaars, and generous hospitality.',
-    bestFor: 'Culture and heritage',
-  },
-  {
-    name: 'Georgia',
-    image: 'https://images.unsplash.com/photo-1565008576549-57569a49371d?auto=format&fit=crop&w=900&q=80',
-    summary: 'Mountain roads, wine regions, old towns, and dramatic viewpoints.',
-    bestFor: 'Nature and food',
-  },
-  {
-    name: 'Azerbaijan',
-    image: 'https://images.unsplash.com/photo-1605538883669-825200433431?auto=format&fit=crop&w=900&q=80',
-    summary: 'Modern Baku, fire temples, mud volcanoes, and Caspian coastlines.',
-    bestFor: 'City and landscape',
-  },
-  {
-    name: 'Turkey',
-    image: 'https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?auto=format&fit=crop&w=900&q=80',
-    summary: 'Istanbul, Cappadocia, coastal towns, cuisine, and layered history.',
-    bestFor: 'Classic holidays',
-  },
-  {
-    name: 'Thailand',
-    image: 'https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&w=900&q=80',
-    summary: 'Temples, beaches, night markets, islands, and relaxed family stays.',
-    bestFor: 'Beach and leisure',
-  },
-  {
-    name: 'Dubai',
-    image: 'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=900&q=80',
-    summary: 'Luxury hotels, desert experiences, family attractions, and skyline views.',
-    bestFor: 'Short premium breaks',
-  },
-]
-
+/**
+ * Replaces the previous 6-country generic-card version of this page
+ * (Uzbekistan, Georgia, Azerbaijan, Turkey, Thailand, Dubai — one card
+ * each, all linking to the same /packages route with no destination
+ * filter). That version couldn't represent individual cities at all.
+ *
+ * This version: 4 countries (Dubai/UAE, Thailand, Uzbekistan, Georgia —
+ * Azerbaijan and Turkey dropped per direction), each showing its full
+ * city list. Every city is its own clickable card linking to
+ * /destinations/{country-slug}/{city-slug} — see CityCard.jsx.
+ *
+ * Export name kept as DestinationsListPage so existing route
+ * definitions / imports elsewhere in the app don't need to change.
+ */
 const DestinationsListPage = () => {
   return (
-    <div className="bg-gray-50">
-      <section className="bg-white px-4 py-16 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-7xl">
-          <p className="mb-2 text-sm font-bold uppercase tracking-wide text-primary-600">Explore the map</p>
-          <h1 className="max-w-3xl text-4xl font-bold leading-tight text-gray-950 md:text-5xl">Destinations built for memorable travel</h1>
-          <p className="mt-4 max-w-2xl text-gray-600">
-            Choose a destination as your starting point. We can shape the route, pace, hotels, and experiences around your style.
+    <div className="w-full overflow-hidden bg-[#FAF8F4] text-dark-900">
+      <section className="relative overflow-hidden bg-dark-900 py-20 text-white lg:py-28">
+        <div className="absolute inset-0 bg-gradient-to-br from-primary-900/30 via-transparent to-accent-900/20" />
+        <div className="grain-overlay" />
+        <div className="section-container relative text-center">
+          <p className="section-eyebrow justify-center text-accent-300">Where travelers go next</p>
+          <h1 className="mx-auto mt-4 max-w-2xl font-display text-4xl font-bold leading-tight md:text-5xl">
+            All destinations
+          </h1>
+          <p className="mx-auto mt-5 max-w-xl text-lg leading-8 text-white/72">
+            33 cities across Dubai &amp; UAE, Thailand, Uzbekistan, and Georgia. Tap any city to see its packages.
           </p>
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-4 pb-16 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {destinations.map((destination) => (
-            <article key={destination.name} className="overflow-hidden rounded-lg bg-white shadow-md transition hover:-translate-y-1 hover:shadow-xl">
-              <img src={destination.image} alt={destination.name} className="h-56 w-full object-cover" loading="lazy" />
-              <div className="p-6">
-                <p className="mb-3 inline-flex items-center gap-2 rounded-lg bg-primary-50 px-3 py-1 text-sm font-semibold text-primary-700">
-                  <FaMapMarkerAlt />
-                  {destination.bestFor}
-                </p>
-                <h2 className="mb-2 text-xl font-bold text-gray-950">{destination.name}</h2>
-                <p className="mb-5 text-sm leading-6 text-gray-600">{destination.summary}</p>
-                <Link to={ROUTES.PACKAGES}>
-                  <Button variant="outline" size="sm" className="gap-2">
-                    See Packages
-                    <FaArrowRight className="h-3.5 w-3.5" />
-                  </Button>
-                </Link>
-              </div>
-            </article>
+      <nav aria-label="Jump to country" className="border-b border-sand-200 bg-white">
+        <div className="section-container flex flex-wrap justify-center gap-2 py-4">
+          {destinationCountries.map((country) => (
+            <a
+              key={country.slug}
+              href={`#${country.slug}`}
+              className="rounded-full border border-sand-200 bg-white px-4 py-2 text-xs font-bold text-dark-600 transition hover:border-primary-300 hover:bg-primary-50 hover:text-primary-700"
+            >
+              {country.name}
+            </a>
           ))}
+        </div>
+      </nav>
+
+      <div className="section-container py-12 lg:py-16">
+        {destinationCountries.map((country, index) => (
+          <CountrySection
+            key={country.slug}
+            countrySlug={country.slug}
+            name={country.name}
+            tagline={country.tagline}
+            heroImage={country.heroImage}
+            cities={country.cities}
+            isFirst={index === 0}
+          />
+        ))}
+      </div>
+
+      <section className="bg-white pb-16 lg:pb-24">
+        <div className="section-container">
+          <div className="flex flex-col items-center gap-6 rounded-3xl bg-dark-900 px-6 py-10 text-center shadow-xl shadow-black/10 sm:flex-row sm:justify-between sm:text-left lg:px-10">
+            <div className="flex items-center gap-4">
+              <span className="hidden h-12 w-12 shrink-0 items-center justify-center rounded-full bg-white/10 text-accent-300 sm:flex">
+                <FaHeadset className="h-5 w-5" />
+              </span>
+              <div>
+                <h2 className="font-display text-xl font-bold text-white sm:text-2xl">Need help choosing?</h2>
+                <p className="mt-1 text-sm leading-6 text-white/65">Our travel experts are here to help you plan the perfect trip.</p>
+              </div>
+            </div>
+            <a href={ROUTES.CONTACT} className="shrink-0">
+              <Button size="lg" className="rounded-full bg-white px-7 font-bold text-dark-900 hover:bg-sand-100">
+                Talk to an expert
+              </Button>
+            </a>
+          </div>
         </div>
       </section>
     </div>

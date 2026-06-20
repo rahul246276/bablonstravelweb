@@ -2,7 +2,7 @@
 export const PUBLIC_ROUTES = {
   HOME: '/',
   DESTINATIONS: '/destinations',
-  DESTINATION_DETAILS: '/destinations/:slug',
+  DESTINATION_DETAILS: '/destinations/:countrySlug/:citySlug',
   PACKAGES: '/packages',
   PACKAGE_DETAILS: '/packages/:slug',
   BLOGS: '/blogs',
