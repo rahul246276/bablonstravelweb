@@ -1,6 +1,7 @@
 import { FaHeadset } from 'react-icons/fa'
 import Button from '../../components/common/Button/Button'
 import { ROUTES } from '../../constants/routes'
+import herobg from '../../assets/images/Destinastion Page  Bg.png'
 import { destinationCountries } from './destinationsData'
 import CountrySection from './sections/CountrySection'
 
@@ -22,7 +23,13 @@ const DestinationsListPage = () => {
   return (
     <div className="w-full overflow-hidden bg-[#FAF8F4] text-dark-900">
       <section className="relative overflow-hidden bg-dark-900 py-20 text-white lg:py-28">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary-900/30 via-transparent to-accent-900/20" />
+        <img
+          src={herobg}
+          alt=""
+          aria-hidden="true"
+          className="absolute inset-0 h-full w-full object-cover opacity-80"
+        />
+        <div className="absolute inset-0 bg-gradient-to-br from-dark-900/88 via-dark-900/54 to-primary-900/40" />
         <div className="grain-overlay" />
         <div className="section-container relative text-center">
           <p className="section-eyebrow justify-center text-accent-300">Where travelers go next</p>

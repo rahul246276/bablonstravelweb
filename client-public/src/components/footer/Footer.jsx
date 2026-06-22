@@ -250,7 +250,7 @@ const Footer = () => {
             <div className="flex items-center gap-4 text-dark-600">
               <FaGlobeAsia className="h-8 w-8 shrink-0 text-secondary-600" />
               <p className="text-sm leading-6">
-                &copy; {currentYear} Bablons Travel & Entertainment.
+                &copy; {currentYear} Bablons Tours & Entertainment.
                 <span className="block">All Rights Reserved.</span>
               </p>
             </div>
@@ -261,6 +261,8 @@ const Footer = () => {
               <Link to={ROUTES.TERMS} className="transition hover:text-secondary-600">Terms & Conditions</Link>
               <span className="h-4 w-px bg-dark-900/20" />
               <Link to={ROUTES.HOME} className="transition hover:text-secondary-600">Sitemap</Link>
+              <span className="h-4 w-px bg-dark-900/20" />
+              <Link to={ROUTES.CONTACT} className="transition hover:text-secondary-600">Contact Us</Link>
             </div>
           </div>
         </div>
