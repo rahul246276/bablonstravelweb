@@ -9,8 +9,10 @@ const optionalAuth = (req, res, next) => {
   return protect(req, res, next)
 }
 
-router.post('/', contactController.createContact)
-router.get('/', protect, authorize('super_admin', 'admin'), contactController.listContacts)
-router.patch('/:id/status', protect, authorize('super_admin', 'admin'), contactController.updateContactStatus)
+router.get('/', optionalAuth, contactController.listBlogs)
+router.get('/:slug', optionalAuth, contactController.getBlog)
+router.post('/', protect, authorize('super_admin'), contactController.createBlog)
+router.patch('/:id', protect, authorize('super_admin'), contactController.updateBlog)
+router.delete('/:id', protect, authorize('super_admin'), contactController.deleteBlog)
 
 module.exports = router
