@@ -13,11 +13,14 @@ import FAQPage from '../../pages/FAQ/FAQPage'
 import PrivacyPolicyPage from '../../pages/Privacy/PrivacyPolicyPage'
 import TermsPage from '../../pages/Terms/TermsPage'
 import NotFoundPage from '../../pages/NotFound/NotFoundPage'
+import AdminRouter from './AdminRouter'
 
 const AppRouter = () => {
   return (
     <Router>
       <Routes>
+        {AdminRouter}
+
         {/* Main Layout Routes */}
         <Route element={<MainLayout />}>
           <Route path={ROUTES.HOME} element={<HomePage />} />
