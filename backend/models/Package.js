@@ -18,6 +18,11 @@ const imageSchema = new mongoose.Schema(
       trim: true,
       default: '',
     },
+    caption: {
+      type: String,
+      trim: true,
+      default: '',
+    },
     type: {
       type: String,
       enum: ['hero', 'gallery', 'hotel'],
@@ -29,13 +34,17 @@ const imageSchema = new mongoose.Schema(
 
 const departureSchema = new mongoose.Schema(
   {
+    startDate: {
+      type: Date,
+    },
+    endDate: {
+      type: Date,
+    },
     departureDate: {
       type: Date,
-      required: [true, 'Departure date is required'],
     },
     returnDate: {
       type: Date,
-      required: [true, 'Return date is required'],
     },
     totalSeats: {
       type: Number,
@@ -53,7 +62,7 @@ const departureSchema = new mongoose.Schema(
     },
     status: {
       type: String,
-      enum: ['open', 'filling', 'soldout', 'cancelled'],
+      enum: ['open', 'filling', 'few_seats', 'soldout', 'sold_out', 'cancelled'],
       default: 'open',
       index: true,
     },
@@ -61,17 +70,32 @@ const departureSchema = new mongoose.Schema(
       type: Number,
       min: [0, 'Departure price cannot be negative'],
     },
+    pricePerPerson: {
+      type: Number,
+      min: [0, 'Departure price cannot be negative'],
+    },
+    bookingAdvance: {
+      type: Number,
+      min: [0, 'Booking advance cannot be negative'],
+    },
   },
   { timestamps: false }
 )
 
 departureSchema.pre('validate', function setAvailableSeats() {
+  if (this.startDate && !this.departureDate) this.departureDate = this.startDate
+  if (this.departureDate && !this.startDate) this.startDate = this.departureDate
+  if (this.endDate && !this.returnDate) this.returnDate = this.endDate
+  if (this.returnDate && !this.endDate) this.endDate = this.returnDate
+  if (this.pricePerPerson !== undefined && this.price === undefined) this.price = this.pricePerPerson
+  if (this.price !== undefined && this.pricePerPerson === undefined) this.pricePerPerson = this.price
+
   if (this.totalSeats !== undefined && this.bookedSeats !== undefined) {
     this.availableSeats = Math.max(this.totalSeats - this.bookedSeats, 0)
   }
 
   if (this.availableSeats === 0 && this.status !== 'cancelled') {
-    this.status = 'soldout'
+    this.status = 'sold_out'
   }
 })
 
@@ -93,6 +117,30 @@ const packageSchema = new mongoose.Schema(
       maxlength: [160, 'Package title cannot exceed 160 characters'],
       index: 'text',
     },
+    shortDescription: {
+      type: String,
+      trim: true,
+      default: '',
+      maxlength: [320, 'Short description cannot exceed 320 characters'],
+    },
+    description: {
+      type: String,
+      trim: true,
+      default: '',
+    },
+    category: {
+      type: String,
+      trim: true,
+      default: '',
+      index: true,
+    },
+    tags: [
+      {
+        type: String,
+        trim: true,
+        index: true,
+      },
+    ],
     slug: {
       type: String,
       unique: true,
@@ -126,9 +174,15 @@ const packageSchema = new mongoose.Schema(
         index: true,
       },
     ],
+    destination: {
+      name: { type: String, trim: true, default: '' },
+      slug: { type: String, trim: true, lowercase: true, default: '' },
+      country: { type: String, trim: true, default: '' },
+      city: { type: String, trim: true, default: '' },
+    },
     packageType: {
       type: String,
-      enum: ['group', 'family', 'couple', 'individual', 'custom'],
+      enum: ['group', 'honeymoon', 'family', 'solo', 'custom', 'domestic', 'international', 'couple', 'individual'],
       required: [true, 'Package type is required'],
       index: true,
     },
@@ -163,6 +217,10 @@ const packageSchema = new mongoose.Schema(
         min: [0, 'Base price cannot be negative'],
         index: true,
       },
+      pricePerPerson: {
+        type: Number,
+        min: [0, 'Price per person cannot be negative'],
+      },
       originalPrice: {
         type: Number,
         min: [0, 'Original price cannot be negative'],
@@ -178,10 +236,25 @@ const packageSchema = new mongoose.Schema(
         default: 0,
         min: [0, 'Booking amount cannot be negative'],
       },
+      bookingAdvance: {
+        type: Number,
+        default: 0,
+        min: [0, 'Booking advance cannot be negative'],
+      },
+      gstPercentage: {
+        type: Number,
+        default: 5,
+        min: [0, 'GST cannot be negative'],
+      },
       priceNote: {
         type: String,
         trim: true,
         default: 'per person',
+      },
+      pricingNote: {
+        type: String,
+        trim: true,
+        default: '',
       },
     },
     groupSettings: {
@@ -200,6 +273,13 @@ const packageSchema = new mongoose.Schema(
         default: false,
       },
     },
+    groupInfo: {
+      minTravelers: { type: Number, min: 1 },
+      maxTravelers: { type: Number, min: 1 },
+      tourManagerIncluded: { type: Boolean, default: false },
+      departuresPerMonth: { type: Number, min: 0 },
+      description: { type: String, trim: true, default: '' },
+    },
     departures: [departureSchema],
     highlights: [
       {
@@ -210,26 +290,36 @@ const packageSchema = new mongoose.Schema(
         },
         text: {
           type: String,
-          required: [true, 'Highlight text is required'],
           trim: true,
+        },
+        title: {
+          type: String,
+          trim: true,
+          default: '',
         },
       },
     ],
     overview: {
       flights: { type: String, trim: true, default: '' },
       hotel: { type: String, trim: true, default: '' },
+      hotelCategory: { type: String, trim: true, default: '' },
       meals: { type: String, trim: true, default: '' },
       transfers: { type: String, trim: true, default: '' },
       guide: { type: String, trim: true, default: '' },
+      tourManager: { type: String, trim: true, default: '' },
       visa: { type: String, trim: true, default: '' },
       groupSize: { type: String, trim: true, default: '' },
       duration: { type: String, trim: true, default: '' },
+      durationText: { type: String, trim: true, default: '' },
     },
     itinerary: [
       {
+        dayNumber: {
+          type: Number,
+          min: [1, 'Itinerary day must be at least 1'],
+        },
         day: {
           type: Number,
-          required: [true, 'Itinerary day is required'],
           min: [1, 'Itinerary day must be at least 1'],
         },
         title: {
@@ -242,6 +332,16 @@ const packageSchema = new mongoose.Schema(
           trim: true,
           default: '',
         },
+        overnightCity: {
+          type: String,
+          trim: true,
+          default: '',
+        },
+        hotelName: {
+          type: String,
+          trim: true,
+          default: '',
+        },
         activities: [
           {
             type: String,
@@ -249,9 +349,8 @@ const packageSchema = new mongoose.Schema(
           },
         ],
         meals: {
-          breakfast: { type: Boolean, default: false },
-          lunch: { type: Boolean, default: false },
-          dinner: { type: Boolean, default: false },
+          type: mongoose.Schema.Types.Mixed,
+          default: {},
         },
       },
     ],
@@ -259,10 +358,19 @@ const packageSchema = new mongoose.Schema(
       {
         name: {
           type: String,
-          required: [true, 'Hotel name is required'],
           trim: true,
         },
+        city: {
+          type: String,
+          trim: true,
+          default: '',
+        },
         stars: {
+          type: Number,
+          min: [1, 'Hotel stars must be at least 1'],
+          max: [5, 'Hotel stars cannot exceed 5'],
+        },
+        starRating: {
           type: Number,
           min: [1, 'Hotel stars must be at least 1'],
           max: [5, 'Hotel stars cannot exceed 5'],
@@ -273,6 +381,10 @@ const packageSchema = new mongoose.Schema(
           default: '',
         },
         nights: {
+          type: mongoose.Schema.Types.Mixed,
+          default: '',
+        },
+        mealPlan: {
           type: String,
           trim: true,
           default: '',
@@ -299,6 +411,8 @@ const packageSchema = new mongoose.Schema(
       },
     ],
     images: [imageSchema],
+    featuredImage: imageSchema,
+    gallery: [imageSchema],
     faqs: [
       {
         question: {
@@ -313,6 +427,15 @@ const packageSchema = new mongoose.Schema(
         },
       },
     ],
+    assignedExpert: {
+      name: { type: String, trim: true, default: '' },
+      role: { type: String, trim: true, default: '' },
+      experience: { type: String, trim: true, default: '' },
+      specialty: { type: String, trim: true, default: '' },
+      phone: { type: String, trim: true, default: '' },
+      whatsapp: { type: String, trim: true, default: '' },
+      avatar: { type: String, trim: true, default: '' },
+    },
     testimonials: [
       {
         name: {
@@ -365,6 +488,11 @@ const packageSchema = new mongoose.Schema(
       default: null,
       index: true,
     },
+    isActive: {
+      type: Boolean,
+      default: true,
+      index: true,
+    },
     createdBy: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
@@ -385,10 +513,79 @@ packageSchema.index({ title: 'text', 'country.name': 'text', cities: 'text', 'se
 packageSchema.index({ status: 1, featured: 1, 'pricing.basePrice': 1 })
 packageSchema.index({ packageType: 1, 'duration.days': 1 })
 packageSchema.index({ 'departures.departureDate': 1, 'departures.status': 1 })
+packageSchema.index({ 'destination.country': 1 })
+packageSchema.index({ tags: 1 })
 
 packageSchema.pre('validate', function preparePackage() {
   if (!this.slug && this.title) {
     this.slug = slugify(this.title, { lower: true, strict: true })
+  }
+
+  if (this.country?.name) {
+    this.destination = {
+      ...(this.destination || {}),
+      name: this.destination?.name || this.cities?.[0] || this.country.name,
+      country: this.destination?.country || this.country.name,
+      city: this.destination?.city || this.cities?.[0] || '',
+      slug: this.destination?.slug || slugify(this.destination?.name || this.cities?.[0] || this.country.name, { lower: true, strict: true }),
+    }
+  }
+
+  if (this.pricing) {
+    if (this.pricing.pricePerPerson === undefined && this.pricing.basePrice !== undefined) this.pricing.pricePerPerson = this.pricing.basePrice
+    if (this.pricing.basePrice === undefined && this.pricing.pricePerPerson !== undefined) this.pricing.basePrice = this.pricing.pricePerPerson
+    if (this.pricing.bookingAdvance === undefined && this.pricing.bookingAmount !== undefined) this.pricing.bookingAdvance = this.pricing.bookingAmount
+    if (this.pricing.bookingAmount === undefined && this.pricing.bookingAdvance !== undefined) this.pricing.bookingAmount = this.pricing.bookingAdvance
+    if (!this.pricing.pricingNote && this.pricing.priceNote) this.pricing.pricingNote = this.pricing.priceNote
+    if (!this.pricing.priceNote && this.pricing.pricingNote) this.pricing.priceNote = this.pricing.pricingNote
+  }
+
+  if (this.overview) {
+    if (!this.overview.hotelCategory && this.overview.hotel) this.overview.hotelCategory = this.overview.hotel
+    if (!this.overview.hotel && this.overview.hotelCategory) this.overview.hotel = this.overview.hotelCategory
+    if (!this.overview.durationText && this.overview.duration) this.overview.durationText = this.overview.duration
+    if (!this.overview.duration && this.overview.durationText) this.overview.duration = this.overview.durationText
+    if (!this.overview.tourManager && this.overview.guide) this.overview.tourManager = this.overview.guide
+  }
+
+  this.highlights?.forEach((highlight) => {
+    if (!highlight.title && highlight.text) highlight.title = highlight.text
+    if (!highlight.text && highlight.title) highlight.text = highlight.title
+  })
+
+  this.itinerary?.forEach((day) => {
+    if (!day.dayNumber && day.day) day.dayNumber = day.day
+    if (!day.day && day.dayNumber) day.day = day.dayNumber
+  })
+
+  this.hotels?.forEach((hotel) => {
+    if (!hotel.city && hotel.location) hotel.city = hotel.location
+    if (!hotel.location && hotel.city) hotel.location = hotel.city
+    if (!hotel.starRating && hotel.stars) hotel.starRating = hotel.stars
+    if (!hotel.stars && hotel.starRating) hotel.stars = hotel.starRating
+  })
+
+  if (!this.featuredImage && this.images?.length) {
+    this.featuredImage = this.images.find((image) => image.type === 'hero') || this.images[0]
+  }
+
+  if (!this.gallery?.length && this.images?.length) {
+    this.gallery = this.images.filter((image) => image.type !== 'hero')
+  }
+
+  if (!this.images?.length) {
+    const images = []
+    if (this.featuredImage?.url) images.push({ ...this.featuredImage.toObject?.() || this.featuredImage, type: 'hero' })
+    this.gallery?.forEach((image) => images.push({ ...image.toObject?.() || image, type: image.type || 'gallery' }))
+    this.images = images
+  }
+
+  if (!this.groupInfo && this.groupSettings) {
+    this.groupInfo = {
+      minTravelers: this.groupSettings.minSize,
+      maxTravelers: this.groupSettings.maxSize,
+      tourManagerIncluded: this.groupSettings.tourManagerIncluded,
+    }
   }
 
   if (this.status === 'published' && !this.publishedAt) {

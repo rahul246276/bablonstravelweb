@@ -10,6 +10,9 @@ const optionalAuth = (req, res, next) => {
 }
 
 router.get('/', optionalAuth, packageController.listPackages)
+router.get('/:slug/related', packageController.getRelatedPackages)
+router.get('/:slug/reviews', packageController.getPackageReviews)
+router.post('/:slug/inquiry', packageController.createPackageInquiry)
 router.get('/:slug', optionalAuth, packageController.getPackage)
 router.post('/', protect, authorize('super_admin'), packageController.createPackage)
 router.patch('/:id', protect, authorize('super_admin'), packageController.updatePackage)

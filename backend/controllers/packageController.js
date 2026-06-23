@@ -1,4 +1,6 @@
 const Package = require('../models/Package')
+const Inquiry = require('../models/Inquiry')
+const BookingInquiry = require('../models/BookingInquiry')
 const ApiError = require('../utils/ApiError')
 const asyncHandler = require('../utils/asyncHandler')
 const { successResponse } = require('../utils/apiResponse')
@@ -20,7 +22,12 @@ const toPackagePayload = (body, userId) => {
   if (body.duration?.days && body.duration?.nights) payload.duration = body.duration
   if (!payload.country && body.country) payload.country = { name: body.country }
   if (typeof payload.country === 'string') payload.country = { name: payload.country }
+  if (payload.destination?.country && !payload.country) payload.country = { name: payload.destination.country }
+  if (payload.destination?.city && !payload.cities?.length) payload.cities = [payload.destination.city]
   if (body.coverImage && !payload.images?.length) payload.images = [{ ...body.coverImage, type: 'hero' }]
+  if (payload.featuredImage?.url && !payload.images?.length) {
+    payload.images = [{ ...payload.featuredImage, type: 'hero' }, ...(payload.gallery || [])]
+  }
   if (userId) payload.updatedBy = userId
   return payload
 }
@@ -32,7 +39,7 @@ const listPackages = asyncHandler(async (req, res) => {
   const filter = {}
 
   if (!req.user) filter.status = 'published'
-  if (req.query.status) filter.status = req.query.status
+  if (req.user && req.query.status) filter.status = req.query.status
   if (req.query.country) filter['country.name'] = new RegExp(req.query.country, 'i')
   if (req.query.city) filter.cities = new RegExp(req.query.city, 'i')
   if (req.query.travelStyle) filter.packageType = req.query.travelStyle
@@ -75,6 +82,93 @@ const getPackage = asyncHandler(async (req, res) => {
   return successResponse(res, 200, 'Package fetched successfully', { package: item, item })
 })
 
+const getRelatedPackages = asyncHandler(async (req, res) => {
+  const current = await Package.findOne({ slug: req.params.slug, status: 'published' })
+  if (!current) throw new ApiError(404, 'Package not found')
+
+  const or = [
+    { packageType: current.packageType },
+    { 'country.name': current.country?.name },
+    { 'destination.country': current.destination?.country },
+    { category: current.category },
+  ].filter((condition) => Object.values(condition)[0])
+
+  if (current.tags?.length) or.push({ tags: { $in: current.tags } })
+  if (current.cities?.length) or.push({ cities: { $in: current.cities } })
+
+  const items = await Package.find({
+    _id: { $ne: current._id },
+    status: 'published',
+    ...(or.length ? { $or: or } : {}),
+  })
+    .sort({ featured: -1, publishedAt: -1, createdAt: -1 })
+    .limit(4)
+
+  return successResponse(res, 200, 'Related packages fetched successfully', { packages: items, items })
+})
+
+const getPackageReviews = asyncHandler(async (req, res) => {
+  const item = await Package.findOne({ slug: req.params.slug, status: 'published' }).select('testimonials title')
+  if (!item) throw new ApiError(404, 'Package not found')
+
+  const reviews = item.testimonials || []
+  const averageRating = reviews.length ? reviews.reduce((sum, review) => sum + Number(review.rating || 0), 0) / reviews.length : 0
+
+  return successResponse(res, 200, 'Package reviews fetched successfully', {
+    reviews,
+    averageRating: Number(averageRating.toFixed(1)),
+    reviewCount: reviews.length,
+  })
+})
+
+const createPackageInquiry = asyncHandler(async (req, res) => {
+  const item = await Package.findOne({ slug: req.params.slug, status: 'published' })
+  if (!item) throw new ApiError(404, 'Package not found')
+
+  const travelerCount = Math.max(Number(req.body.travelerCount || req.body.travelers || 1), 1)
+  const selectedDeparture = item.departures.id(req.body.selectedDeparture) || null
+  const basePrice = selectedDeparture?.pricePerPerson || item.pricing?.pricePerPerson || item.pricing?.basePrice || 0
+  const gstPercentage = item.pricing?.gstPercentage ?? 5
+  const subtotal = basePrice * travelerCount
+  const gstAmount = Math.round((subtotal * gstPercentage) / 100)
+  const estimatedAmount = subtotal + gstAmount
+  const advanceAmount = (selectedDeparture?.bookingAdvance || item.pricing?.bookingAdvance || item.pricing?.bookingAmount || 0) * travelerCount
+
+  const inquiry = await Inquiry.create({
+    fullName: req.body.customerName || req.body.fullName,
+    phone: req.body.phone,
+    email: req.body.email || '',
+    package: item._id,
+    packageTitle: item.title,
+    destination: item.destination?.name || item.country?.name || '',
+    travelDate: selectedDeparture?.departureDate || req.body.travelDate || null,
+    travelers: travelerCount,
+    travelStyle: ['group', 'family', 'honeymoon', 'individual', 'custom'].includes(item.packageType) ? item.packageType : 'custom',
+    message: req.body.message || `Package page inquiry. Estimated amount: ${item.pricing?.currency || 'INR'} ${estimatedAmount}. Advance: ${advanceAmount}.`,
+    source: 'website',
+    status: 'new',
+  })
+
+  const booking = await BookingInquiry.create({
+    package: item._id,
+    selectedDeparture: selectedDeparture?._id || null,
+    travelerCount,
+    customerName: req.body.customerName || req.body.fullName,
+    phone: req.body.phone,
+    email: req.body.email || '',
+    estimatedAmount,
+    advanceAmount,
+    source: 'package-page',
+    status: 'new',
+    inquiry: inquiry._id,
+  })
+
+  return successResponse(res, 201, 'Package inquiry submitted successfully', {
+    inquiry,
+    booking,
+  })
+})
+
 const createPackage = asyncHandler(async (req, res) => {
   const item = await Package.create({ ...toPackagePayload(req.body, req.user._id), createdBy: req.user._id })
   return successResponse(res, 201, 'Package created successfully', { package: item, item })
@@ -105,4 +199,14 @@ const updatePackageStatus = asyncHandler(async (req, res) => {
   return successResponse(res, 200, 'Package status updated successfully', { package: item, item })
 })
 
-module.exports = { listPackages, getPackage, createPackage, updatePackage, deletePackage, updatePackageStatus }
+module.exports = {
+  listPackages,
+  getPackage,
+  getRelatedPackages,
+  getPackageReviews,
+  createPackageInquiry,
+  createPackage,
+  updatePackage,
+  deletePackage,
+  updatePackageStatus,
+}
