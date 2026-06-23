@@ -38,23 +38,26 @@ const getUpcomingGroupDepartures = async () => {
       {
         $match: {
           status: 'published',
+          isActive: { $ne: false },
           packageType: 'group',
-          departures: {
-            $elemMatch: {
-              departureDate: { $gte: new Date() },
-              status: { $in: ['open', 'filling'] },
-            },
-          },
+          departures: { $exists: true, $ne: [] },
         },
       },
       { $unwind: '$departures' },
       {
-        $match: {
-          'departures.departureDate': { $gte: new Date() },
-          'departures.status': { $in: ['open', 'filling'] },
+        $addFields: {
+          departureDateForSort: {
+            $ifNull: ['$departures.departureDate', '$departures.startDate'],
+          },
         },
       },
-      { $sort: { 'departures.departureDate': 1 } },
+      {
+        $match: {
+          departureDateForSort: { $gte: new Date() },
+          'departures.status': { $in: ['open', 'filling', 'few_seats'] },
+        },
+      },
+      { $sort: { departureDateForSort: 1 } },
       {
         $project: {
           title: 1,
@@ -62,7 +65,9 @@ const getUpcomingGroupDepartures = async () => {
           country: 1,
           cities: 1,
           packageType: 1,
-          departure: '$departures',
+          departure: {
+            $mergeObjects: ['$departures', { departureDate: '$departureDateForSort' }],
+          },
         },
       },
       { $limit: 8 },

@@ -29,7 +29,7 @@ const imageSchema = new mongoose.Schema(
       default: 'gallery',
     },
   },
-  { _id: false }
+  { _id: true }
 )
 
 const departureSchema = new mongoose.Schema(
@@ -538,6 +538,7 @@ packageSchema.pre('validate', function preparePackage() {
     if (this.pricing.bookingAmount === undefined && this.pricing.bookingAdvance !== undefined) this.pricing.bookingAmount = this.pricing.bookingAdvance
     if (!this.pricing.pricingNote && this.pricing.priceNote) this.pricing.pricingNote = this.pricing.priceNote
     if (!this.pricing.priceNote && this.pricing.pricingNote) this.pricing.priceNote = this.pricing.pricingNote
+    if (!this.pricing.originalPrice) this.pricing.originalPrice = undefined
   }
 
   if (this.overview) {
@@ -575,8 +576,8 @@ packageSchema.pre('validate', function preparePackage() {
 
   if (!this.images?.length) {
     const images = []
-    if (this.featuredImage?.url) images.push({ ...this.featuredImage.toObject?.() || this.featuredImage, type: 'hero' })
-    this.gallery?.forEach((image) => images.push({ ...image.toObject?.() || image, type: image.type || 'gallery' }))
+    if (this.featuredImage?.url) images.push({ ...(this.featuredImage.toObject?.() || this.featuredImage), type: 'hero' })
+    this.gallery?.forEach((image) => images.push({ ...(image.toObject?.() || image), type: image.type || 'gallery' }))
     this.images = images
   }
 
@@ -602,7 +603,7 @@ packageSchema.pre('validate', function preparePackage() {
     }
   }
 
-  if (this.pricing && this.pricing.originalPrice !== undefined) {
+  if (this.pricing && this.pricing.originalPrice !== undefined && this.pricing.originalPrice !== null) {
     if (this.pricing.originalPrice < this.pricing.basePrice) {
       throw new Error('Original price cannot be less than base price')
     }

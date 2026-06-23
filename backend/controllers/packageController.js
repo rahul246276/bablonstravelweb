@@ -5,6 +5,8 @@ const ApiError = require('../utils/ApiError')
 const asyncHandler = require('../utils/asyncHandler')
 const { successResponse } = require('../utils/apiResponse')
 
+const escapeRegExp = (value) => String(value).replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+
 const toPackagePayload = (body, userId) => {
   const payload = { ...body }
   if (body.travelStyle && !body.packageType) payload.packageType = body.travelStyle
@@ -40,8 +42,9 @@ const listPackages = asyncHandler(async (req, res) => {
 
   if (!req.user) filter.status = 'published'
   if (req.user && req.query.status) filter.status = req.query.status
-  if (req.query.country) filter['country.name'] = new RegExp(req.query.country, 'i')
-  if (req.query.city) filter.cities = new RegExp(req.query.city, 'i')
+  if (!req.user) filter.isActive = true
+  if (req.query.country) filter['country.name'] = new RegExp(escapeRegExp(req.query.country), 'i')
+  if (req.query.city) filter.cities = new RegExp(escapeRegExp(req.query.city), 'i')
   if (req.query.travelStyle) filter.packageType = req.query.travelStyle
   if (req.query.packageType) filter.packageType = req.query.packageType
   if (req.query.featured) filter.featured = req.query.featured === 'true'
@@ -76,14 +79,17 @@ const listPackages = asyncHandler(async (req, res) => {
 
 const getPackage = asyncHandler(async (req, res) => {
   const filter = req.params.slug.match(/^[0-9a-fA-F]{24}$/) ? { _id: req.params.slug } : { slug: req.params.slug }
-  if (!req.user) filter.status = 'published'
+  if (!req.user) {
+    filter.status = 'published'
+    filter.isActive = true
+  }
   const item = await Package.findOne(filter)
   if (!item) throw new ApiError(404, 'Package not found')
   return successResponse(res, 200, 'Package fetched successfully', { package: item, item })
 })
 
 const getRelatedPackages = asyncHandler(async (req, res) => {
-  const current = await Package.findOne({ slug: req.params.slug, status: 'published' })
+  const current = await Package.findOne({ slug: req.params.slug, status: 'published', isActive: true })
   if (!current) throw new ApiError(404, 'Package not found')
 
   const or = [
@@ -99,6 +105,7 @@ const getRelatedPackages = asyncHandler(async (req, res) => {
   const items = await Package.find({
     _id: { $ne: current._id },
     status: 'published',
+    isActive: true,
     ...(or.length ? { $or: or } : {}),
   })
     .sort({ featured: -1, publishedAt: -1, createdAt: -1 })
@@ -108,7 +115,7 @@ const getRelatedPackages = asyncHandler(async (req, res) => {
 })
 
 const getPackageReviews = asyncHandler(async (req, res) => {
-  const item = await Package.findOne({ slug: req.params.slug, status: 'published' }).select('testimonials title')
+  const item = await Package.findOne({ slug: req.params.slug, status: 'published', isActive: true }).select('testimonials title')
   if (!item) throw new ApiError(404, 'Package not found')
 
   const reviews = item.testimonials || []
@@ -122,7 +129,7 @@ const getPackageReviews = asyncHandler(async (req, res) => {
 })
 
 const createPackageInquiry = asyncHandler(async (req, res) => {
-  const item = await Package.findOne({ slug: req.params.slug, status: 'published' })
+  const item = await Package.findOne({ slug: req.params.slug, status: 'published', isActive: true })
   if (!item) throw new ApiError(404, 'Package not found')
 
   const travelerCount = Math.max(Number(req.body.travelerCount || req.body.travelers || 1), 1)
@@ -175,11 +182,12 @@ const createPackage = asyncHandler(async (req, res) => {
 })
 
 const updatePackage = asyncHandler(async (req, res) => {
-  const item = await Package.findByIdAndUpdate(req.params.id, toPackagePayload(req.body, req.user._id), {
-    new: true,
-    runValidators: true,
-  })
+  const item = await Package.findById(req.params.id)
   if (!item) throw new ApiError(404, 'Package not found')
+
+  Object.assign(item, toPackagePayload(req.body, req.user._id))
+  await item.save()
+
   return successResponse(res, 200, 'Package updated successfully', { package: item, item })
 })
 
@@ -190,12 +198,15 @@ const deletePackage = asyncHandler(async (req, res) => {
 })
 
 const updatePackageStatus = asyncHandler(async (req, res) => {
-  const update = {}
-  if (req.body.status) update.status = req.body.status
-  if (req.body.featured !== undefined) update.featured = req.body.featured
-  if (req.body.isFeatured !== undefined) update.featured = req.body.isFeatured
-  const item = await Package.findByIdAndUpdate(req.params.id, update, { new: true, runValidators: true })
+  const item = await Package.findById(req.params.id)
   if (!item) throw new ApiError(404, 'Package not found')
+
+  if (req.body.status) item.status = req.body.status
+  if (req.body.featured !== undefined) item.featured = req.body.featured
+  if (req.body.isFeatured !== undefined) item.featured = req.body.isFeatured
+  if (req.body.isActive !== undefined) item.isActive = req.body.isActive
+  await item.save()
+
   return successResponse(res, 200, 'Package status updated successfully', { package: item, item })
 })
 
