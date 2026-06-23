@@ -1,5 +1,5 @@
 const SectionCard = ({ children, className = '' }) => (
-  <section className={`rounded-xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6 ${className}`}>
+  <section className={`rounded-card-sm border border-sand-200/80 bg-white/95 p-5 shadow-card sm:p-6 ${className}`}>
     {children}
   </section>
 )

@@ -11,7 +11,7 @@ const DepartureSelector = ({ package: travelPackage, selectedDeparture, onSelect
     return (
       <SectionCard>
         <SectionHeading title="Choose Your Travel Date" description="This package can be customized around your preferred dates." />
-        <input type="date" className="w-full rounded-lg border border-slate-200 p-3 text-sm font-bold text-slate-700 sm:max-w-xs" />
+        <input type="date" className="w-full rounded-lg border border-sand-200 bg-sand-50 p-3 text-sm font-bold text-dark-700 sm:max-w-xs" />
       </SectionCard>
     )
   }
@@ -37,16 +37,16 @@ const DepartureSelector = ({ package: travelPackage, selectedDeparture, onSelect
               type="button"
               disabled={soldOut}
               onClick={() => onSelect(departure)}
-              className={`rounded-xl border p-4 text-left transition ${selected ? 'border-orange-500 bg-orange-50' : 'border-slate-200 bg-white hover:border-orange-200'} ${soldOut ? 'cursor-not-allowed opacity-60' : ''}`}
+              className={`rounded-card-sm border p-4 text-left transition ${selected ? 'border-secondary-500 bg-secondary-50 shadow-card' : 'border-sand-200 bg-white hover:border-secondary-200 hover:bg-sand-50'} ${soldOut ? 'cursor-not-allowed opacity-60' : ''}`}
             >
               <div className="flex flex-wrap items-center justify-between gap-3">
                 <div>
-                  <p className="font-black text-slate-950">{new Date(departure.startDate || departure.departureDate).toLocaleDateString()} - {new Date(departure.endDate || departure.returnDate).toLocaleDateString()}</p>
-                  <p className="mt-1 text-sm text-slate-500">{departure.availableSeats ?? 0} of {departure.totalSeats ?? 0} seats available</p>
+                  <p className="font-black text-dark-900">{new Date(departure.startDate || departure.departureDate).toLocaleDateString()} - {new Date(departure.endDate || departure.returnDate).toLocaleDateString()}</p>
+                  <p className="mt-1 text-sm text-dark-500">{departure.availableSeats ?? 0} of {departure.totalSeats ?? 0} seats available</p>
                 </div>
                 <div className="text-right">
-                  <p className="font-black text-slate-950">{formatPrice(departure.pricePerPerson || departure.price || travelPackage.pricing?.basePrice, travelPackage.pricing?.currency)}</p>
-                  <p className="text-xs font-black uppercase tracking-wide text-orange-600">{statusLabel(departure.status)}</p>
+                  <p className="font-black text-dark-900">{formatPrice(departure.pricePerPerson || departure.price || travelPackage.pricing?.basePrice, travelPackage.pricing?.currency)}</p>
+                  <p className="text-xs font-black uppercase tracking-wide text-secondary-600">{statusLabel(departure.status)}</p>
                 </div>
               </div>
             </button>

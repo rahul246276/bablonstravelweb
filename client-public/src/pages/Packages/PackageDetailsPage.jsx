@@ -76,7 +76,7 @@ const PackageDetailsPage = () => {
 
   if (loading) {
     return (
-      <main className="bg-slate-50 px-4 py-10">
+      <main className="bg-ivory px-4 py-10">
         <div className="mx-auto max-w-7xl space-y-4">
           <LoadingSkeleton lines={7} />
           <LoadingSkeleton lines={5} />
@@ -87,7 +87,7 @@ const PackageDetailsPage = () => {
 
   if (error || !travelPackage) {
     return (
-      <main className="bg-slate-50 px-4 py-16">
+      <main className="bg-ivory px-4 py-16">
         <div className="mx-auto max-w-3xl">
           <ErrorState title="Package unavailable" description={error || 'This package could not be loaded.'} />
           <div className="mt-6 text-center"><Link to="/packages" className="font-black text-orange-600">Back to packages</Link></div>
@@ -99,16 +99,16 @@ const PackageDetailsPage = () => {
   const priceLabel = formatPrice(getPackagePrice(travelPackage, selectedDeparture), travelPackage.pricing?.currency || 'INR')
 
   return (
-    <div className="bg-slate-50 pb-24 lg:pb-0">
+    <div className="bg-ivory pb-24 lg:pb-0">
       <PackageHeroGallery package={travelPackage} />
 
       <main className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-        <nav className="mb-5 text-sm font-bold text-slate-500" aria-label="Breadcrumb">
-          <Link to="/" className="hover:text-orange-600">Home</Link>
+        <nav className="mb-5 rounded-full border border-sand-200 bg-white/80 px-4 py-2 text-sm font-bold text-dark-500 shadow-sm backdrop-blur" aria-label="Breadcrumb">
+          <Link to="/" className="hover:text-secondary-600">Home</Link>
           <span className="mx-2">/</span>
-          <Link to="/packages" className="hover:text-orange-600">Packages</Link>
+          <Link to="/packages" className="hover:text-secondary-600">Packages</Link>
           <span className="mx-2">/</span>
-          <span className="text-slate-900">{travelPackage.title}</span>
+          <span className="text-dark-900">{travelPackage.title}</span>
         </nav>
 
         <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_360px]">

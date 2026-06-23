@@ -21,9 +21,9 @@ const PackageOverview = ({ overview = {} }) => {
       <SectionHeading title="Trip Overview" />
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
         {items.map((item) => (
-          <div key={item.label} className="rounded-lg border border-slate-100 bg-slate-50 p-4">
-            <p className="text-xs font-black uppercase tracking-wide text-slate-400">{item.label}</p>
-            <p className="mt-2 font-black text-slate-900">{item.value}</p>
+          <div key={item.label} className="rounded-xl border border-sand-200 bg-sand-50 p-4">
+            <p className="text-xs font-black uppercase tracking-wide text-secondary-500">{item.label}</p>
+            <p className="mt-2 font-black text-dark-900">{item.value}</p>
           </div>
         ))}
       </div>

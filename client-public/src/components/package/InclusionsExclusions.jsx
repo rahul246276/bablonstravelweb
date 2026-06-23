@@ -4,10 +4,10 @@ import SectionHeading from '../common/SectionHeading'
 
 const List = ({ title, items, icon: Icon, tone }) => (
   <div>
-    <h3 className="font-black text-slate-950">{title}</h3>
+    <h3 className="font-display text-2xl font-bold text-dark-900">{title}</h3>
     <ul className="mt-4 space-y-3">
       {items.map((item) => (
-        <li key={item} className="flex gap-3 text-sm leading-6 text-slate-600">
+        <li key={item} className="flex gap-3 text-sm leading-6 text-dark-600">
           <Icon className={`mt-1 shrink-0 ${tone}`} /> {item}
         </li>
       ))}
