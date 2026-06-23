@@ -129,11 +129,11 @@ const ContactCTASection = () => {
         src={ctaBg}
         alt=""
         aria-hidden="true"
-        className="absolute inset-0 h-full w-full object-cover opacity-85"
+        className="absolute inset-0 h-full w-full object-cover opacity-60"
         loading="lazy"
       />
-      <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(4,40,35,0.82)_0%,rgba(7,55,49,0.7)_43%,rgba(9,35,31,0.48)_100%)]" />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_82%_18%,rgba(231,188,96,0.14),transparent_100%),linear-gradient(180deg,rgba(7,28,25,0.08),rgba(2,27,24,0.5))]" />
+      <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(4,40,35,0.96)_0%,rgba(7,55,49,0.9)_43%,rgba(9,35,31,0.78)_100%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_82%_18%,rgba(231,188,96,0.2),transparent_28%),linear-gradient(180deg,rgba(7,28,25,0.18),rgba(2,27,24,0.78))]" />
       <div className="grain-overlay" />
 
       <div className="section-container relative">

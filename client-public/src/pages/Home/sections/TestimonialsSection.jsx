@@ -10,6 +10,7 @@ const testimonials = [
     initials: 'SJ',
     accent: 'from-primary-700 to-primary-500',
   },
+  
   {
     name: 'Ahmed Hassan',
     role: 'Business traveler',
@@ -26,30 +27,6 @@ const testimonials = [
     initials: 'MG',
     accent: 'from-secondary-700 to-accent-500',
   },
-  {
-    name: 'Priya Mehta',
-    role: 'Couple getaway',
-    destination: 'Thailand',
-    content: 'Everything felt premium but still personal. The airport transfers, hotel choices, and island tours were handled beautifully.',
-    initials: 'PM',
-    accent: 'from-primary-700 to-secondary-500',
-  },
-  {
-    name: 'Daniel Reed',
-    role: 'Luxury holiday',
-    destination: 'Turkey',
-    content: 'The team planned our days with just the right pace. We had great guides, smooth transfers, and enough free time to explore.',
-    initials: 'DR',
-    accent: 'from-dark-900 to-primary-600',
-  },
-  {
-    name: 'Nadia Khan',
-    role: 'Family tour',
-    destination: 'Azerbaijan',
-    content: 'Clear communication, transparent pricing, and support whenever we needed it. It made international travel feel stress-free.',
-    initials: 'NK',
-    accent: 'from-secondary-700 to-accent-600',
-  },
 ]
 
 const StarRow = ({ label = '5 out of 5 stars' }) => (
@@ -61,18 +38,16 @@ const StarRow = ({ label = '5 out of 5 stars' }) => (
 )
 
 const TestimonialsSection = () => {
-  const sliderTestimonials = [...testimonials, ...testimonials]
-
   return (
     <section className="section-shell relative overflow-hidden bg-dark-900 text-white">
       <img
         src={testimonialBg}
         alt=""
-        className="absolute inset-0 h-full w-full object-cover opacity-55"
+        className="absolute inset-0 h-full w-full object-cover opacity-35"
         aria-hidden="true"
       />
-      <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(1,42,35,0.86)_0%,rgba(1,42,35,0.74)_45%,rgba(1,42,35,0.58)_100%)]" />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_20%,rgba(244,159,54,0.2),transparent_32%),radial-gradient(circle_at_90%_62%,rgba(255,255,255,0.1),transparent_30%)]" />
+      <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(1,42,35,0.94)_0%,rgba(1,42,35,0.84)_45%,rgba(1,42,35,0.62)_100%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_20%,rgba(244,159,54,0.18),transparent_32%),radial-gradient(circle_at_88%_70%,rgba(255,255,255,0.12),transparent_28%)]" />
 
       <div className="section-container relative">
         <div className="section-header grid gap-8 lg:grid-cols-[1fr_420px] lg:items-end">
@@ -113,12 +88,11 @@ const TestimonialsSection = () => {
           </div>
         </div>
 
-        <div className="testimonial-slider-row overflow-hidden">
-          <div className="testimonial-slider-track flex gap-5">
-            {sliderTestimonials.map((testimonial, index) => (
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+          {testimonials.map((testimonial) => (
             <article
-              key={`${testimonial.name}-${index}`}
-              className="testimonial-slider-card group relative flex min-h-[330px] flex-col overflow-hidden rounded-[1.75rem] border border-white/18 bg-white/[0.13] p-6 shadow-[0_20px_65px_rgba(0,0,0,0.22)] backdrop-blur-md transition duration-500 hover:-translate-y-1 hover:border-accent-300/60 hover:bg-white/[0.17] lg:p-7"
+              key={testimonial.name}
+              className="group relative flex min-h-[320px] flex-col overflow-hidden rounded-[1.75rem] border border-white/16 bg-white/[0.11] p-6 shadow-[0_20px_65px_rgba(0,0,0,0.2)] backdrop-blur-md transition duration-500 hover:-translate-y-1 hover:border-accent-300/55 hover:bg-white/[0.15] lg:p-7"
             >
               <div className={`absolute left-0 top-0 h-1.5 w-full bg-gradient-to-r ${testimonial.accent}`} />
               <div className="flex items-center justify-between gap-4">
@@ -140,8 +114,7 @@ const TestimonialsSection = () => {
                 </div>
               </div>
             </article>
-            ))}
-          </div>
+          ))}
         </div>
       </div>
     </section>

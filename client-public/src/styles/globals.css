@@ -375,7 +375,12 @@
 
   @media (min-width: 1024px) {
     .home-hero-inner {
-      width: min(calc(100% - 4rem), 88rem);
+      width: mi
+      
+      
+      
+      
+      (calc(100% - 4rem), 88rem);
       min-height: min(780px, calc(100vh - var(--header-height-desktop) + 8rem));
       padding-top: clamp(3.5rem, 4vw, 5rem);
     }

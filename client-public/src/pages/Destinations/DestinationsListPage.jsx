@@ -28,6 +28,7 @@ const DestinationsListPage = () => {
           alt=""
           aria-hidden="true"
           className="absolute inset-0 h-full w-full object-cover opacity-80"
+          
         />
         <div className="absolute inset-0 bg-gradient-to-br from-dark-900/88 via-dark-900/54 to-primary-900/40" />
         <div className="grain-overlay" />

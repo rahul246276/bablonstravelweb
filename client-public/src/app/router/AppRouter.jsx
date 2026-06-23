@@ -5,10 +5,13 @@ import HomePage from '../../pages/Home/HomePage'
 import DestinationsListPage from '../../pages/Destinations/DestinationsListPage'
 import DestinationDetailsPage from '../../pages/Destinations/DestinationDetailsPage'
 import PackagesListPage from '../../pages/Packages/PackagesListPage'
+import PackageDetailsPage from '../../pages/Packages/PackageDetailsPage'
 import BlogsListPage from '../../pages/Blogs/BlogsListPage'
 import GalleryPage from '../../pages/Gallery/GalleryPage'
 import AboutPage from '../../pages/About/AboutPage'
 import ContactPage from '../../pages/Contact/ContactPage'
+
+
 import FAQPage from '../../pages/FAQ/FAQPage'
 import PrivacyPolicyPage from '../../pages/Privacy/PrivacyPolicyPage'
 import TermsPage from '../../pages/Terms/TermsPage'
@@ -36,7 +39,7 @@ const AppRouter = () => {
 
           {/* Placeholder routes - will be implemented */}
           <Route path={ROUTES.DESTINATION_DETAILS} element={<DestinationDetailsPage />} />
-          <Route path={ROUTES.PACKAGE_DETAILS} element={<div className="min-h-screen flex items-center justify-center">Package Details - Coming Soon</div>} />
+          <Route path={ROUTES.PACKAGE_DETAILS} element={<PackageDetailsPage />} />
           <Route path={ROUTES.BLOG_DETAILS} element={<div className="min-h-screen flex items-center justify-center">Blog Details - Coming Soon</div>} />
           <Route path={ROUTES.GALLERY_DESTINATION} element={<div className="min-h-screen flex items-center justify-center">Destination Gallery - Coming Soon</div>} />
         </Route>

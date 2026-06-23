@@ -1,16 +1,17 @@
 import { Link } from 'react-router-dom'
 import Button from '../common/Button/Button'
+import RatingStars from '../common/RatingStars'
+import { formatPrice } from '../common/PriceDisplay'
+import { getDurationLabel, getPackageDestination, getPackageImages, getPackagePrice } from './packageViewUtils'
 
 const PackageCard = ({ package: travelPackage }) => {
-  const {
-    title = 'Travel package',
-    destination = 'Featured destination',
-    slug = '',
-    image,
-    duration,
-    price,
-    shortDescription = 'A curated Bablons Travel itinerary designed for a comfortable, memorable journey.',
-  } = travelPackage || {}
+  const title = travelPackage?.title || 'Travel package'
+  const slug = travelPackage?.slug || ''
+  const destination = typeof travelPackage?.destination === 'string' ? travelPackage.destination : getPackageDestination(travelPackage)
+  const image = travelPackage?.image || getPackageImages(travelPackage)[0]?.url
+  const duration = travelPackage?.duration && typeof travelPackage.duration === 'string' ? travelPackage.duration : getDurationLabel(travelPackage)
+  const price = travelPackage?.price || formatPrice(getPackagePrice(travelPackage), travelPackage?.pricing?.currency || 'INR')
+  const shortDescription = travelPackage?.shortDescription || travelPackage?.description || 'A curated Bablons Travel itinerary designed for a comfortable, memorable journey.'
 
   const href = slug ? `/packages/${slug}` : '/packages'
 
@@ -29,6 +30,7 @@ const PackageCard = ({ package: travelPackage }) => {
           </Link>
         </h2>
         <p className="mt-3 flex-1 line-clamp-3 text-gray-600">{shortDescription}</p>
+        {travelPackage?.testimonials?.length ? <div className="mt-4"><RatingStars rating={4.9} count={travelPackage.testimonials.length} /></div> : null}
         <div className="mt-5 flex items-center justify-between gap-4">
           <div>
             {duration ? <p className="text-sm text-gray-500">{duration}</p> : null}
