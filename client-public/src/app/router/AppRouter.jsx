@@ -42,10 +42,8 @@ const AppRouter = () => {
           <Route path={ROUTES.PACKAGE_DETAILS} element={<PackageDetailsPage />} />
           <Route path={ROUTES.BLOG_DETAILS} element={<div className="min-h-screen flex items-center justify-center">Blog Details - Coming Soon</div>} />
           <Route path={ROUTES.GALLERY_DESTINATION} element={<div className="min-h-screen flex items-center justify-center">Destination Gallery - Coming Soon</div>} />
+          <Route path="*" element={<NotFoundPage />} />
         </Route>
-
-        {/* 404 Route */}
-        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </Router>
   )

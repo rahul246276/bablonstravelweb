@@ -1,9 +1,78 @@
+import { useEffect, useMemo, useState } from 'react'
 import { FaHeadset } from 'react-icons/fa'
 import Button from '../../components/common/Button/Button'
 import { ROUTES } from '../../constants/routes'
 import herobg from '../../assets/images/Destinastion Page  Bg.png'
 import { destinationCountries } from './destinationsData'
 import CountrySection from './sections/CountrySection'
+import { destinationService } from '../../services/destinationService'
+
+const normalizeImage = (image, fallbackAlt) => ({
+  src: image?.src || image?.url || '',
+  alt: image?.alt || fallbackAlt,
+})
+
+const normalizeCountries = (countries = []) =>
+  countries
+    .map((country) => ({
+      ...country,
+      slug: country.slug || country.countrySlug,
+      name: country.name || country.country,
+      tagline: country.tagline || country.shortDescription || `Explore ${country.name || country.country}'s most requested travel experiences.`,
+      heroImage: normalizeImage(country.heroImage, country.name || country.country),
+      cities: (country.cities || []).map((city) => ({
+        ...city,
+        slug: city.slug,
+        name: city.name,
+        image: normalizeImage(city.image || city.heroImage, city.name),
+      })).filter((city) => city.slug && city.name),
+      travelTips: country.travelTips || {},
+    }))
+    .filter((country) => country.slug && country.name)
+
+const mergeCountries = (curatedCountries, liveCountries) => {
+  if (!liveCountries.length) return curatedCountries
+
+  const countryMap = new Map(curatedCountries.map((country) => [country.slug, { ...country, cities: [...country.cities] }]))
+
+  liveCountries.forEach((liveCountry) => {
+    const existingCountry = countryMap.get(liveCountry.slug)
+
+    if (!existingCountry) {
+      const cities = liveCountry.cities.map((city) => ({
+        ...city,
+        image: city.image?.src ? city.image : liveCountry.heroImage,
+      })).filter((city) => city.image?.src)
+
+      countryMap.set(liveCountry.slug, {
+        ...liveCountry,
+        heroImage: liveCountry.heroImage?.src ? liveCountry.heroImage : cities[0]?.image || normalizeImage(null, liveCountry.name),
+        cities,
+      })
+      return
+    }
+
+    const cityMap = new Map(existingCountry.cities.map((city) => [city.slug, city]))
+    liveCountry.cities.forEach((liveCity) => {
+      const existingCity = cityMap.get(liveCity.slug)
+      cityMap.set(liveCity.slug, {
+        ...existingCity,
+        ...liveCity,
+        image: liveCity.image?.src ? liveCity.image : existingCity?.image || liveCountry.heroImage || existingCountry.heroImage,
+      })
+    })
+
+    countryMap.set(liveCountry.slug, {
+      ...existingCountry,
+      ...liveCountry,
+      tagline: liveCountry.tagline || existingCountry.tagline,
+      heroImage: liveCountry.heroImage?.src ? liveCountry.heroImage : existingCountry.heroImage,
+      cities: Array.from(cityMap.values()).filter((city) => city.image?.src),
+    })
+  })
+
+  return Array.from(countryMap.values()).filter((country) => country.cities.length || country.heroImage?.src)
+}
 
 /**
  * Replaces the previous 6-country generic-card version of this page
@@ -20,6 +89,36 @@ import CountrySection from './sections/CountrySection'
  * definitions / imports elsewhere in the app don't need to change.
  */
 const DestinationsListPage = () => {
+  const [backendCountries, setBackendCountries] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState('')
+
+  useEffect(() => {
+    let mounted = true
+
+    destinationService.groups({ active: true })
+      .then((data) => {
+        if (!mounted) return
+        setBackendCountries(normalizeCountries(data.countries || data.destinations || data.items || []))
+        setError('')
+      })
+      .catch((err) => {
+        if (!mounted) return
+        setError(err.response?.data?.message || 'Live destinations are unavailable right now.')
+      })
+      .finally(() => {
+        if (mounted) setLoading(false)
+      })
+
+    return () => {
+      mounted = false
+    }
+  }, [])
+
+  const countries = useMemo(() => mergeCountries(destinationCountries, backendCountries), [backendCountries])
+  const cityCount = countries.reduce((sum, country) => sum + country.cities.length, 0)
+  const countryNames = countries.map((country) => country.name).join(', ')
+
   return (
     <div className="w-full overflow-hidden bg-[#FAF8F4] text-dark-900">
       <section className="relative overflow-hidden bg-dark-900 py-20 text-white lg:py-28">
@@ -38,14 +137,14 @@ const DestinationsListPage = () => {
             All destinations
           </h1>
           <p className="mx-auto mt-5 max-w-xl text-lg leading-8 text-white/72">
-            33 cities across Dubai &amp; UAE, Thailand, Uzbekistan, and Georgia. Tap any city to see its packages.
+            {cityCount} cities across {countryNames}. Tap any city to see its packages.
           </p>
         </div>
       </section>
 
       <nav aria-label="Jump to country" className="border-b border-sand-200 bg-white">
         <div className="section-container flex flex-wrap justify-center gap-2 py-4">
-          {destinationCountries.map((country) => (
+          {countries.map((country) => (
             <a
               key={country.slug}
               href={`#${country.slug}`}
@@ -58,7 +157,17 @@ const DestinationsListPage = () => {
       </nav>
 
       <div className="section-container py-12 lg:py-16">
-        {destinationCountries.map((country, index) => (
+        {loading ? (
+          <div className="mb-8 rounded-2xl border border-sand-200 bg-white p-4 text-center text-sm font-bold text-dark-500 shadow-sm">
+            Loading latest destinations...
+          </div>
+        ) : null}
+        {!loading && error && !backendCountries.length ? (
+          <div className="mb-8 rounded-2xl border border-amber-200 bg-amber-50 p-4 text-center text-sm font-bold text-amber-800">
+            Showing curated destinations. {error}
+          </div>
+        ) : null}
+        {countries.map((country, index) => (
           <CountrySection
             key={country.slug}
             countrySlug={country.slug}

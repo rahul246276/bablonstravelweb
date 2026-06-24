@@ -1,3 +1,4 @@
+import { useEffect, useMemo, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import Button from '../../components/common/Button/Button'
 import { findCityBySlug, getCityDetails } from './destinationDetailsHelpers'
@@ -6,6 +7,54 @@ import Attractions from './sections/Attractions'
 import Gallery from './sections/Gallery'
 import RelatedPackages from './sections/RelatedPackages'
 import TravelTips from './sections/TravelTips'
+import { destinationService } from '../../services/destinationService'
+
+const normalizeImage = (image, fallbackAlt) => ({
+  src: image?.src || image?.url || '',
+  alt: image?.alt || fallbackAlt,
+})
+
+const normalizeAttractions = (attractions = []) =>
+  attractions.map((attraction) => ({
+    name: attraction.name || attraction.title,
+    note: attraction.note || attraction.description,
+  })).filter((attraction) => attraction.name)
+
+const backendDestinationToView = (destination) => {
+  if (!destination) return null
+
+  const countryName = destination.country || destination.name
+  const city = {
+    slug: destination.slug,
+    name: destination.name,
+    image: normalizeImage(destination.heroImage, destination.name),
+    details: {
+      intro: destination.overview || destination.shortDescription || `${destination.name} is one of ${countryName}'s standout travel experiences.`,
+      highlights: [
+        'Custom itinerary planning',
+        'Hotel and transfer assistance',
+        'Guided sightseeing options',
+        'Visa and document guidance where applicable',
+      ],
+      attractions: normalizeAttractions(destination.attractions),
+      gallery: (destination.gallery || []).map((image) => normalizeImage(image, destination.name)).filter((image) => image.src),
+    },
+  }
+
+  return {
+    city,
+    country: {
+      slug: destination.countrySlug,
+      name: countryName,
+      travelTips: {
+        bestTime: destination.bestTimeToVisit || 'Ask our travel team',
+        currency: destination.currency || 'Confirmed during planning',
+        language: 'Confirmed during planning',
+        timezone: 'Confirmed during planning',
+      },
+    },
+  }
+}
 
 /**
  * Route: /destinations/:countrySlug/:citySlug
@@ -20,7 +69,44 @@ import TravelTips from './sections/TravelTips'
  */
 const DestinationDetailsPage = () => {
   const { countrySlug, citySlug } = useParams()
-  const result = findCityBySlug(countrySlug, citySlug)
+  const staticResult = useMemo(() => findCityBySlug(countrySlug, citySlug), [countrySlug, citySlug])
+  const routeKey = `${countrySlug}/${citySlug}`
+  const [backendState, setBackendState] = useState({ key: '', result: null })
+
+  useEffect(() => {
+    let mounted = true
+
+    if (staticResult) return undefined
+
+    destinationService.get(citySlug)
+      .then((item) => {
+        if (!mounted) return
+        const result = item.countrySlug === countrySlug ? backendDestinationToView(item) : null
+        setBackendState({ key: routeKey, result })
+      })
+      .catch(() => {
+        if (mounted) setBackendState({ key: routeKey, result: null })
+      })
+
+    return () => {
+      mounted = false
+    }
+  }, [citySlug, countrySlug, routeKey, staticResult])
+
+  const backendResult = backendState.key === routeKey ? backendState.result : null
+  const loading = !staticResult && backendState.key !== routeKey
+  const result = staticResult || backendResult
+
+  if (loading) {
+    return (
+      <div className="section-shell bg-white text-center">
+        <div className="section-container">
+          <p className="section-eyebrow justify-center">Loading</p>
+          <h1 className="mt-3 section-heading">Finding destination details...</h1>
+        </div>
+      </div>
+    )
+  }
 
   if (!result) {
     return (
