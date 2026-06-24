@@ -10,6 +10,7 @@ const optionalAuth = (req, res, next) => {
 }
 
 router.get('/', optionalAuth, destinationController.listDestinations)
+router.get('/groups', optionalAuth, destinationController.listDestinationGroups)
 router.get('/:slug', optionalAuth, destinationController.getDestination)
 router.post('/', protect, authorize('super_admin'), destinationController.createDestination)
 router.patch('/:id', protect, authorize('super_admin'), destinationController.updateDestination)

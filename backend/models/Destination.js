@@ -1,6 +1,8 @@
 const mongoose = require('mongoose')
 const slugify = require('slugify')
 
+const normalizeKey = (value) => String(value || '').trim().toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')
+
 const imageSchema = new mongoose.Schema(
   {
     url: { type: String, trim: true, default: '' },
@@ -48,7 +50,12 @@ destinationSchema.index({ name: 'text', country: 'text', shortDescription: 'text
 
 destinationSchema.pre('validate', function prepareDestination() {
   if (!this.slug && this.name) this.slug = slugify(this.name, { lower: true, strict: true })
-  if (!this.countrySlug && this.country) this.countrySlug = slugify(this.country, { lower: true, strict: true })
+  if ((!this.countrySlug || this.isModified('country')) && this.country) {
+    this.countrySlug = slugify(this.country, { lower: true, strict: true })
+  }
+  if (this.cityType === 'city' && normalizeKey(this.name) === normalizeKey(this.country)) {
+    this.cityType = 'country'
+  }
 })
 
 module.exports = mongoose.model('Destination', destinationSchema)
