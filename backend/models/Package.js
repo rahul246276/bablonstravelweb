@@ -574,12 +574,14 @@ packageSchema.pre('validate', function preparePackage() {
     this.gallery = this.images.filter((image) => image.type !== 'hero')
   }
 
-  if (!this.images?.length) {
-    const images = []
-    if (this.featuredImage?.url) images.push({ ...(this.featuredImage.toObject?.() || this.featuredImage), type: 'hero' })
-    this.gallery?.forEach((image) => images.push({ ...(image.toObject?.() || image), type: image.type || 'gallery' }))
-    this.images = images
-  }
+  const syncedImages = []
+  if (this.featuredImage?.url) syncedImages.push({ ...(this.featuredImage.toObject?.() || this.featuredImage), type: 'hero' })
+  this.gallery?.forEach((image) => {
+    if (image?.url && image.url !== this.featuredImage?.url) {
+      syncedImages.push({ ...(image.toObject?.() || image), type: 'gallery' })
+    }
+  })
+  if (syncedImages.length) this.images = syncedImages
 
   if (!this.groupInfo && this.groupSettings) {
     this.groupInfo = {
