@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { toast } from 'react-toastify'
 import { uploadService } from '../../services/uploadService'
 
-const ImageUploader = ({ onUploaded }) => {
+const ImageUploader = ({ onUploaded, buttonLabel = 'Upload' }) => {
   const [file, setFile] = useState(null)
   const [folder, setFolder] = useState('packages')
   const [alt, setAlt] = useState('')
@@ -47,15 +47,15 @@ const ImageUploader = ({ onUploaded }) => {
           <option value="testimonials">Testimonials</option>
           <option value="blogs">Blogs</option>
         </select>
-        <button onClick={upload} className="rounded-lg bg-orange-500 px-4 py-2 text-sm font-black text-white">Upload</button>
+        <button type="button" onClick={upload} className="rounded-lg bg-orange-500 px-4 py-2 text-sm font-black text-white">{buttonLabel}</button>
       </div>
       <input value={alt} onChange={(event) => setAlt(event.target.value)} placeholder="Alt text" className="mt-3 h-11 w-full rounded-lg border border-slate-200 px-3 text-sm" />
       {progress ? <div className="mt-3 h-2 rounded-full bg-slate-100"><div className="h-2 rounded-full bg-orange-500" style={{ width: `${progress}%` }} /></div> : null}
       {uploaded ? (
         <div className="mt-4 flex items-center gap-4">
           <img src={uploaded.url} alt={uploaded.alt} className="h-20 w-28 rounded-lg object-cover" />
-          <button onClick={() => navigator.clipboard.writeText(uploaded.url)} className="rounded-lg border border-slate-200 px-3 py-2 text-sm font-bold">Copy URL</button>
-          <button onClick={remove} className="rounded-lg border border-red-200 px-3 py-2 text-sm font-bold text-red-600">Delete</button>
+          <button type="button" onClick={() => navigator.clipboard.writeText(uploaded.url)} className="rounded-lg border border-slate-200 px-3 py-2 text-sm font-bold">Copy URL</button>
+          <button type="button" onClick={remove} className="rounded-lg border border-red-200 px-3 py-2 text-sm font-bold text-red-600">Delete</button>
         </div>
       ) : null}
     </div>

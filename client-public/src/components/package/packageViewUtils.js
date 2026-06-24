@@ -2,9 +2,11 @@ import { formatPrice } from '../common/PriceDisplay'
 
 export const getPackageImages = (travelPackage = {}) => {
   const images = []
-  if (travelPackage.featuredImage?.url) images.push(travelPackage.featuredImage)
-  if (travelPackage.images?.length) images.push(...travelPackage.images)
-  if (travelPackage.gallery?.length) images.push(...travelPackage.gallery)
+  const featuredFromImages = travelPackage.images?.find((image) => image.type === 'hero')
+  const featured = travelPackage.featuredImage?.url ? travelPackage.featuredImage : featuredFromImages
+  if (featured?.url) images.push({ ...featured, type: 'hero' })
+  if (travelPackage.gallery?.length) images.push(...travelPackage.gallery.map((image) => ({ ...image, type: image.type || 'gallery' })))
+  if (travelPackage.images?.length) images.push(...travelPackage.images.map((image) => ({ ...image, type: image.type || 'gallery' })))
 
   return images.filter((image, index, list) => image?.url && list.findIndex((item) => item.url === image.url) === index)
 }

@@ -55,6 +55,14 @@ const tabs = [
 const splitLines = (value) => String(value || '').split('\n').map((item) => item.trim()).filter(Boolean)
 const splitComma = (value) => String(value || '').split(',').map((item) => item.trim()).filter(Boolean)
 const toDateInput = (value) => (value ? new Date(value).toISOString().slice(0, 10) : '')
+const getApiErrorMessage = (error, fallback = 'Package save failed') => {
+  const response = error.response?.data
+  const firstError = response?.errors?.[0]
+
+  if (firstError?.path && firstError?.message) return `${firstError.path}: ${firstError.message}`
+  if (firstError?.message) return firstError.message
+  return response?.message || fallback
+}
 
 const normalizeForm = (item) => ({
   ...emptyForm,
@@ -121,6 +129,28 @@ const PackageFormPage = () => {
   const setArrayItem = (key, index, value) => setForm((current) => ({ ...current, [key]: current[key].map((item, itemIndex) => itemIndex === index ? { ...item, ...value } : item) }))
   const addArrayItem = (key, value) => setForm((current) => ({ ...current, [key]: [...current[key], value] }))
   const removeArrayItem = (key, index) => setForm((current) => ({ ...current, [key]: current[key].filter((_, itemIndex) => itemIndex !== index) }))
+  const addGalleryImage = (image) => setForm((current) => ({
+    ...current,
+    gallery: [...(current.gallery || []), { ...image, type: 'gallery' }],
+  }))
+  const setFeaturedImage = (image) => setForm((current) => ({
+    ...current,
+    featuredImage: { ...image, type: 'hero' },
+  }))
+  const makeGalleryImageFeatured = (index) => setForm((current) => {
+    const selected = current.gallery[index]
+    if (!selected) return current
+
+    const previousFeatured = current.featuredImage?.url ? { ...current.featuredImage, type: 'gallery' } : null
+    return {
+      ...current,
+      featuredImage: { ...selected, type: 'hero' },
+      gallery: [
+        ...current.gallery.filter((_, itemIndex) => itemIndex !== index),
+        ...(previousFeatured ? [previousFeatured] : []),
+      ],
+    }
+  })
 
   const buildPayload = (nextStatus = form.status) => {
     const featuredImage = form.featuredImage
@@ -195,9 +225,35 @@ const PackageFormPage = () => {
     return true
   }
 
+  const validatePayload = (payload) => {
+    const errors = []
+    const basePrice = Number(payload.pricing?.basePrice || 0)
+    const originalPrice = Number(payload.pricing?.originalPrice || 0)
+    const bookingAmount = Number(payload.pricing?.bookingAmount || 0)
+    const minTravelers = Number(payload.groupSettings?.minSize || payload.groupInfo?.minTravelers || 0)
+    const maxTravelers = Number(payload.groupSettings?.maxSize || payload.groupInfo?.maxTravelers || 0)
+
+    if (!payload.title?.trim()) errors.push({ tab: 'basic', label: 'title' })
+    if (!payload.country?.name?.trim()) errors.push({ tab: 'destination', label: 'country' })
+    if (!payload.packageType) errors.push({ tab: 'basic', label: 'package type' })
+    if (!Number(payload.duration?.days)) errors.push({ tab: 'destination', label: 'duration days' })
+    if (Number(payload.duration?.days || 0) < Number(payload.duration?.nights || 0)) errors.push({ tab: 'destination', label: 'days cannot be less than nights' })
+    if (!basePrice) errors.push({ tab: 'pricing', label: 'price per person' })
+    if (originalPrice && originalPrice < basePrice) errors.push({ tab: 'pricing', label: 'original price cannot be less than price per person' })
+    if (bookingAmount && bookingAmount > basePrice) errors.push({ tab: 'pricing', label: 'booking advance cannot exceed price per person' })
+    if (minTravelers && maxTravelers && minTravelers > maxTravelers) errors.push({ tab: 'group', label: 'minimum travelers cannot exceed maximum travelers' })
+
+    if (!errors.length) return true
+
+    setTab(errors[0].tab)
+    toast.error(`Please check ${errors[0].label}`)
+    return false
+  }
+
   const submit = async (event, nextStatus = form.status) => {
     event?.preventDefault()
     const payload = buildPayload(nextStatus)
+    if (!validatePayload(payload)) return
     if (!validatePublish(payload)) return
     setSaving(true)
     try {
@@ -205,7 +261,7 @@ const PackageFormPage = () => {
       toast.success(nextStatus === 'published' ? 'Package published' : 'Package saved')
       navigate(`/admin/packages/${saved._id}`)
     } catch (error) {
-      toast.error(error.response?.data?.message || 'Package save failed')
+      toast.error(getApiErrorMessage(error))
     } finally {
       setSaving(false)
     }
@@ -274,16 +330,55 @@ const PackageFormPage = () => {
 
         {tab === 'images' ? (
           <div className="space-y-5">
-            <ImageUploader onUploaded={(image) => form.featuredImage ? set('gallery', [...form.gallery, image]) : set('featuredImage', image)} />
-            <div>
-              <h2 className="font-black text-slate-950">Featured Image</h2>
-              {form.featuredImage?.url ? <img src={form.featuredImage.url} alt="" className="mt-3 h-40 w-64 rounded-lg object-cover" /> : <p className="mt-2 text-sm text-slate-500">Upload an image to set the featured image.</p>}
-            </div>
-            <div>
-              <h2 className="font-black text-slate-950">Gallery</h2>
-              <div className="mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-                {form.gallery.map((image, index) => <div key={image.url} className="rounded-lg border p-2"><img src={image.url} alt="" className="h-28 w-full rounded object-cover" /><button type="button" onClick={() => removeArrayItem('gallery', index)} className="mt-2 text-xs font-black text-red-600">Remove</button></div>)}
+            <div className="grid gap-5 xl:grid-cols-2">
+              <div className="rounded-xl border border-slate-200 bg-slate-50 p-4">
+                <h2 className="font-black text-slate-950">Featured / Hero Image</h2>
+                <p className="mt-1 text-sm text-slate-500">This image appears first in the single package hero section.</p>
+                <div className="mt-4">
+                  <ImageUploader onUploaded={setFeaturedImage} buttonLabel={form.featuredImage?.url ? 'Replace Featured Image' : 'Upload Featured Image'} />
+                </div>
               </div>
+              <div className="rounded-xl border border-slate-200 bg-slate-50 p-4">
+                <h2 className="font-black text-slate-950">Gallery Images</h2>
+                <p className="mt-1 text-sm text-slate-500">Upload multiple other images. These show in package thumbnails, hero selector, and gallery.</p>
+                <div className="mt-4">
+                  <ImageUploader onUploaded={addGalleryImage} buttonLabel="Add Gallery Image" />
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <h2 className="font-black text-slate-950">Current Featured Image</h2>
+              {form.featuredImage?.url ? (
+                <div className="mt-3 max-w-md rounded-xl border border-orange-200 bg-orange-50 p-3">
+                  <img src={form.featuredImage.url} alt={form.featuredImage.alt || ''} className="h-52 w-full rounded-lg object-cover" />
+                  <div className="mt-3 flex flex-wrap gap-2">
+                    <button type="button" onClick={() => set('featuredImage', null)} className="rounded-lg border border-red-200 bg-white px-3 py-2 text-xs font-black text-red-600">Remove Featured</button>
+                    {form.featuredImage.alt ? <span className="rounded-lg bg-white px-3 py-2 text-xs font-bold text-slate-500">{form.featuredImage.alt}</span> : null}
+                  </div>
+                </div>
+              ) : <p className="mt-2 text-sm text-slate-500">No featured image selected yet.</p>}
+            </div>
+
+            <div>
+              <div className="flex flex-wrap items-end justify-between gap-3">
+                <div>
+                  <h2 className="font-black text-slate-950">Package Gallery</h2>
+                  <p className="text-sm text-slate-500">{form.gallery.length} image{form.gallery.length === 1 ? '' : 's'} added.</p>
+                </div>
+              </div>
+              <div className="mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+                {form.gallery.map((image, index) => (
+                  <div key={`${image.url}-${index}`} className="rounded-xl border border-slate-200 bg-white p-2 shadow-sm">
+                    <img src={image.url} alt={image.alt || ''} className="h-32 w-full rounded-lg object-cover" />
+                    <div className="mt-2 flex flex-wrap gap-2">
+                      <button type="button" onClick={() => makeGalleryImageFeatured(index)} className="rounded-lg bg-slate-900 px-3 py-2 text-xs font-black text-white">Set Featured</button>
+                      <button type="button" onClick={() => removeArrayItem('gallery', index)} className="rounded-lg border border-red-200 px-3 py-2 text-xs font-black text-red-600">Remove</button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              {!form.gallery.length ? <p className="mt-3 rounded-lg border border-dashed border-slate-300 p-4 text-center text-sm text-slate-500">No gallery images yet. Use “Add Gallery Image” above.</p> : null}
             </div>
           </div>
         ) : null}
