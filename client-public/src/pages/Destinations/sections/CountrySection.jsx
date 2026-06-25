@@ -14,11 +14,16 @@ const CountrySection = ({ name, tagline, heroImage, cities, countrySlug, isFirst
 
   return (
     <section id={countrySlug} className={isFirst ? 'pt-2' : 'pt-14 lg:pt-20'}>
-      <div className="grid grid-cols-1 gap-6 lg:grid-cols-[280px_1fr] lg:gap-8">
-        <div className="relative hidden min-h-[360px] overflow-hidden rounded-3xl lg:block">
-          <img src={heroImage.src} alt={heroImage.alt} className="h-full w-full object-cover" loading="lazy" />
-          <div className="absolute inset-0 bg-gradient-to-t from-dark-900/85 via-dark-900/15 to-transparent" />
-          <div className="absolute inset-x-0 bottom-0 p-6">
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-[360px_1fr] lg:gap-9 xl:grid-cols-[410px_1fr]">
+        <div className="relative hidden min-h-[460px] overflow-hidden rounded-3xl border border-white bg-dark-900 shadow-[0_30px_90px_rgba(16,39,36,0.18)] ring-1 ring-sand-200/80 lg:block">
+          <img src={heroImage.src} alt={heroImage.alt} className="h-full w-full object-cover transition duration-700 hover:scale-105" loading="lazy" />
+          <div className="absolute inset-0 bg-gradient-to-t from-dark-900/88 via-dark-900/20 to-transparent" />
+          <div className="absolute inset-x-5 top-5 flex justify-between">
+            <span className="rounded-full bg-white/90 px-4 py-2 text-xs font-extrabold uppercase tracking-[0.12em] text-primary-900 shadow-lg backdrop-blur">
+              Country
+            </span>
+          </div>
+          <div className="absolute inset-x-0 bottom-0 p-7">
             <h2 className="font-display text-2xl font-bold leading-tight text-white">{name}</h2>
             <p className="mt-2 text-sm leading-6 text-white/75">{tagline}</p>
           </div>
