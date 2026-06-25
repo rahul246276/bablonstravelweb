@@ -8,6 +8,8 @@ import Gallery from './sections/Gallery'
 import RelatedPackages from './sections/RelatedPackages'
 import TravelTips from './sections/TravelTips'
 import { destinationService } from '../../services/destinationService'
+import ContactCTA from '../Home/sections/ContactCTASection'
+
 
 const normalizeImage = (image, fallbackAlt) => ({
   src: image?.src || image?.url || '',
@@ -138,6 +140,7 @@ const DestinationDetailsPage = () => {
       <Gallery gallery={details.gallery} fallbackImage={city.image} cityName={city.name} />
       <TravelTips travelTips={country.travelTips} countryName={country.name} />
       <RelatedPackages cityName={city.name} />
+      <ContactCTA />
     </div>
   )
 }

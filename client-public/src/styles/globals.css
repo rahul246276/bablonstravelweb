@@ -224,10 +224,10 @@
 
 @keyframes testimonialSlide {
   from {
-    transform: translateX(0);
+    transform: translateX(calc(-50% - 0.625rem));
   }
   to {
-    transform: translateX(calc(-50% - 0.625rem));
+    transform: translateX(0);
   }
 }
 

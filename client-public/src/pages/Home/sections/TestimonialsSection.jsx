@@ -27,6 +27,30 @@ const testimonials = [
     initials: 'MG',
     accent: 'from-secondary-700 to-accent-500',
   },
+  {
+    name: 'Rohit Mehra',
+    role: 'Honeymoon trip',
+    destination: 'Dubai',
+    content: 'The team planned a beautiful honeymoon with smooth transfers, great hotel suggestions, and enough free time for us.',
+    initials: 'RM',
+    accent: 'from-accent-600 to-secondary-500',
+  },
+  {
+    name: 'Priya Kapoor',
+    role: 'Group tour',
+    destination: 'Thailand',
+    content: 'Our group had different needs, but Bablons handled the timing, meals, sightseeing, and coordination very professionally.',
+    initials: 'PK',
+    accent: 'from-emerald-700 to-primary-500',
+  },
+  {
+    name: 'Daniel Wilson',
+    role: 'Custom itinerary',
+    destination: 'Uzbekistan',
+    content: 'They listened carefully and created a route that felt personal, comfortable, and full of memorable local experiences.',
+    initials: 'DW',
+    accent: 'from-sky-700 to-primary-600',
+  },
 ]
 
 const StarRow = ({ label = '5 out of 5 stars' }) => (
@@ -38,16 +62,18 @@ const StarRow = ({ label = '5 out of 5 stars' }) => (
 )
 
 const TestimonialsSection = () => {
+  const floatingTestimonials = [...testimonials, ...testimonials]
+
   return (
     <section className="section-shell relative overflow-hidden bg-dark-900 text-white">
       <img
         src={testimonialBg}
         alt=""
-        className="absolute inset-0 h-full w-full object-cover opacity-35"
+        className="absolute inset-0 h-full w-full object-cover opacity-55"
         aria-hidden="true"
       />
-      <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(1,42,35,0.94)_0%,rgba(1,42,35,0.84)_45%,rgba(1,42,35,0.62)_100%)]" />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_20%,rgba(244,159,54,0.18),transparent_32%),radial-gradient(circle_at_88%_70%,rgba(255,255,255,0.12),transparent_28%)]" />
+      <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(1,42,35,0.82)_0%,rgba(1,42,35,0.68)_45%,rgba(1,42,35,0.44)_100%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_20%,rgba(244,159,54,0.12),transparent_32%),radial-gradient(circle_at_88%_70%,rgba(255,255,255,0.08),transparent_28%)]" />
 
       <div className="section-container relative">
         <div className="section-header grid gap-8 lg:grid-cols-[1fr_420px] lg:items-end">
@@ -88,11 +114,12 @@ const TestimonialsSection = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-          {testimonials.map((testimonial) => (
+        <div className="testimonial-slider-row -mx-4 overflow-hidden px-4">
+          <div className="testimonial-slider-track flex gap-5 py-4">
+          {floatingTestimonials.map((testimonial, index) => (
             <article
-              key={testimonial.name}
-              className="group relative flex min-h-[320px] flex-col overflow-hidden rounded-[1.75rem] border border-white/16 bg-white/[0.11] p-6 shadow-[0_20px_65px_rgba(0,0,0,0.2)] backdrop-blur-md transition duration-500 hover:-translate-y-1 hover:border-accent-300/55 hover:bg-white/[0.15] lg:p-7"
+              key={`${testimonial.name}-${index}`}
+              className="testimonial-slider-card group relative flex min-h-[330px] flex-col overflow-hidden rounded-[1.75rem] border border-white/18 bg-white/[0.13] p-6 shadow-[0_20px_65px_rgba(0,0,0,0.22)] backdrop-blur-md transition duration-500 hover:-translate-y-2 hover:border-accent-300/60 hover:bg-white/[0.17] lg:p-7"
             >
               <div className={`absolute left-0 top-0 h-1.5 w-full bg-gradient-to-r ${testimonial.accent}`} />
               <div className="flex items-center justify-between gap-4">
@@ -115,6 +142,7 @@ const TestimonialsSection = () => {
               </div>
             </article>
           ))}
+          </div>
         </div>
       </div>
     </section>

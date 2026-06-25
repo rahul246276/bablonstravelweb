@@ -7,6 +7,8 @@ import ErrorState from '../../components/common/ErrorState'
 import LoadingSkeleton from '../../components/common/LoadingSkeleton'
 import { packageService } from '../../services/packageService'
 import packageHeroBg from '../../assets/images/Hero Section Bg 5.jpg'
+import ContactCTA from '../Home/sections/ContactCTASection'
+
 
 const PackagesListPage = () => {
   const [filters, setFilters] = useState({ destination: '', travelStyle: '', budget: '', duration: '', departureDate: '' })
@@ -153,6 +155,7 @@ const PackagesListPage = () => {
           </div>
         </section>
       </section>
+      <ContactCTA />
     </div>
   )
 }
