@@ -7,6 +7,7 @@ import DestinationDetailsPage from '../../pages/Destinations/DestinationDetailsP
 import PackagesListPage from '../../pages/Packages/PackagesListPage'
 import PackageDetailsPage from '../../pages/Packages/PackageDetailsPage'
 import BlogsListPage from '../../pages/Blogs/BlogsListPage'
+import BlogDetailsPage from '../../pages/Blogs/BlogDetailsPage'
 import GalleryPage from '../../pages/Gallery/GalleryPage'
 import AboutPage from '../../pages/About/AboutPage'
 import ContactPage from '../../pages/Contact/ContactPage'
@@ -40,7 +41,7 @@ const AppRouter = () => {
           {/* Placeholder routes - will be implemented */}
           <Route path={ROUTES.DESTINATION_DETAILS} element={<DestinationDetailsPage />} />
           <Route path={ROUTES.PACKAGE_DETAILS} element={<PackageDetailsPage />} />
-          <Route path={ROUTES.BLOG_DETAILS} element={<div className="min-h-screen flex items-center justify-center">Blog Details - Coming Soon</div>} />
+          <Route path={ROUTES.BLOG_DETAILS} element={<BlogDetailsPage />} />
           <Route path={ROUTES.GALLERY_DESTINATION} element={<div className="min-h-screen flex items-center justify-center">Destination Gallery - Coming Soon</div>} />
           <Route path="*" element={<NotFoundPage />} />
         </Route>
