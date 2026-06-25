@@ -1,7 +1,8 @@
 import { FaWhatsapp } from 'react-icons/fa6'
+import { COMPANY_CONTACT } from '../../constants/companyContact'
 
 const getWhatsAppUrl = ({ phone, message }) => {
-  const number = String(phone || import.meta.env.VITE_COMPANY_WHATSAPP || '919999999999').replace(/\D/g, '')
+  const number = String(phone || import.meta.env.VITE_COMPANY_WHATSAPP || COMPANY_CONTACT.whatsappNumber).replace(/\D/g, '')
   return `https://wa.me/${number}?text=${encodeURIComponent(message || 'Hi Bablons Travel, I want to know more about this package.')}`
 }
 
@@ -16,5 +17,4 @@ const WhatsAppButton = ({ phone, message, children = 'WhatsApp', className = '' 
   </a>
 )
 
-export { getWhatsAppUrl }
 export default WhatsAppButton

@@ -11,7 +11,6 @@ import {
   FaGlobeAsia,
   FaHome,
   FaInstagram,
-  FaLinkedinIn,
   FaMapMarkerAlt,
   FaMonument,
   FaMountain,
@@ -24,18 +23,31 @@ import {
   FaUserFriends,
   FaWhatsapp,
   FaYoutube,
+  FaPinterestP,
+  FaTwitter,
   FaHeadset,
   FaPlaneDeparture,
   FaUmbrellaBeach,
 } from 'react-icons/fa'
 
 import { ROUTES } from '../../constants/routes'
+import { COMPANY_CONTACT, COMPANY_SOCIALS } from '../../constants/companyContact'
 import bablonsLogo from '../../assets/logos/Bablons Logo.png'
 
-const CONTACT_EMAIL = 'info@bablonstravelent.com'
-const CONTACT_PHONE = '+91 9810212399'
-const CONTACT_PHONE_HREF = 'tel:+919810212399'
-const CONTACT_ADDRESS = 'Available Worldwide'
+const CONTACT_EMAIL = COMPANY_CONTACT.email
+const CONTACT_PHONE = COMPANY_CONTACT.phone
+const CONTACT_PHONE_HREF = COMPANY_CONTACT.phoneHref
+const CONTACT_ADDRESS = COMPANY_CONTACT.address
+const WHATSAPP_URL = COMPANY_CONTACT.whatsappUrl
+
+const socialLinks = [
+  { name: 'Facebook', icon: FaFacebookF, url: COMPANY_SOCIALS.facebook },
+  { name: 'Instagram', icon: FaInstagram, url: COMPANY_SOCIALS.instagram },
+  { name: 'X', icon: FaTwitter, url: COMPANY_SOCIALS.x },
+  { name: 'Pinterest', icon: FaPinterestP, url: COMPANY_SOCIALS.pinterest },
+  { name: 'WhatsApp', icon: FaWhatsapp, url: WHATSAPP_URL },
+  { name: 'YouTube', icon: FaYoutube, url: COMPANY_SOCIALS.youtube },
+]
 
 const navLinks = [
   { name: 'Home', path: ROUTES.HOME, icon: FaHome },
@@ -173,11 +185,14 @@ const Navbar = () => {
 
             <div className="flex shrink-0 items-center gap-4">
               <span className="font-semibold text-dark-800">Follow Us:</span>
-              <a href="https://facebook.com" aria-label="Facebook" className="text-dark-900 transition hover:text-secondary-600"><FaFacebookF className="h-4 w-4" /></a>
-              <a href="https://instagram.com" aria-label="Instagram" className="text-dark-900 transition hover:text-secondary-600"><FaInstagram className="h-4 w-4" /></a>
-              <a href="https://linkedin.com" aria-label="LinkedIn" className="text-dark-900 transition hover:text-secondary-600"><FaLinkedinIn className="h-4 w-4" /></a>
-              <a href="https://whatsapp.com" aria-label="WhatsApp" className="text-dark-900 transition hover:text-secondary-600"><FaWhatsapp className="h-4 w-4" /></a>
-              <a href="https://youtube.com" aria-label="YouTube" className="text-dark-900 transition hover:text-secondary-600"><FaYoutube className="h-4 w-4" /></a>
+              {socialLinks.map((link) => {
+                const Icon = link.icon
+                return (
+                  <a key={link.name} href={link.url} target="_blank" rel="noreferrer" aria-label={link.name} className="text-dark-900 transition hover:text-secondary-600">
+                    <Icon className="h-4 w-4" />
+                  </a>
+                )
+              })}
             </div>
           </div>
         </div>
@@ -364,10 +379,14 @@ const Navbar = () => {
               </div>
 
               <div className="mt-5 flex items-center gap-2">
-                <a href="https://facebook.com" aria-label="Facebook" className="flex h-9 w-9 items-center justify-center rounded-full border border-white/12 bg-white/8 text-white transition hover:bg-white hover:text-primary-950"><FaFacebookF className="h-3.5 w-3.5" /></a>
-                <a href="https://instagram.com" aria-label="Instagram" className="flex h-9 w-9 items-center justify-center rounded-full border border-white/12 bg-white/8 text-white transition hover:bg-white hover:text-primary-950"><FaInstagram className="h-3.5 w-3.5" /></a>
-                <a href="https://linkedin.com" aria-label="LinkedIn" className="flex h-9 w-9 items-center justify-center rounded-full border border-white/12 bg-white/8 text-white transition hover:bg-white hover:text-primary-950"><FaLinkedinIn className="h-3.5 w-3.5" /></a>
-                <a href="https://whatsapp.com" aria-label="WhatsApp" className="flex h-9 w-9 items-center justify-center rounded-full border border-white/12 bg-white/8 text-white transition hover:bg-white hover:text-primary-950"><FaWhatsapp className="h-3.5 w-3.5" /></a>
+                {socialLinks.slice(0, 5).map((link) => {
+                  const Icon = link.icon
+                  return (
+                    <a key={link.name} href={link.url} target="_blank" rel="noreferrer" aria-label={link.name} className="flex h-9 w-9 items-center justify-center rounded-full border border-white/12 bg-white/8 text-white transition hover:bg-white hover:text-primary-950">
+                      <Icon className="h-3.5 w-3.5" />
+                    </a>
+                  )
+                })}
               </div>
             </div>
 

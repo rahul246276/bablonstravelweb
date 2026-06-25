@@ -20,6 +20,8 @@ import {
   FaWhatsapp,
 } from 'react-icons/fa'
 import ctaBg from '../../../assets/images/Hero Section Bg 5.jpg'
+import { COMPANY_CONTACT } from '../../../constants/companyContact'
+import { contactService } from '../../../services/contactService'
 
 const stats = [
   {
@@ -110,17 +112,46 @@ const initialForm = {
 const ContactCTASection = () => {
   const [formData, setFormData] = useState(initialForm)
   const [submitted, setSubmitted] = useState(false)
+  const [submitting, setSubmitting] = useState(false)
+  const [error, setError] = useState('')
 
   const handleChange = (event) => {
     const { name, value } = event.target
     setFormData((current) => ({ ...current, [name]: value }))
     setSubmitted(false)
+    setError('')
   }
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault()
-    setSubmitted(true)
-    setFormData(initialForm)
+
+    const message = [
+      `Destination: ${formData.destination}`,
+      `Travel month: ${formData.month}`,
+      `Budget: ${formData.budget}`,
+      'Lead source: Home page free travel plan CTA',
+    ].join('\n')
+
+    try {
+      setSubmitting(true)
+      setError('')
+      await contactService.create({
+        fullName: formData.name,
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        subject: 'Free Travel Plan Request',
+        destination: formData.destination,
+        message,
+      })
+      setSubmitted(true)
+      setFormData(initialForm)
+    } catch (err) {
+      setSubmitted(false)
+      setError(err.response?.data?.message || 'Unable to send your request right now. Please call or WhatsApp us.')
+    } finally {
+      setSubmitting(false)
+    }
   }
 
   return (
@@ -164,7 +195,7 @@ const ContactCTASection = () => {
                 Plan My Trip
               </a>
               <a
-                href="https://whatsapp.com"
+                href={COMPANY_CONTACT.whatsappUrl}
                 target="_blank"
                 rel="noreferrer"
                 className="inline-flex min-h-14 items-center justify-center gap-3 rounded-lg border border-white/24 bg-dark-900/35 px-7 text-base font-extrabold uppercase tracking-wide text-white backdrop-blur transition hover:-translate-y-0.5 hover:border-accent-300/70 hover:bg-white/10"
@@ -288,15 +319,22 @@ const ContactCTASection = () => {
 
             <button
               type="submit"
+              disabled={submitting}
               className="mt-5 inline-flex h-14 w-full items-center justify-center gap-3 rounded-lg bg-gradient-to-r from-accent-500 to-secondary-400 px-5 text-sm font-extrabold uppercase tracking-wide text-white shadow-[0_18px_45px_rgba(187,132,44,0.28)] transition hover:-translate-y-0.5 hover:from-accent-400 hover:to-secondary-300"
             >
-              Get My Free Itinerary
+              {submitting ? 'Sending Request...' : 'Get My Free Itinerary'}
               <FaArrowRight />
             </button>
 
             {submitted ? (
               <p className="mt-4 rounded-lg border border-accent-300/25 bg-accent-300/10 px-4 py-3 text-center text-sm text-accent-100">
                 Thanks. Our travel expert will contact you shortly.
+              </p>
+            ) : null}
+
+            {error ? (
+              <p className="mt-4 rounded-lg border border-red-300/25 bg-red-500/10 px-4 py-3 text-center text-sm text-red-100">
+                {error}
               </p>
             ) : null}
 

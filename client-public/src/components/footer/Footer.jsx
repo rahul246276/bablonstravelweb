@@ -8,18 +8,20 @@ import {
   FaHeadset,
   FaHotel,
   FaInstagram,
-  FaLinkedinIn,
   FaMapMarkerAlt,
   FaPhoneAlt,
+  FaPinterestP,
   FaPlane,
   FaShieldAlt,
   FaTags,
+  FaTwitter,
   FaUsers,
   FaWhatsapp,
   FaYoutube,
 } from 'react-icons/fa'
 import { MdEmail } from 'react-icons/md'
 import { ROUTES } from '../../constants/routes'
+import { COMPANY_CONTACT, COMPANY_SOCIALS } from '../../constants/companyContact'
 import bablonsLogo from '../../assets/logos/Bablons Logo.png'
 import footerBg from '../../assets/images/Hero Section Bg 5.jpg'
 
@@ -62,11 +64,12 @@ const services = [
 ]
 
 const socialLinks = [
-  { name: 'Facebook', icon: FaFacebookF, url: 'https://facebook.com' },
-  { name: 'Instagram', icon: FaInstagram, url: 'https://instagram.com' },
-  { name: 'LinkedIn', icon: FaLinkedinIn, url: 'https://linkedin.com' },
-  { name: 'WhatsApp', icon: FaWhatsapp, url: 'https://whatsapp.com' },
-  { name: 'YouTube', icon: FaYoutube, url: 'https://youtube.com' },
+  { name: 'Facebook', icon: FaFacebookF, url: COMPANY_SOCIALS.facebook },
+  { name: 'Instagram', icon: FaInstagram, url: COMPANY_SOCIALS.instagram },
+  { name: 'X', icon: FaTwitter, url: COMPANY_SOCIALS.x },
+  { name: 'Pinterest', icon: FaPinterestP, url: COMPANY_SOCIALS.pinterest },
+  { name: 'WhatsApp', icon: FaWhatsapp, url: COMPANY_CONTACT.whatsappUrl },
+  { name: 'YouTube', icon: FaYoutube, url: COMPANY_SOCIALS.youtube },
 ]
 
 const trustItems = [
@@ -77,10 +80,10 @@ const trustItems = [
 ]
 
 const contactItems = [
-  { icon: FaPhoneAlt, label: '+91 98102 12399' },
-  { icon: MdEmail, label: 'info@bablonstravelent.com' },
-  { icon: FaMapMarkerAlt, label: 'Available Worldwide' },
-  { icon: FaClock, label: 'Mon - Sat : 10 AM - 7 PM' },
+  { icon: FaPhoneAlt, label: COMPANY_CONTACT.phoneDisplay, href: COMPANY_CONTACT.phoneHref },
+  { icon: MdEmail, label: COMPANY_CONTACT.email, href: COMPANY_CONTACT.emailHref },
+  { icon: FaMapMarkerAlt, label: COMPANY_CONTACT.address },
+  { icon: FaClock, label: COMPANY_CONTACT.hours },
 ]
 
 const Footer = () => {
@@ -113,7 +116,7 @@ const Footer = () => {
               Plan My Holiday
               <FaArrowRight />
             </Link>
-            <a href="tel:+919810212399" className="inline-flex h-14 items-center justify-center gap-3 rounded-full border border-primary-900/20 bg-white/80 px-7 text-sm font-extrabold text-primary-900 shadow-sm transition hover:bg-primary-900 hover:text-white">
+            <a href={COMPANY_CONTACT.phoneHref} className="inline-flex h-14 items-center justify-center gap-3 rounded-full border border-primary-900/20 bg-white/80 px-7 text-sm font-extrabold text-primary-900 shadow-sm transition hover:bg-primary-900 hover:text-white">
               <FaPhoneAlt />
               Talk to an Expert
             </a>
@@ -201,7 +204,7 @@ const Footer = () => {
                     <span className="flex h-9 w-9 items-center justify-center rounded-full bg-secondary-50 text-secondary-600">
                       <Icon className="h-4 w-4" />
                     </span>
-                    {item.label}
+                    {item.href ? <a href={item.href} className="transition hover:text-secondary-600">{item.label}</a> : item.label}
                   </li>
                 )
               })}

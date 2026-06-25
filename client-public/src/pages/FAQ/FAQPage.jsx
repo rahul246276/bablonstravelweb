@@ -9,6 +9,7 @@ import {
   FiSearch,
   FiShield,
 } from 'react-icons/fi'
+import { COMPANY_CONTACT } from '../../constants/companyContact'
 
 const faqs = [
   {
@@ -366,7 +367,7 @@ const FAQPage = () => {
             </a>
 
             <a
-              href="tel:+919999999999"
+              href={COMPANY_CONTACT.phoneHref}
               className="inline-flex items-center justify-center gap-2 rounded-full border border-white/25 px-6 py-3.5 text-sm font-bold text-white transition hover:border-[#f4c15d] hover:text-[#f4c15d]"
             >
               <FiPhone />

@@ -4,18 +4,19 @@ import GoogleMap from './sections/GoogleMap'
 import OfficeInfo from './sections/OfficeInfo'
 import SocialLinks from './sections/SocialLinks'
 import WhatsappSection from './sections/WhatsappSection'
+import { COMPANY_CONTACT } from '../../constants/companyContact'
 
 const contactDetails = {
   company: 'Bablons Tours & Entertainments',
-  phone: '+91 98102 12399',
-  phoneHref: 'tel:+919810212399',
-  email: 'info@bablonstravelent.com',
-  emailHref: 'mailto:info@bablonstravelent.com',
+  phone: COMPANY_CONTACT.phoneDisplay,
+  phoneHref: COMPANY_CONTACT.phoneHref,
+  email: COMPANY_CONTACT.email,
+  emailHref: COMPANY_CONTACT.emailHref,
   address: '28.6292858, 77.0755844',
   mapUrl: 'https://www.google.com/maps/place/28%C2%B037%2745.4%22N+77%C2%B004%2732.1%22E/@28.6292858,77.0730095,17z/data=!3m1!4b1!4m4!3m3!8m2!3d28.6292858!4d77.0755844?hl=en&entry=ttu',
   mapEmbedUrl: 'https://www.google.com/maps?q=28.6292858,77.0755844&z=17&output=embed',
-  hours: 'Mon - Sat : 10 AM - 7 PM',
-  whatsappUrl: 'https://whatsapp.com',
+  hours: COMPANY_CONTACT.hours,
+  whatsappUrl: COMPANY_CONTACT.whatsappUrl,
 }
 
 const ContactPage = () => {

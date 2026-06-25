@@ -1,11 +1,13 @@
-import { FaCertificate, FaFacebookF, FaInstagram, FaStar, FaTripadvisor, FaLinkedin, FaYoutube, FaUsers} from 'react-icons/fa'
+import { FaCertificate, FaFacebookF, FaInstagram, FaPinterestP, FaStar, FaTwitter, FaYoutube, FaUsers, FaWhatsapp } from 'react-icons/fa'
+import { COMPANY_CONTACT, COMPANY_SOCIALS } from '../../../constants/companyContact'
 
 const socialLinks = [
-  { name: 'Facebook', icon: FaFacebookF, url: 'https://facebook.com', color: 'bg-blue-600' },
-  { name: 'Instagram', icon: FaInstagram, url: 'https://instagram.com', color: 'bg-pink-600' },
-  { name: 'YouTube', icon: FaYoutube, url: 'https://youtube.com', color: 'bg-red-600' },
-  { name: 'Tripadvisor', icon: FaTripadvisor, url: 'https://tripadvisor.com', color: 'bg-emerald-600' },
-  { name: 'LinkedIn', icon: FaLinkedin, url: 'https://linkedin.com', color: 'bg-blue-700' }
+  { name: 'Facebook', icon: FaFacebookF, url: COMPANY_SOCIALS.facebook, color: 'bg-blue-600' },
+  { name: 'Instagram', icon: FaInstagram, url: COMPANY_SOCIALS.instagram, color: 'bg-pink-600' },
+  { name: 'X', icon: FaTwitter, url: COMPANY_SOCIALS.x, color: 'bg-slate-950' },
+  { name: 'Pinterest', icon: FaPinterestP, url: COMPANY_SOCIALS.pinterest, color: 'bg-red-700' },
+  { name: 'YouTube', icon: FaYoutube, url: COMPANY_SOCIALS.youtube, color: 'bg-red-600' },
+  { name: 'WhatsApp', icon: FaWhatsapp, url: COMPANY_CONTACT.whatsappUrl, color: 'bg-emerald-600' },
 ]
 
 const SocialLinks = () => {

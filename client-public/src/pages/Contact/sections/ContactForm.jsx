@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { FaArrowRight, FaCalendarAlt, FaChevronDown, FaLock, FaPaperPlane } from 'react-icons/fa'
+import { contactService } from '../../../services/contactService'
 
 const initialForm = {
   name: '',
@@ -17,17 +18,40 @@ const destinations = ['Dubai', 'Bali', 'Thailand', 'Singapore', 'Europe', 'Maldi
 const ContactForm = () => {
   const [formData, setFormData] = useState(initialForm)
   const [submitted, setSubmitted] = useState(false)
+  const [submitting, setSubmitting] = useState(false)
+  const [error, setError] = useState('')
 
   const handleChange = (event) => {
     const { name, value } = event.target
     setFormData((current) => ({ ...current, [name]: value }))
     setSubmitted(false)
+    setError('')
   }
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault()
-    setSubmitted(true)
-    setFormData(initialForm)
+
+    try {
+      setSubmitting(true)
+      setError('')
+      await contactService.create({
+        fullName: formData.name,
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        subject: formData.subject,
+        destination: formData.destination,
+        travelDate: formData.travelDate || null,
+        message: formData.message,
+      })
+      setSubmitted(true)
+      setFormData(initialForm)
+    } catch (err) {
+      setSubmitted(false)
+      setError(err.response?.data?.message || 'Unable to send your message right now. Please call or WhatsApp us.')
+    } finally {
+      setSubmitting(false)
+    }
   }
 
   const inputClass = 'h-12 w-full rounded-lg border border-white/22 bg-transparent px-4 text-sm text-white outline-none transition placeholder:text-white/52 focus:border-accent-300 focus:bg-white/5'
@@ -143,15 +167,22 @@ const ContactForm = () => {
 
       <button
         type="submit"
+        disabled={submitting}
         className="mt-5 inline-flex h-14 w-full items-center justify-center gap-3 rounded-lg bg-gradient-to-r from-accent-500 to-secondary-500 px-6 text-base font-extrabold text-white shadow-[0_18px_45px_rgba(187,132,44,0.24)] transition hover:-translate-y-0.5 hover:from-accent-400 hover:to-secondary-400"
       >
-        Send Message
+        {submitting ? 'Sending...' : 'Send Message'}
         <FaPaperPlane className="h-4 w-4" />
       </button>
 
       {submitted ? (
         <p className="mt-4 rounded-lg border border-accent-300/25 bg-accent-300/10 px-4 py-3 text-center text-sm text-accent-100">
           Thank you. Our travel expert will get back to you shortly.
+        </p>
+      ) : null}
+
+      {error ? (
+        <p className="mt-4 rounded-lg border border-red-300/25 bg-red-500/10 px-4 py-3 text-center text-sm text-red-100">
+          {error}
         </p>
       ) : null}
 
