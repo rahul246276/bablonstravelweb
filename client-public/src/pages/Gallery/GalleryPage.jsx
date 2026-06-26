@@ -1,5 +1,17 @@
 import { Link } from 'react-router-dom'
-import { FaCameraRetro, FaMapMarkerAlt, FaPlaneDeparture, FaRegImages, FaWhatsapp } from 'react-icons/fa'
+import {
+  FaAward,
+  FaCameraRetro,
+  FaCloudUploadAlt,
+  FaGlobeAsia,
+  FaHeart,
+  FaImage,
+  FaMapMarkerAlt,
+  FaPaperPlane,
+  FaPlaneDeparture,
+  FaRegHeart,
+  FaRegImages,
+} from 'react-icons/fa'
 import galleryHeroBg from '../../assets/images/Bablons Tour Bg 2.png'
 import { ROUTES } from '../../constants/routes'
 
@@ -36,59 +48,136 @@ const photos = [
   },
 ]
 
+const heroStats = [
+  { icon: FaGlobeAsia, value: '06+', label: 'Destinations', note: 'Handpicked wonders' },
+  { icon: FaRegImages, value: '250+', label: 'Premium photos', note: 'High quality gallery' },
+  { icon: FaAward, value: '100%', label: 'Authentic moments', note: 'Captured with passion' },
+]
+
+const heroFeatures = [
+  { icon: FaCameraRetro, title: 'Premium Quality', text: 'Images' },
+  { icon: FaAward, title: 'Curated by', text: 'Travel Experts' },
+  { icon: FaCloudUploadAlt, title: 'New Galleries', text: 'Added Regularly' },
+  { icon: FaHeart, title: 'Save Your', text: 'Favorite Moments' },
+  { icon: FaPaperPlane, title: 'Share & Inspire', text: 'Fellow Travelers' },
+]
+
+const heroPolaroids = [
+  { title: 'Natural Beauty', image: photos[1].image, rotate: '-rotate-6', offset: 'lg:translate-y-8' },
+  { title: 'Timeless Cultures', image: photos[0].image, rotate: 'rotate-2', offset: 'lg:-translate-y-2' },
+  { title: 'Dreamy Escapes', image: photos[4].image, rotate: 'rotate-6', offset: 'lg:translate-y-10' },
+]
+
 const GalleryPage = () => {
   return (
     <div className="overflow-hidden bg-[#FAF8F4] text-dark-900">
-      <section className="relative isolate min-h-[560px] overflow-hidden bg-dark-900 text-white">
+      <section className="relative isolate overflow-hidden bg-dark-900 text-white">
         <img
           src={galleryHeroBg}
           alt=""
           aria-hidden="true"
-          className="absolute inset-0 h-full w-full object-cover opacity-90"
+          className="absolute inset-0 h-full w-full object-cover opacity-95"
         />
-        <div className="absolute inset-0 bg-gradient-to-br from-dark-900/92 via-dark-900/58 to-secondary-900/38" />
-        <div className="absolute inset-0 bg-gradient-to-t from-dark-900 via-transparent to-dark-900/20" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#061820]/96 via-[#09222a]/72 to-[#16110b]/18" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#061820] via-transparent to-[#061820]/16" />
         <div className="grain-overlay" />
 
-        <div className="section-container relative flex min-h-[560px] flex-col justify-center py-16 lg:py-24">
-          <div className="max-w-4xl">
-            <p className="inline-flex items-center gap-3 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-xs font-extrabold uppercase tracking-[0.12em] text-accent-200 backdrop-blur-md">
+        <div className="section-container relative grid min-h-[calc(100vh-var(--header-height-mobile))] gap-10 py-10 lg:min-h-[760px] lg:grid-cols-[minmax(0,0.95fr)_minmax(420px,0.9fr)] lg:items-center lg:py-16">
+          <div className="max-w-3xl">
+            <div className="inline-flex items-center gap-3 rounded-full border border-accent-300/55 bg-dark-900/28 px-5 py-3 text-xs font-extrabold uppercase tracking-[0.14em] text-accent-200 shadow-[0_18px_45px_rgba(0,0,0,0.22)] backdrop-blur-md">
               <FaCameraRetro className="h-4 w-4" />
               Bablons Travel Gallery
-            </p>
-            <h1 className="mt-7 max-w-3xl font-display text-5xl font-bold leading-[1.05] text-white md:text-6xl lg:text-7xl">
-              Premium travel moments, beautifully captured
+            </div>
+
+            <h1 className="mt-8 max-w-3xl font-display text-[clamp(4rem,8vw,7.6rem)] font-bold leading-[0.88] text-white">
+              The world.
+              <span className="mt-3 block bg-gradient-to-r from-accent-200 via-[#f3bd62] to-secondary-300 bg-clip-text font-display italic text-transparent drop-shadow-[0_8px_18px_rgba(0,0,0,0.35)]">
+              Beautifull 
+              </span>
+              captured.
             </h1>
-            <p className="mt-6 max-w-2xl text-lg leading-8 text-white/78 md:text-xl">
-              Explore handpicked frames from the destinations our travelers love most, from Silk Road landmarks to island mornings and skyline evenings.
+
+            <div className="mt-5 h-px w-80 max-w-full bg-gradient-to-r from-accent-300 via-accent-200 to-transparent" />
+
+            <p className="mt-7 max-w-2xl text-lg leading-8 text-white/84 md:text-xl">
+              Step into a curated collection of breathtaking destinations, timeless landmarks, and unforgettable travel moments.
             </p>
-            <div className="mt-9 flex flex-col gap-3 sm:flex-row">
+
+            <div className="mt-9 flex flex-col gap-4 sm:flex-row">
               <Link
                 to={ROUTES.PACKAGES}
-                className="inline-flex h-13 items-center justify-center gap-3 rounded-full bg-white px-7 py-4 text-sm font-extrabold uppercase tracking-[0.05em] text-dark-900 shadow-[0_20px_55px_rgba(0,0,0,0.28)] transition hover:-translate-y-0.5 hover:bg-accent-100"
+                className="inline-flex min-h-[3.5rem] items-center justify-center gap-3 rounded-full bg-gradient-to-r from-accent-300 to-secondary-300 px-8 py-4 text-sm font-extrabold uppercase tracking-[0.06em] text-dark-900 shadow-[0_20px_55px_rgba(240,195,106,0.26)] transition hover:-translate-y-0.5 hover:from-accent-200 hover:to-secondary-200"
               >
-                <FaPlaneDeparture />
-                Explore Packages
+                <FaImage />
+                Explore Gallery
               </Link>
               <Link
                 to={ROUTES.CONTACT}
-                className="inline-flex h-13 items-center justify-center gap-3 rounded-full border border-white/25 bg-white/10 px-7 py-4 text-sm font-extrabold uppercase tracking-[0.05em] text-white backdrop-blur-md transition hover:-translate-y-0.5 hover:bg-white hover:text-dark-900"
+                className="inline-flex min-h-[3.5rem] items-center justify-center gap-3 rounded-full border border-white/35 bg-dark-900/20 px-8 py-4 text-sm font-extrabold uppercase tracking-[0.06em] text-white backdrop-blur-md transition hover:-translate-y-0.5 hover:bg-white hover:text-dark-900"
               >
-                <FaWhatsapp />
-                Plan My Trip
+                <FaRegHeart />
+                My Favorites
               </Link>
+            </div>
+
+            <div className="mt-10 grid gap-3 border border-white/16 bg-white/[0.08] p-4 shadow-[0_30px_90px_rgba(0,0,0,0.24)] backdrop-blur-xl sm:grid-cols-3 lg:max-w-3xl">
+              {heroStats.map((stat) => {
+                const Icon = stat.icon
+                return (
+                  <div key={stat.label} className="flex items-center gap-4 p-3">
+                    <Icon className="h-9 w-9 text-accent-300" />
+                    <div>
+                      <p className="font-display text-4xl font-bold leading-none text-white">{stat.value}</p>
+                      <p className="mt-2 text-xs font-extrabold uppercase tracking-[0.08em] text-white">{stat.label}</p>
+                      <p className="mt-1 text-sm text-white/62">{stat.note}</p>
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+
+            <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+              {heroFeatures.map((feature) => {
+                const Icon = feature.icon
+                return (
+                  <div key={feature.title} className="flex items-center gap-3 text-white/88">
+                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-accent-300/45 text-accent-300">
+                      <Icon className="h-5 w-5" />
+                    </span>
+                    <p className="text-sm font-medium leading-5">
+                      <span className="block">{feature.title}</span>
+                      <span className="block text-white/66">{feature.text}</span>
+                    </p>
+                  </div>
+                )
+              })}
             </div>
           </div>
 
-          <div className="mt-12 grid gap-3 sm:grid-cols-3 lg:max-w-3xl">
-            {[
-              ['06', 'Signature destinations'],
-              ['120+', 'Curated trip moments'],
-              ['24/7', 'Travel support'],
-            ].map(([value, label]) => (
-              <div key={label} className="border border-white/16 bg-white/10 p-5 backdrop-blur-md">
-                <p className="font-display text-3xl font-bold text-white">{value}</p>
-                <p className="mt-1 text-sm font-semibold text-white/68">{label}</p>
+          <div className="relative hidden min-h-[540px] items-end justify-center lg:flex">
+            <div className="absolute right-6 top-10 h-28 w-28 rounded-full border border-accent-300/25" />
+            <FaCameraRetro className="absolute left-12 top-28 h-20 w-20 rotate-12 text-accent-300/85" />
+            <div className="absolute bottom-4 right-0 flex items-end gap-0">
+              {heroPolaroids.map((card) => (
+                <figure
+                  key={card.title}
+                  className={`${card.rotate} ${card.offset} -ml-8 w-52 bg-white p-3 pb-7 shadow-[0_28px_70px_rgba(0,0,0,0.32)] transition duration-500 hover:z-10 hover:-translate-y-3`}
+                >
+                  <img src={card.image} alt={card.title} className="aspect-[4/3] w-full object-cover" />
+                  <figcaption className="mt-3 text-center font-display text-xl italic text-dark-900">
+                    {card.title}
+                  </figcaption>
+                </figure>
+              ))}
+            </div>
+            <div className="absolute bottom-0 h-40 w-full bg-gradient-to-t from-[#061820] to-transparent" />
+          </div>
+
+          <div className="grid gap-3 sm:grid-cols-3 lg:hidden">
+            {heroPolaroids.map((card) => (
+              <div key={card.title} className="bg-white p-2 pb-5 shadow-[0_20px_55px_rgba(0,0,0,0.24)]">
+                <img src={card.image} alt={card.title} className="aspect-[4/3] w-full object-cover" />
+                <p className="mt-3 text-center font-display text-lg italic text-dark-900">{card.title}</p>
               </div>
             ))}
           </div>
