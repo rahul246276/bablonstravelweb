@@ -8,6 +8,7 @@ import TravelGallery from './sections/TravelGallery'
 import TestimonialsSection from './sections/TestimonialsSection'
 import LatestBlogsSection from './sections/LatestBlogsSection'
 import ContactCTASection from './sections/ContactCTASection'
+import FaqSection from './sections/FaqSection'
 
 const HomePage = () => {
   return (
@@ -22,6 +23,7 @@ const HomePage = () => {
       <TestimonialsSection />
       <LatestBlogsSection />
       <ContactCTASection />
+      <FaqSection />
     </div>
   )
 }

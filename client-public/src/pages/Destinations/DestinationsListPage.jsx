@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { FaHeadset } from 'react-icons/fa'
 import Button from '../../components/common/Button/Button'
 import { ROUTES } from '../../constants/routes'
-import herobg from '../../assets/images/Destinastion Page  Bg.png'
+import herobg from '../../assets/images/Bablons Tour Bg 1.png'
 import { destinationCountries } from './destinationsData'
 import CountrySection from './sections/CountrySection'
 import { destinationService } from '../../services/destinationService'
@@ -128,15 +128,17 @@ const DestinationsListPage = () => {
           src={herobg}
           alt=""
           aria-hidden="true"
-          className="absolute inset-0 h-full w-full object-cover opacity-80"
+          className="absolute inset-0 h-full w-full object-full opacity-80"
           
         />
         <div className="absolute inset-0 bg-gradient-to-br from-dark-900/88 via-dark-900/54 to-primary-900/40" />
         <div className="grain-overlay" />
         <div className="section-container relative text-center">
-          <p className="section-eyebrow justify-center text-accent-300">Where travelers go next</p>
+          <h1 className="section-eyebrow justify-center text-accent-300 text-lg font-bold lowercases tracking-wider">
+            Discover Your Next Dream Destination
+          </h1>
           <h1 className="mx-auto mt-4 max-w-2xl font-display text-4xl font-bold leading-tight md:text-5xl">
-            All destinations
+            Your Journey Begins Here
           </h1>
           <p className="mx-auto mt-5 max-w-xl text-lg leading-8 text-white/72">
             {cityCount} cities across {countryNames}. Tap any city to see its packages.
