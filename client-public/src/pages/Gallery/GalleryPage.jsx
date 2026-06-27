@@ -8,7 +8,6 @@ import {
   FaImage,
   FaMapMarkerAlt,
   FaPaperPlane,
-  FaPlaneDeparture,
   FaRegHeart,
   FaRegImages,
 } from 'react-icons/fa'

@@ -1,9 +1,4 @@
-const formatPrice = (amount = 0, currency = 'INR') =>
-  new Intl.NumberFormat('en-IN', {
-    style: 'currency',
-    currency,
-    maximumFractionDigits: 0,
-  }).format(Number(amount || 0))
+import { formatPrice } from '../../utils/formatPrice'
 
 const PriceDisplay = ({ amount, originalAmount, currency = 'INR', note = 'per person' }) => (
   <div>
@@ -17,5 +12,4 @@ const PriceDisplay = ({ amount, originalAmount, currency = 'INR', note = 'per pe
   </div>
 )
 
-export { formatPrice }
 export default PriceDisplay

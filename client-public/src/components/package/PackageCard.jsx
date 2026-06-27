@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import { FaArrowRight, FaClock, FaMapMarkerAlt, FaStar } from 'react-icons/fa'
 import RatingStars from '../common/RatingStars'
-import { formatPrice } from '../common/PriceDisplay'
+import { formatPrice } from '../../utils/formatPrice'
 import { getDurationLabel, getPackageDestination, getPackageImages, getPackagePrice } from './packageViewUtils'
 
 const PackageCard = ({ package: travelPackage }) => {

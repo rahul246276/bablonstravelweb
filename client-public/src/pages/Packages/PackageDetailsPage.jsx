@@ -20,23 +20,35 @@ import WhyChooseUsCard from '../../components/package/WhyChooseUsCard'
 import ErrorState from '../../components/common/ErrorState'
 import LoadingSkeleton from '../../components/common/LoadingSkeleton'
 import MobileBookingBar from '../../components/common/MobileBookingBar'
-import { formatPrice } from '../../components/common/PriceDisplay'
+import { formatPrice } from '../../utils/formatPrice'
 import { packageService } from '../../services/packageService'
 import { getPackagePrice } from '../../components/package/packageViewUtils'
 
 const PackageDetailsPage = () => {
   const { slug } = useParams()
-  const [travelPackage, setTravelPackage] = useState(null)
-  const [related, setRelated] = useState([])
-  const [reviews, setReviews] = useState({ reviews: [], averageRating: 0, reviewCount: 0 })
+  const [pageState, setPageState] = useState({
+    slug,
+    travelPackage: null,
+    related: [],
+    reviews: { reviews: [], averageRating: 0, reviewCount: 0 },
+    loading: true,
+    error: '',
+  })
   const [selectedDeparture, setSelectedDeparture] = useState(null)
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState('')
+
+  if (pageState.slug !== slug) {
+    setPageState({
+      slug,
+      travelPackage: null,
+      related: [],
+      reviews: { reviews: [], averageRating: 0, reviewCount: 0 },
+      loading: true,
+      error: '',
+    })
+  }
 
   useEffect(() => {
     let mounted = true
-    setLoading(true)
-    setError('')
 
     Promise.all([
       packageService.get(slug),
@@ -45,9 +57,14 @@ const PackageDetailsPage = () => {
     ])
       .then(([item, relatedItems, reviewData]) => {
         if (!mounted) return
-        setTravelPackage(item)
-        setRelated(relatedItems)
-        setReviews(reviewData)
+        setPageState({
+          slug,
+          travelPackage: item,
+          related: relatedItems,
+          reviews: reviewData,
+          loading: false,
+          error: '',
+        })
         setSelectedDeparture(item.departures?.find((departure) => !['soldout', 'sold_out'].includes(departure.status)) || null)
         document.title = item.seo?.metaTitle || `${item.title} | Bablons Travel`
         const description = item.seo?.metaDescription || item.shortDescription || item.description
@@ -63,16 +80,21 @@ const PackageDetailsPage = () => {
       })
       .catch((err) => {
         if (!mounted) return
-        setError(err.response?.data?.message || 'Package not found')
-      })
-      .finally(() => {
-        if (mounted) setLoading(false)
+        setPageState((state) => ({
+          ...state,
+          slug,
+          travelPackage: null,
+          loading: false,
+          error: err.response?.data?.message || 'Package not found',
+        }))
       })
 
     return () => {
       mounted = false
     }
   }, [slug])
+
+  const { travelPackage, related, reviews, loading, error } = pageState
 
   if (loading) {
     return (

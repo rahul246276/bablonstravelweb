@@ -1,6 +1,6 @@
 import SectionCard from '../common/SectionCard'
 import SectionHeading from '../common/SectionHeading'
-import { formatPrice } from '../common/PriceDisplay'
+import { formatPrice } from '../../utils/formatPrice'
 
 const statusLabel = (status) => String(status || 'open').replace('_', ' ')
 

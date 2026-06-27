@@ -19,7 +19,6 @@ const PackagesListPage = () => {
   const [visibleCount, setVisibleCount] = useState(8)
 
   useEffect(() => {
-    setLoading(true)
     packageService.list({ limit: 100 })
       .then((data) => setPackages(data.packages || data.items || []))
       .catch((err) => setError(err.response?.data?.message || 'Failed to load packages'))

@@ -1,8 +1,9 @@
 import { useMemo, useState } from 'react'
 import { toast } from 'react-toastify'
-import PriceDisplay, { formatPrice } from '../common/PriceDisplay'
+import PriceDisplay from '../common/PriceDisplay'
 import WhatsAppButton from '../common/WhatsAppButton'
 import { packageService } from '../../services/packageService'
+import { formatPrice } from '../../utils/formatPrice'
 import { getPackagePrice } from './packageViewUtils'
 
 const BookingSidebar = ({ package: travelPackage, selectedDeparture }) => {

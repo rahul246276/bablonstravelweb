@@ -1,4 +1,4 @@
-import { formatPrice } from '../common/PriceDisplay'
+import { formatPrice } from '../../utils/formatPrice'
 
 export const getPackageImages = (travelPackage = {}) => {
   const images = []
