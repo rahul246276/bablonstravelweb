@@ -286,7 +286,7 @@ const Navbar = () => {
           />
 
           <aside
-            className={`absolute bottom-0 right-0 top-0 flex w-[min(88vw,390px)] flex-col overflow-hidden rounded-l-[1.45rem] bg-[radial-gradient(circle_at_20%_0%,rgba(28,120,184,0.4),transparent_35%),linear-gradient(155deg,#06223f_0%,#03182f_48%,#052f55_100%)] text-white shadow-[-22px_0_44px_rgba(0,0,0,0.28)] transition-transform duration-300 ease-out ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}
+            className={`absolute bottom-0 right-0 top-0 flex w-[min(92vw,420px)] flex-col overflow-hidden rounded-l-[1.45rem] bg-[radial-gradient(circle_at_20%_0%,rgba(28,120,184,0.4),transparent_35%),linear-gradient(155deg,#06223f_0%,#03182f_48%,#052f55_100%)] text-white shadow-[-22px_0_44px_rgba(0,0,0,0.28)] transition-transform duration-300 ease-out ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}
           >
             <div className="flex items-center justify-between gap-4 border-b border-white/10 px-5 py-4">
               <Link to={ROUTES.HOME} onClick={() => setIsMobileMenuOpen(false)} className="flex min-w-0 items-center gap-3" aria-label="Bablons Travel home">
@@ -374,7 +374,7 @@ const Navbar = () => {
                 </a>
                 <span className="flex min-w-0 items-center gap-3 rounded-2xl px-2 py-1.5">
                   <FaMapMarkerAlt className="h-4 w-4 shrink-0 text-accent-300" />
-                  <span>{CONTACT_ADDRESS}</span>
+                  <span className="min-w-0 break-words">{CONTACT_ADDRESS}</span>
                 </span>
               </div>
 

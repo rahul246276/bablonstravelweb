@@ -97,13 +97,13 @@ const Footer = () => {
         <img src={footerBg} alt="" aria-hidden="true" className="absolute inset-0 h-full w-full object-cover object-center opacity-12" />
         <div className="absolute inset-0 bg-gradient-to-r from-[#FFFCF7] via-[#FFFCF7]/94 to-[#FFFCF7]/82" />
         <div className="relative mx-auto grid max-w-[100rem] gap-7 px-4 py-10 sm:px-6 md:px-8 lg:grid-cols-[1fr_auto] lg:items-center xl:px-10">
-          <div className="flex items-start gap-5">
+          <div className="flex items-start gap-4 sm:gap-5">
             <span className="hidden h-16 w-16 shrink-0 items-center justify-center rounded-full border border-accent-300/60 bg-accent-300/12 text-secondary-600 shadow-sm sm:flex">
               <FaPlane className="h-7 w-7 -rotate-12" />
             </span>
             <div>
               <p className="text-xs font-extrabold uppercase tracking-[0.18em] text-secondary-600">Plan your next escape</p>
-              <h2 className="mt-3 max-w-3xl font-display text-4xl font-bold leading-tight text-primary-900 md:text-5xl">
+              <h2 className="mt-3 max-w-3xl font-display text-[clamp(2rem,8vw,3rem)] font-bold leading-tight text-primary-900 md:text-5xl">
                 Ready for Your Next International <span className="text-accent-500">Journey?</span>
               </h2>
               <p className="mt-4 max-w-2xl text-base leading-7 text-dark-600">
@@ -111,7 +111,7 @@ const Footer = () => {
               </p>
             </div>
           </div>
-          <div className="flex flex-col gap-3 sm:flex-row">
+          <div className="flex flex-col gap-3 sm:flex-row lg:justify-end">
             <Link to={ROUTES.CONTACT} className="inline-flex h-14 items-center justify-center gap-3 rounded-full bg-gradient-to-r from-accent-400 to-secondary-600 px-7 text-sm font-extrabold text-white shadow-[0_16px_36px_rgba(217,111,58,0.22)] transition hover:-translate-y-0.5">
               Plan My Holiday
               <FaArrowRight />
@@ -157,7 +157,7 @@ const Footer = () => {
             </div>
           </div>
 
-          <div className="grid gap-9 rounded-3xl border border-sand-200 bg-white/58 p-7 shadow-[0_18px_70px_rgba(16,39,36,0.07)] sm:grid-cols-2 xl:grid-cols-4">
+          <div className="grid gap-8 rounded-2xl border border-sand-200 bg-white/58 p-5 shadow-[0_18px_70px_rgba(16,39,36,0.07)] sm:grid-cols-2 sm:p-7 lg:rounded-3xl xl:grid-cols-4">
             {Object.entries(footerLinks).map(([category, links]) => (
               <div key={category}>
                 <h3 className="text-sm font-extrabold uppercase tracking-[0.1em] text-secondary-600">{category}</h3>
@@ -191,7 +191,7 @@ const Footer = () => {
             </div>
           </div>
 
-          <div className="rounded-3xl border border-sand-200 bg-white/86 p-7 shadow-[0_18px_55px_rgba(16,39,36,0.08)]">
+          <div className="rounded-2xl border border-sand-200 bg-white/86 p-5 shadow-[0_18px_55px_rgba(16,39,36,0.08)] sm:p-7 lg:rounded-3xl">
             <h3 className="font-display text-2xl font-bold leading-tight text-primary-900">
               Contact Our
               <span className="block text-secondary-600">Travel Experts</span>
@@ -200,11 +200,11 @@ const Footer = () => {
               {contactItems.map((item) => {
                 const Icon = item.icon
                 return (
-                  <li key={item.label} className="flex items-center gap-4 text-sm font-semibold text-dark-700">
+                  <li key={item.label} className="flex min-w-0 items-start gap-4 text-sm font-semibold text-dark-700">
                     <span className="flex h-9 w-9 items-center justify-center rounded-full bg-secondary-50 text-secondary-600">
                       <Icon className="h-4 w-4" />
                     </span>
-                    {item.href ? <a href={item.href} className="transition hover:text-secondary-600">{item.label}</a> : item.label}
+                    {item.href ? <a href={item.href} className="min-w-0 break-words transition hover:text-secondary-600">{item.label}</a> : <span className="min-w-0 break-words">{item.label}</span>}
                   </li>
                 )
               })}
@@ -217,7 +217,7 @@ const Footer = () => {
             {trustItems.map((item) => {
               const Icon = item.icon
               return (
-                <div key={item.title} className="border-b border-sand-200 p-6 last:border-b-0 sm:even:border-l lg:border-b-0 lg:border-l lg:first:border-l-0">
+                <div key={item.title} className="border-b border-sand-200 p-5 last:border-b-0 sm:p-6 sm:even:border-l lg:border-b-0 lg:border-l lg:first:border-l-0">
                   <span className="flex h-14 w-14 items-center justify-center rounded-full border border-accent-300/45 bg-accent-300/10 text-secondary-600">
                     <Icon className="h-5 w-5" />
                   </span>
@@ -228,7 +228,7 @@ const Footer = () => {
             })}
           </div>
 
-          <div className="rounded-3xl border border-sand-200 bg-white/86 p-7 shadow-[0_18px_55px_rgba(16,39,36,0.08)]">
+          <div className="rounded-2xl border border-sand-200 bg-white/86 p-5 shadow-[0_18px_55px_rgba(16,39,36,0.08)] sm:p-7 lg:rounded-3xl">
             <h3 className="font-display text-2xl font-bold text-primary-900">Travel Inspiration Delivered</h3>
             <p className="mt-3 text-sm leading-7 text-dark-600">
               Get exclusive offers, destination guides, and travel tips straight to your inbox.
@@ -257,7 +257,7 @@ const Footer = () => {
                 <span className="block">All Rights Reserved.</span>
               </p>
             </div>
-            <p className="font-display-label text-2xl text-accent-500">Crafting Journeys. Creating Memories.</p>
+            <p className="font-display-label text-xl text-accent-500 sm:text-2xl">Crafting Journeys. Creating Memories.</p>
             <div className="flex flex-wrap items-center gap-5 text-sm font-semibold text-dark-700">
               <Link to={ROUTES.PRIVACY} className="transition hover:text-secondary-600">Privacy Policy</Link>
               <span className="h-4 w-px bg-dark-900/20" />

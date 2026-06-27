@@ -26,7 +26,7 @@ const ContactHero = () => {
             <FaPlaneDeparture className="text-accent-400" />
             Let's Connect
           </p>
-          <h1 className="mt-5 font-display text-5xl font-bold leading-[1.05] text-white md:text-6xl lg:text-7xl">
+          <h1 className="mt-5 font-display text-[clamp(2.55rem,11vw,4rem)] font-bold leading-[1.04] text-white md:text-6xl lg:text-7xl">
             We Are Here To Plan
             <span className="block text-accent-400">Your Perfect Journey</span>
           </h1>
@@ -34,11 +34,11 @@ const ContactHero = () => {
             Have questions or ready to start your next adventure? Our travel experts are just a message away.
           </p>
 
-          <div className="mt-8 grid max-w-3xl gap-5 sm:grid-cols-3">
+          <div className="mt-8 grid max-w-3xl gap-4 sm:grid-cols-3 sm:gap-5">
             {heroHighlights.map((item) => {
               const Icon = item.icon
               return (
-                <div key={item.title} className="flex items-center gap-4 sm:border-r sm:border-white/16 sm:pr-5 sm:last:border-r-0">
+                <div key={item.title} className="flex items-center gap-3 sm:gap-4 sm:border-r sm:border-white/16 sm:pr-5 sm:last:border-r-0">
                   <Icon className="h-9 w-9 text-accent-400" />
                   <div>
                     <h2 className="text-sm font-extrabold text-white">{item.title}</h2>

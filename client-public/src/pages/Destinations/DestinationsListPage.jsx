@@ -128,19 +128,19 @@ const DestinationsListPage = () => {
           src={herobg}
           alt=""
           aria-hidden="true"
-          className="absolute inset-0 h-full w-full object-full opacity-80"
+          className="absolute inset-0 h-full w-full object-cover opacity-80"
           
         />
         <div className="absolute inset-0 bg-gradient-to-br from-dark-900/88 via-dark-900/54 to-primary-900/40" />
         <div className="grain-overlay" />
         <div className="section-container relative text-center">
-          <h1 className="section-eyebrow justify-center text-accent-300 text-lg font-bold lowercases tracking-wider">
+          <h1 className="section-eyebrow mx-auto max-w-[18rem] justify-center text-center text-sm font-bold tracking-wider text-accent-300 sm:max-w-full sm:text-lg">
             Discover Your Next Dream Destination
           </h1>
-          <h1 className="mx-auto mt-4 max-w-2xl font-display text-4xl font-bold leading-tight md:text-5xl">
+          <h1 className="mx-auto mt-4 max-w-[20rem] font-display text-[clamp(2.15rem,9vw,3rem)] font-bold leading-tight sm:max-w-2xl md:text-5xl">
             Your Journey Begins Here
           </h1>
-          <p className="mx-auto mt-5 max-w-xl text-lg leading-8 text-white/72">
+          <p className="mx-auto mt-5 max-w-[18.5rem] text-base leading-8 text-white/72 sm:max-w-xl sm:text-lg">
             {cityCount} cities across {countryNames}. Tap any city to see its packages.
           </p>
         </div>
@@ -186,7 +186,7 @@ const DestinationsListPage = () => {
 
       <section className="bg-white pb-16 lg:pb-24">
         <div className="section-container">
-          <div className="flex flex-col items-center gap-6 rounded-3xl bg-dark-900 px-6 py-10 text-center shadow-xl shadow-black/10 sm:flex-row sm:justify-between sm:text-left lg:px-10">
+          <div className="flex flex-col items-center gap-6 rounded-2xl bg-dark-900 px-5 py-8 text-center shadow-xl shadow-black/10 sm:flex-row sm:justify-between sm:text-left lg:rounded-3xl lg:px-10 lg:py-10">
             <div className="flex items-center gap-4">
               <span className="hidden h-12 w-12 shrink-0 items-center justify-center rounded-full bg-white/10 text-accent-300 sm:flex">
                 <FaHeadset className="h-5 w-5" />
@@ -196,8 +196,8 @@ const DestinationsListPage = () => {
                 <p className="mt-1 text-sm leading-6 text-white/65">Our travel experts are here to help you plan the perfect trip.</p>
               </div>
             </div>
-            <a href={ROUTES.CONTACT} className="shrink-0">
-              <Button size="lg" className="rounded-full bg-white px-7 font-bold text-dark-900 hover:bg-sand-100">
+            <a href={ROUTES.CONTACT} className="w-full shrink-0 sm:w-auto">
+              <Button size="lg" className="w-full rounded-full bg-white px-7 font-bold text-dark-900 hover:bg-sand-100 sm:w-auto">
                 Talk to an expert
               </Button>
             </a>

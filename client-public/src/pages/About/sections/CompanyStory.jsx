@@ -24,7 +24,7 @@ const CompanyStory = () => {
             <FaPlaneDeparture className="text-accent-400" />
             About Bablons Tours
           </p>
-          <h1 className="mt-5 max-w-4xl font-display text-5xl font-bold leading-[1.04] text-white drop-shadow-[0_4px_18px_rgba(0,0,0,0.24)] md:text-6xl lg:text-7xl">
+          <h1 className="mt-5 max-w-4xl font-display text-[clamp(2.55rem,11vw,4.25rem)] font-bold leading-[1.03] text-white drop-shadow-[0_4px_18px_rgba(0,0,0,0.24)] md:text-6xl lg:text-7xl">
             Your Trusted Partner For
             <span className="block">
               Travel, Visa & <span className="text-accent-400">Opportunities.</span>

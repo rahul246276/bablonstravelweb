@@ -32,7 +32,7 @@ const DestinationOverview = ({ city, country }) => {
               <FaMapMarkerAlt className="text-accent-300" />
               {country.name}
             </p>
-            <h1 className="mt-4 max-w-4xl font-display text-5xl font-bold leading-[1.04] text-white md:text-6xl lg:text-7xl">
+            <h1 className="mt-4 max-w-4xl font-display text-[clamp(2.65rem,12vw,4.25rem)] font-bold leading-[1.03] text-white md:text-6xl lg:text-7xl">
               {city.name}
             </h1>
             <p className="mt-6 max-w-2xl text-lg leading-8 text-white/82 md:text-xl">
@@ -40,7 +40,7 @@ const DestinationOverview = ({ city, country }) => {
             </p>
           </div>
 
-          <div className="rounded-[1.35rem] border border-white/16 bg-white/[0.1] p-6 shadow-[0_24px_70px_rgba(0,0,0,0.24)] backdrop-blur">
+          <div className="rounded-[1.35rem] border border-white/16 bg-white/[0.1] p-5 shadow-[0_24px_70px_rgba(0,0,0,0.24)] backdrop-blur sm:p-6">
             <p className="flex items-center gap-2 text-sm font-extrabold uppercase tracking-[0.12em] text-accent-300">
               <FaPlaneDeparture />
               Trip support

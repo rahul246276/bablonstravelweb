@@ -100,17 +100,17 @@ const HeroSection = () => {
 
       <div className="home-hero-inner relative z-10 mx-auto grid items-center">
         <div className="home-hero-copy">
-          <div className="home-hero-badge mb-8 inline-flex items-center gap-3 rounded-full border border-white/28 bg-dark-900/26 px-5 py-3 text-xs font-extrabold uppercase tracking-[0.08em] text-white/95 backdrop-blur-md">
+          <div className="home-hero-badge mb-8 inline-flex max-w-full flex-wrap items-center gap-3 rounded-full border border-white/28 bg-dark-900/26 px-5 py-3 text-xs font-extrabold uppercase tracking-[0.08em] text-white/95 backdrop-blur-md">
             <FaStar className="text-accent-300" />
             International holidays from India
           </div>
 
-          <h1 className="home-hero-title max-w-3xl">
+          <h1 className="home-hero-title max-w-[20rem] sm:max-w-3xl">
             Discover The World,
             <span className="home-hero-title-accent block">Without The Hassle.</span>
           </h1>
 
-          <p className="home-hero-text mt-6 max-w-2xl">
+          <p className="home-hero-text mt-6 max-w-[20rem] sm:max-w-2xl">
             From visa to flights, stays to experiences, we handle every detail with care. You just enjoy a perfectly planned international journey.
           </p>
 

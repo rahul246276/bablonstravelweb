@@ -65,15 +65,15 @@ const PackagesListPage = () => {
         <div className="absolute inset-0 bg-gradient-to-t from-[#fbf7ef] via-transparent to-transparent" />
         <div className="relative mx-auto max-w-7xl">
           <div className="max-w-2xl">
-            <p className="mb-6 inline-flex items-center gap-3 text-sm font-display-label text-secondary-500">
+            <p className="mb-6 inline-flex max-w-full flex-wrap items-center gap-3 text-sm font-display-label text-secondary-500">
               <span className="h-px w-7 bg-secondary-300" />
               Explore The World
               <FaPlane className="text-dark-700" />
             </p>
-            <h1 className="font-display text-5xl font-bold leading-[1.08] text-[#071b34] md:text-7xl">
+            <h1 className="max-w-[20rem] font-display text-[clamp(2.35rem,10vw,4.6rem)] font-bold leading-[1.08] text-[#071b34] sm:max-w-2xl md:text-7xl">
               Our Best Travel Packages
             </h1>
-            <p className="mt-6 max-w-xl text-base leading-8 text-dark-600">
+            <p className="mt-6 max-w-[20rem] text-base leading-8 text-dark-600 sm:max-w-xl">
               Handpicked travel experiences for every kind of traveler. Adventure, comfort, memories - all in one place.
             </p>
             <nav className="mt-8 flex items-center gap-3 text-sm font-bold text-dark-600" aria-label="Breadcrumb">
@@ -102,18 +102,18 @@ const PackagesListPage = () => {
             <div>
               <p className="text-sm font-bold text-dark-500">{filteredPackages.length} package{filteredPackages.length === 1 ? '' : 's'} found</p>
             </div>
-            <div className="flex items-center gap-3">
-              <label className="flex items-center gap-2 text-sm font-semibold text-dark-600">
+            <div className="grid w-full grid-cols-1 gap-3 sm:w-auto sm:grid-cols-2">
+              <label className="flex min-w-0 items-center gap-2 text-sm font-semibold text-dark-600">
                 Show:
-                <select value={visibleCount} onChange={(event) => setVisibleCount(Number(event.target.value))} className="rounded-lg border border-sand-300 bg-white px-3 py-2 text-dark-800">
+                <select value={visibleCount} onChange={(event) => setVisibleCount(Number(event.target.value))} className="min-w-0 flex-1 rounded-lg border border-sand-300 bg-white px-3 py-2 text-dark-800">
                   <option value="8">8</option>
                   <option value="12">12</option>
                   <option value="16">16</option>
                 </select>
               </label>
-              <label className="flex items-center gap-2 text-sm font-semibold text-dark-600">
+              <label className="flex min-w-0 items-center gap-2 text-sm font-semibold text-dark-600">
                 Sort by:
-                <select value={sortBy} onChange={(event) => setSortBy(event.target.value)} className="rounded-lg border border-sand-300 bg-white px-3 py-2 text-dark-800">
+                <select value={sortBy} onChange={(event) => setSortBy(event.target.value)} className="min-w-0 flex-1 rounded-lg border border-sand-300 bg-white px-3 py-2 text-dark-800">
                   <option value="popular">Popular</option>
                   <option value="newest">Newest</option>
                   <option value="price_low">Price low</option>
@@ -136,8 +136,8 @@ const PackagesListPage = () => {
 
         <section className="mt-16 rounded-card-sm bg-[#061936] p-6 text-white shadow-elevated md:p-8">
           <div className="grid gap-6 lg:grid-cols-[1fr_520px] lg:items-center">
-            <div className="flex items-center gap-5">
-              <span className="grid h-20 w-20 shrink-0 place-items-center rounded-full border border-white/40 bg-white/8 text-3xl">
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-5">
+              <span className="grid h-14 w-14 shrink-0 place-items-center rounded-full border border-white/40 bg-white/8 text-2xl sm:h-20 sm:w-20 sm:text-3xl">
                 <FaPaperPlane />
               </span>
               <div>

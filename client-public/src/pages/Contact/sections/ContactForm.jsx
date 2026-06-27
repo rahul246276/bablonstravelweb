@@ -61,9 +61,9 @@ const ContactForm = () => {
     <form
       id="contact-form"
       onSubmit={handleSubmit}
-      className="rounded-[1.35rem] border border-white/12 bg-[#062f29] p-6 text-white shadow-[0_28px_80px_rgba(16,39,36,0.24)] md:p-8"
+      className="rounded-[1.35rem] border border-white/12 bg-[#062f29] p-5 text-white shadow-[0_28px_80px_rgba(16,39,36,0.24)] sm:p-6 md:p-8"
     >
-      <h2 className="font-display text-4xl font-bold leading-tight text-white">Send Us a Message</h2>
+      <h2 className="font-display text-[clamp(2rem,8vw,2.5rem)] font-bold leading-tight text-white">Send Us a Message</h2>
       <span className="mt-4 block h-0.5 w-16 rounded-full bg-accent-400" />
 
       <div className="mt-6 grid gap-5 md:grid-cols-2">
@@ -186,7 +186,7 @@ const ContactForm = () => {
         </p>
       ) : null}
 
-      <p className="mt-5 flex items-center justify-center gap-2 text-center text-sm text-white/72">
+      <p className="mt-5 flex flex-wrap items-center justify-center gap-2 text-center text-sm text-white/72">
         <FaLock className="h-4 w-4 text-accent-300" />
         We respect your privacy. Your information is safe with us.
         <FaArrowRight className="hidden h-3 w-3 text-accent-300 sm:inline" />

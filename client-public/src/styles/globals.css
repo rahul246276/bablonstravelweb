@@ -47,6 +47,9 @@
 
   html {
     scroll-behavior: smooth;
+    overflow-x: hidden;
+    text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
   }
 
   body {
@@ -55,6 +58,8 @@
     background-color: var(--bt-ivory);
     line-height: 1.6;
     font-feature-settings: 'cv11' 1, 'ss01' 1;
+    min-width: 320px;
+    overflow-x: hidden;
   }
 
   .font-display {
@@ -101,6 +106,13 @@
     height: auto;
   }
 
+  img,
+  video,
+  canvas,
+  svg {
+    max-width: 100%;
+  }
+
   /* FIX: react-icons renders inline <svg> with no explicit width/height
      attributes — it relies on the parent font-size (1em sizing). Tailwind
      v4's Preflight resets are stricter about unstyled SVGs than v3 was,
@@ -120,12 +132,15 @@
     cursor: pointer;
     border: none;
     background: none;
+    min-height: 44px;
   }
 
   input,
   select,
   textarea {
     font-family: inherit;
+    min-height: 44px;
+    font-size: 1rem;
   }
 
   ::placeholder {
@@ -375,12 +390,7 @@
 
   @media (min-width: 1024px) {
     .home-hero-inner {
-      width: mi
-      
-      
-      
-      
-      (calc(100% - 4rem), 88rem);
+      width: min(calc(100% - 4rem), 88rem);
       min-height: min(780px, calc(100vh - var(--header-height-desktop) + 8rem));
       padding-top: clamp(3.5rem, 4vw, 5rem);
     }
@@ -408,6 +418,7 @@
     line-height: 1.05;
     letter-spacing: 0;
     font-weight: 700;
+    overflow-wrap: anywhere;
     text-wrap: balance;
     animation: slideInUp 0.8s ease-out 0.3s both;
   }
@@ -425,6 +436,7 @@
     color: rgba(255, 255, 255, 0.88);
     font-size: clamp(1.05rem, 1.2vw, 1.25rem);
     line-height: 1.75;
+    overflow-wrap: anywhere;
     animation: fadeIn 0.8s ease-out 0.4s both;
   }
 
@@ -705,6 +717,15 @@
 }
 
 @media (max-width: 1023px) {
+  .section-shell {
+    padding-top: 4.5rem;
+    padding-bottom: 4.5rem;
+  }
+
+  .section-heading {
+    font-size: clamp(2rem, 7vw, 3rem);
+  }
+
   .home-hero-inner {
     width: min(calc(100% - 2rem), 760px);
     grid-template-columns: 1fr;
@@ -749,12 +770,13 @@
 
   .home-hero-inner {
     width: min(calc(100% - 1.5rem), 520px);
-    padding-top: 2.5rem;
-    padding-bottom: 7rem;
+    padding-top: 2rem;
+    padding-bottom: 6.5rem;
   }
 
   .home-hero-title {
-    font-size: clamp(2.45rem, 12vw, 3.5rem);
+    font-size: clamp(2.05rem, 9.8vw, 2.9rem);
+    line-height: 1.08;
   }
 
   .home-hero-text {
@@ -778,5 +800,23 @@
     height: 120px;
     top: 1.5rem;
     right: 1.5rem;
+  }
+}
+
+@media (max-width: 420px) {
+  .section-heading {
+    font-size: clamp(1.85rem, 9vw, 2.4rem);
+  }
+
+  .home-hero-badge {
+    max-width: 100%;
+    white-space: normal;
+    border-radius: 1rem;
+  }
+
+  .home-hero-actions a {
+    width: 100%;
+    padding-right: 1.25rem;
+    padding-left: 1.25rem;
   }
 }

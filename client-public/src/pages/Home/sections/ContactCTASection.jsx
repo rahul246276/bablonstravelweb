@@ -175,7 +175,7 @@ const ContactCTASection = () => {
               Start Your Journey
             </p>
 
-            <h2 className="mt-6 max-w-4xl font-display text-5xl font-bold leading-[1.04] text-white md:text-6xl lg:text-7xl">
+            <h2 className="mt-6 max-w-4xl font-display text-[clamp(2.55rem,11vw,4.25rem)] font-bold leading-[1.03] text-white md:text-6xl lg:text-7xl">
               Your Dream Journey
               <span className="block">
                 Starts <span className="text-accent-400">Here.</span>
@@ -222,9 +222,9 @@ const ContactCTASection = () => {
             </div>
 
             <div className="mt-12 max-w-4xl rounded-2xl border border-white/12 bg-dark-900/38 px-6 py-5 backdrop-blur-md">
-              <div className="flex items-center justify-center gap-4 text-center">
+              <div className="flex items-center justify-center gap-3 text-center sm:gap-4">
                 <span className="h-px flex-1 bg-accent-400/35" />
-                <p className="text-[0.7rem] font-bold uppercase tracking-[0.42em] text-accent-300">
+                <p className="max-w-[14rem] text-[0.68rem] font-bold uppercase tracking-[0.18em] text-accent-300 sm:max-w-none sm:tracking-[0.42em]">
                   Trusted by thousands of happy travelers
                 </p>
                 <span className="h-px flex-1 bg-accent-400/35" />
@@ -257,7 +257,7 @@ const ContactCTASection = () => {
           <form
             id="free-travel-plan"
             onSubmit={handleSubmit}
-            className="relative rounded-3xl border border-white/12 bg-[#082a25]/88 p-6 shadow-[0_28px_90px_rgba(0,0,0,0.36)] backdrop-blur-xl md:p-8"
+            className="relative rounded-2xl border border-white/12 bg-[#082a25]/88 p-5 shadow-[0_28px_90px_rgba(0,0,0,0.36)] backdrop-blur-xl sm:p-6 md:rounded-3xl md:p-8"
           >
             <div className="absolute left-1/2 top-0 flex h-16 w-16 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-gradient-to-br from-accent-400 to-secondary-400 text-2xl text-white shadow-[0_18px_40px_rgba(187,132,44,0.35)]">
               <FaCalendarAlt />

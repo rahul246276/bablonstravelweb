@@ -1,5 +1,15 @@
 import { formatPrice } from '../../utils/formatPrice'
 
+const brokenImageIds = new Set([
+  'yirbvrec6lzea3u7fxrq',
+  'sjmt3lmugqzbrgklwzqz',
+])
+
+const isUsableImage = (image) => {
+  if (!image?.url) return false
+  return !Array.from(brokenImageIds).some((id) => image.url.includes(id) || image.publicId?.includes(id))
+}
+
 export const getPackageImages = (travelPackage = {}) => {
   const images = []
   const featuredFromImages = travelPackage.images?.find((image) => image.type === 'hero')
@@ -8,7 +18,7 @@ export const getPackageImages = (travelPackage = {}) => {
   if (travelPackage.gallery?.length) images.push(...travelPackage.gallery.map((image) => ({ ...image, type: image.type || 'gallery' })))
   if (travelPackage.images?.length) images.push(...travelPackage.images.map((image) => ({ ...image, type: image.type || 'gallery' })))
 
-  return images.filter((image, index, list) => image?.url && list.findIndex((item) => item.url === image.url) === index)
+  return images.filter((image, index, list) => isUsableImage(image) && list.findIndex((item) => item.url === image.url) === index)
 }
 
 export const getPackagePrice = (travelPackage = {}, departure) =>

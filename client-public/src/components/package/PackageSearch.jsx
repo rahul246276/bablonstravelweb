@@ -10,7 +10,7 @@ const PackageSearch = ({ filters, onChange, onSubmit }) => {
 
   return (
     <form onSubmit={onSubmit} className="rounded-2xl border border-sand-200/70 bg-white p-4 shadow-[0_24px_70px_rgba(16,39,36,0.12)] md:p-5">
-      <div className="grid grid-cols-1 gap-0 divide-y divide-sand-200 md:grid-cols-[1.15fr_0.9fr_0.8fr_0.9fr_0.9fr_auto] md:divide-x md:divide-y-0 md:items-center">
+      <div className="grid grid-cols-1 gap-0 divide-y divide-sand-200 lg:grid-cols-[1.15fr_0.9fr_0.8fr_0.9fr_0.9fr_auto] lg:divide-x lg:divide-y-0 lg:items-center">
         <div className="px-2 py-3 md:px-4">
           <label className="mb-2 block text-xs font-bold text-dark-500">
             Destination
@@ -85,7 +85,7 @@ const PackageSearch = ({ filters, onChange, onSubmit }) => {
           </div>
         </div>
 
-        <button type="submit" className="mt-3 inline-flex h-14 items-center justify-center gap-3 rounded-xl bg-[#071b34] px-6 text-sm font-black text-white transition hover:bg-secondary-600 md:ml-4 md:mt-0">
+        <button type="submit" className="mt-3 inline-flex h-14 items-center justify-center gap-3 rounded-xl bg-[#071b34] px-6 text-sm font-black text-white transition hover:bg-secondary-600 lg:ml-4 lg:mt-0">
           Search Packages
           <FaSearch />
         </button>
