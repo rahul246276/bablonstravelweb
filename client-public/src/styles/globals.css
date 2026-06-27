@@ -346,10 +346,10 @@
   }
 
   .site-logo-img {
-    width: 76px;
-    height: 76px;
-    max-width: 76px;
-    max-height: 76px;
+    width: 100px;
+    height: 100px;
+    max-width: 100px;
+    max-height: 100px;
     display: block;
     object-fit: contain;
   }

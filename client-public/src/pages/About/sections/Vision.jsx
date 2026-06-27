@@ -30,7 +30,7 @@ const Vision = () => {
       <div className="section-container relative grid gap-12 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
         <div className="relative">
           <div className="overflow-hidden rounded-[2rem] border border-sand-200 bg-white p-3 shadow-[0_28px_80px_rgba(16,39,36,0.14)]">
-            <img src={visionImage} alt="Travel planning documents and journey inspiration" className="h-[360px] w-full rounded-[1.5rem] object-cover sm:h-[460px] lg:h-[520px]" />
+            <img src={visionImage} alt="Travel planning documents and journey inspiration" className="h-[360px] w-full rounded-[1.5rem] object-fit sm:h-[460px] lg:h-[520px]" />
           </div>
           <div className="absolute -bottom-7 left-4 right-4 rounded-[1.25rem] border border-sand-200 bg-white p-4 shadow-[0_18px_50px_rgba(16,39,36,0.14)] sm:left-7 sm:right-7 sm:p-5">
             <p className="text-sm font-extrabold uppercase tracking-[0.14em] text-secondary-600">Our vision</p>
