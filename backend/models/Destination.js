@@ -16,7 +16,8 @@ const imageSchema = new mongoose.Schema(
 const destinationSchema = new mongoose.Schema(
   {
     name: { type: String, required: true, trim: true, index: 'text' },
-    slug: { type: String, unique: true, lowercase: true, trim: true, index: true },
+    slug: { type: String, lowercase: true, trim: true, index: true },
+    citySlug: { type: String, lowercase: true, trim: true, index: true },
     country: { type: String, required: true, trim: true, index: true },
     countrySlug: { type: String, lowercase: true, trim: true, index: true },
     cityType: { type: String, enum: ['city', 'region', 'country'], default: 'city' },
@@ -47,14 +48,20 @@ const destinationSchema = new mongoose.Schema(
 )
 
 destinationSchema.index({ name: 'text', country: 'text', shortDescription: 'text' })
+destinationSchema.index({ countrySlug: 1, citySlug: 1 })
 
 destinationSchema.pre('validate', function prepareDestination() {
-  if (!this.slug && this.name) this.slug = slugify(this.name, { lower: true, strict: true })
   if ((!this.countrySlug || this.isModified('country')) && this.country) {
     this.countrySlug = slugify(this.country, { lower: true, strict: true })
   }
+  if ((!this.citySlug || this.isModified('name')) && this.name) {
+    this.citySlug = slugify(this.name, { lower: true, strict: true })
+  }
   if (this.cityType === 'city' && normalizeKey(this.name) === normalizeKey(this.country)) {
     this.cityType = 'country'
+  }
+  if ((!this.slug || this.isModified('name') || this.isModified('country') || this.isModified('cityType')) && this.name) {
+    this.slug = this.cityType === 'country' ? this.countrySlug : [this.countrySlug, this.citySlug].filter(Boolean).join('-')
   }
 })
 

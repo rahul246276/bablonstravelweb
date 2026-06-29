@@ -6,6 +6,27 @@ const { successResponse } = require('../utils/apiResponse')
 const getImageUrl = (image) => image?.url || image?.src || ''
 const normalizeKey = (value) => String(value || '').trim().toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')
 
+const COUNTRY_SLUG_ALIASES = {
+  dubai: ['dubai', 'dubai-uae', 'uae', 'united-arab-emirates'],
+  'dubai-uae': ['dubai', 'dubai-uae', 'uae', 'united-arab-emirates'],
+  uae: ['dubai', 'dubai-uae', 'uae', 'united-arab-emirates'],
+  'united-arab-emirates': ['dubai', 'dubai-uae', 'uae', 'united-arab-emirates'],
+}
+
+const getCountrySlugCandidates = (countrySlug = '') => COUNTRY_SLUG_ALIASES[countrySlug] || [countrySlug]
+
+const normalizeDestinationPayload = (payload = {}) => {
+  const nextPayload = { ...payload }
+
+  if (!nextPayload.name && nextPayload.city) nextPayload.name = nextPayload.city
+  if (nextPayload.cityType === 'country' && !nextPayload.name && nextPayload.country) {
+    nextPayload.name = nextPayload.country
+  }
+
+  delete nextPayload.city
+  return nextPayload
+}
+
 const toImageView = (image, fallbackAlt = '') => ({
   src: getImageUrl(image),
   url: getImageUrl(image),
@@ -65,7 +86,8 @@ const groupDestinationsByCountry = (items) => {
 
     group.cities.push({
       _id: item._id,
-      slug: item.slug,
+      slug: item.citySlug || item.slug,
+      apiSlug: item.slug,
       name: item.name,
       country: item.country,
       countrySlug,
@@ -125,7 +147,10 @@ const listDestinationGroups = asyncHandler(async (req, res) => {
 })
 
 const getDestination = asyncHandler(async (req, res) => {
-  const filter = req.params.slug.match(/^[0-9a-fA-F]{24}$/) ? { _id: req.params.slug } : { slug: req.params.slug }
+  const filter = req.params.slug.match(/^[0-9a-fA-F]{24}$/)
+    ? { _id: req.params.slug }
+    : { $or: [{ slug: req.params.slug }, { citySlug: req.params.slug }] }
+  if (!filter._id && req.query.countrySlug) filter.countrySlug = { $in: getCountrySlugCandidates(req.query.countrySlug) }
   if (!req.user) filter.isActive = true
   const item = await Destination.findOne(filter)
   if (!item) throw new ApiError(404, 'Destination not found')
@@ -133,14 +158,14 @@ const getDestination = asyncHandler(async (req, res) => {
 })
 
 const createDestination = asyncHandler(async (req, res) => {
-  const item = await Destination.create(req.body)
+  const item = await Destination.create(normalizeDestinationPayload(req.body))
   return successResponse(res, 201, 'Destination created successfully', { destination: item, item })
 })
 
 const updateDestination = asyncHandler(async (req, res) => {
   const item = await Destination.findById(req.params.id)
   if (!item) throw new ApiError(404, 'Destination not found')
-  Object.assign(item, req.body)
+  Object.assign(item, normalizeDestinationPayload(req.body))
   await item.save()
   return successResponse(res, 200, 'Destination updated successfully', { destination: item, item })
 })
