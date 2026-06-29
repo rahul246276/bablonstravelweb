@@ -165,17 +165,17 @@ const Navbar = () => {
   return (
     <header className={`site-header fixed inset-x-0 top-0 z-50 bg-white transition-shadow duration-300 ${hasScrolled ? 'shadow-[0_14px_38px_rgba(16,39,36,0.12)]' : ''}`}>
       <div className="hidden lg:block">
-        <div className="w-full border-b border-sand-200 bg-white px-6 xl:px-8">
-          <div className="flex h-12 items-center justify-between text-sm font-bold text-dark-900">
-            <div className="flex min-w-0 items-center gap-8 xl:gap-12">
+        <div className="w-full border-b border-sand-200 bg-white">
+          <div className="mx-auto flex h-12 w-full max-w-[1500px] items-center justify-between px-5 text-[0.82rem] font-bold text-dark-900 xl:px-7 2xl:px-8">
+            <div className="flex min-w-0 items-center gap-6 xl:gap-9">
               {utilityItems.map((item, index) => {
                 const Icon = item.icon
 
                 return (
-                  <div key={item.label} className="flex items-center gap-4">
+                  <div key={item.label} className="flex items-center gap-3">
                     {index > 0 ? <span className="hidden h-5 w-px bg-dark-900/25 xl:block" aria-hidden="true" /> : null}
-                    <span className="inline-flex items-center gap-3 whitespace-nowrap">
-                      <Icon className="h-4 w-4 text-primary-900" />
+                    <span className="inline-flex items-center gap-2.5 whitespace-nowrap">
+                      <Icon className="h-3.5 w-3.5 text-primary-900" />
                       {item.label}
                     </span>
                   </div>
@@ -183,13 +183,13 @@ const Navbar = () => {
               })}
             </div>
 
-            <div className="flex shrink-0 items-center gap-4">
+            <div className="flex shrink-0 items-center gap-3.5">
               <span className="font-semibold text-dark-800">Follow Us:</span>
               {socialLinks.map((link) => {
                 const Icon = link.icon
                 return (
                   <a key={link.name} href={link.url} target="_blank" rel="noreferrer" aria-label={link.name} className="text-dark-900 transition hover:text-secondary-600">
-                    <Icon className="h-4 w-4" />
+                    <Icon className="h-3.5 w-3.5" />
                   </a>
                 )
               })}
@@ -199,21 +199,21 @@ const Navbar = () => {
       </div>
 
       <nav aria-label="Main navigation">
-        <div className="w-full border-b border-sand-200 bg-white px-4 sm:px-6 xl:px-8">
-          <div className="site-header-inner flex items-center justify-between gap-4 text-dark-900 lg:grid lg:grid-cols-[minmax(300px,0.9fr)_minmax(0,2fr)_minmax(230px,0.8fr)]">
-            <Link to={ROUTES.HOME} className="group flex min-w-0 shrink-0 items-center gap-3.5 lg:gap-4" aria-label="Bablons Travel home">
+        <div className="w-full border-b border-sand-200 bg-white">
+          <div className="site-header-inner mx-auto flex w-full max-w-[1500px] items-center justify-between gap-3 px-4 text-dark-900 sm:px-6 lg:grid lg:grid-cols-[minmax(250px,0.78fr)_minmax(0,2.15fr)_minmax(190px,0.58fr)] lg:px-5 xl:grid-cols-[minmax(280px,0.82fr)_minmax(0,2.1fr)_minmax(220px,0.68fr)] xl:px-7 2xl:px-8">
+            <Link to={ROUTES.HOME} className="group flex min-w-0 shrink-0 items-center gap-3 lg:gap-3.5" aria-label="Bablons Travel home">
               <span className="site-logo-frame transition group-hover:-translate-y-0.5">
                 <img src={bablonsLogo} alt="Bablons Travel" className="site-logo-img" />
               </span>
               <span className="hidden leading-tight sm:block">
-                <span className="block font-display text-[1.32rem] font-bold text-dark-900 lg:text-[1.42rem]">Bablons Tours </span>
-                <span className="mt-1 block text-[0.66rem] font-extrabold uppercase tracking-[0.24em] text-secondary-400">
+                <span className="block font-display text-[1.22rem] font-bold text-dark-900 xl:text-[1.34rem]">Bablons Tours</span>
+                <span className="mt-0.5 block text-[0.58rem] font-extrabold uppercase tracking-[0.22em] text-secondary-500 xl:text-[0.62rem]">
                  & Entertainments
                 </span>
               </span>
             </Link>
 
-            <div className="hidden min-w-0 items-center justify-center gap-2 lg:flex">
+            <div className="hidden min-w-0 items-center justify-center gap-1 lg:flex xl:gap-1.5">
               {navLinks.map((link) => {
                 const Icon = link.icon
 
@@ -223,19 +223,19 @@ const Navbar = () => {
                     to={link.path}
                     end={link.path === ROUTES.HOME}
                     className={({ isActive }) =>
-                      `group/nav relative flex min-w-[5.4rem] flex-col items-center justify-center gap-1 px-2 py-3 text-center text-[0.7rem] font-extrabold uppercase tracking-[0.04em] transition xl:min-w-[6.3rem] xl:text-[0.74rem] ${
+                      `group/nav relative flex min-w-[4.75rem] flex-col items-center justify-center gap-1 rounded-xl px-1.5 py-2.5 text-center text-[0.66rem] font-extrabold uppercase tracking-[0.04em] transition hover:bg-sand-50 xl:min-w-[5.75rem] xl:px-2 xl:text-[0.72rem] ${
                         isActive ? 'text-secondary-600' : 'text-dark-900 hover:text-secondary-600'
                       }`
                     }
                   >
                     {({ isActive }) => (
                       <>
-                        <Icon className={`h-4 w-4 transition ${isActive ? 'text-secondary-600' : 'text-dark-900 group-hover/nav:text-secondary-600'}`} />
+                        <Icon className={`h-3.5 w-3.5 transition xl:h-4 xl:w-4 ${isActive ? 'text-secondary-600' : 'text-dark-900 group-hover/nav:text-secondary-600'}`} />
                         <span className="inline-flex items-center gap-1">
                           {link.name}
                           {link.hasDropdown ? <span className="text-[0.85rem] leading-none">⌄</span> : null}
                         </span>
-                        <span className={`absolute bottom-1 h-0.5 w-8 rounded-full bg-secondary-500 transition ${isActive ? 'opacity-100' : 'opacity-0 group-hover/nav:opacity-70'}`} />
+                        <span className={`absolute bottom-1 h-0.5 w-7 rounded-full bg-secondary-500 transition xl:w-8 ${isActive ? 'opacity-100' : 'opacity-0 group-hover/nav:opacity-70'}`} />
                       </>
                     )}
                   </NavLink>
@@ -243,10 +243,10 @@ const Navbar = () => {
               })}
             </div>
 
-            <div className="hidden items-center justify-end gap-3 lg:flex">
+            <div className="hidden items-center justify-end gap-2.5 lg:flex xl:gap-3">
               <Link
                 to={ROUTES.PACKAGES}
-                className="inline-flex h-12 items-center justify-center gap-3 rounded-full bg-gradient-to-r from-accent-300 to-secondary-500 px-7 text-sm font-extrabold uppercase tracking-[0.04em] text-dark-900 shadow-[0_14px_30px_rgba(217,111,58,0.22)] transition hover:-translate-y-0.5 hover:shadow-[0_18px_38px_rgba(217,111,58,0.3)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-secondary-500 xl:px-8"
+                className="inline-flex h-11 items-center justify-center gap-2.5 rounded-full bg-gradient-to-r from-accent-300 to-secondary-500 px-5 text-xs font-extrabold uppercase tracking-[0.04em] text-dark-900 shadow-[0_12px_26px_rgba(217,111,58,0.22)] transition hover:-translate-y-0.5 hover:shadow-[0_16px_34px_rgba(217,111,58,0.3)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-secondary-500 xl:px-7 xl:text-sm"
               >
                 Book Now
                 <FaArrowRight className="h-3.5 w-3.5" />
@@ -254,7 +254,7 @@ const Navbar = () => {
               <Link
                 to={ROUTES.PACKAGES}
                 aria-label="Search packages"
-                className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-dark-900/20 text-dark-900 transition hover:border-secondary-500 hover:bg-secondary-50 hover:text-secondary-600"
+                className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-dark-900/18 text-dark-900 transition hover:border-secondary-500 hover:bg-secondary-50 hover:text-secondary-600"
               >
                 <FaSearch className="h-4 w-4" />
               </Link>

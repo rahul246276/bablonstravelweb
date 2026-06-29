@@ -4,7 +4,6 @@ import { FaArrowRight, FaChevronDown, FaGlobeAsia, FaHeadset, FaMapMarkerAlt, Fa
 import Button from '../../components/common/Button/Button'
 import { ROUTES } from '../../constants/routes'
 import herobg from '../../assets/images/Destinastion page bg.webp'
-import { destinationCountries } from './destinationsData'
 import CountrySection from './sections/CountrySection'
 import { destinationService } from '../../services/destinationService'
 import ContactCTA from '../Home/sections/ContactCTASection'
@@ -15,57 +14,40 @@ const normalizeImage = (image, fallbackAlt) => ({
   alt: image?.alt || fallbackAlt,
 })
 
+const fallbackImage = (alt = 'Travel destination') => ({
+  src: herobg,
+  alt,
+})
+
 const normalizeCountries = (countries = []) =>
   countries
-    .map((country) => ({
-      ...country,
-      slug: country.slug || country.countrySlug,
-      name: country.name || country.country,
-      tagline: country.tagline || country.shortDescription || `Explore ${country.name || country.country}'s most requested travel experiences.`,
-      heroImage: normalizeImage(country.heroImage, country.name || country.country),
-      cities: (country.cities || []).map((city) => ({
-        ...city,
-        slug: city.slug,
-        name: city.name,
-        image: normalizeImage(city.image || city.heroImage, city.name),
-      })).filter((city) => city.slug && city.name),
-      travelTips: country.travelTips || {},
-    }))
+    .map((country) => {
+      const countryName = country.name || country.country
+      const heroImage = normalizeImage(country.heroImage, countryName)
+      const fallbackHero = heroImage.src ? heroImage : fallbackImage(countryName)
+
+      return {
+        ...country,
+        slug: country.slug || country.countrySlug,
+        name: countryName,
+        tagline: country.tagline || country.shortDescription || `Explore ${countryName}'s most requested travel experiences.`,
+        heroImage: fallbackHero,
+        cities: (country.cities || [])
+          .map((city) => {
+            const cityImage = normalizeImage(city.image || city.heroImage, city.name)
+
+            return {
+              ...city,
+              slug: city.slug,
+              name: city.name,
+              image: cityImage.src ? cityImage : fallbackHero,
+            }
+          })
+          .filter((city) => city.slug && city.name),
+        travelTips: country.travelTips || {},
+      }
+    })
     .filter((country) => country.slug && country.name)
-
-const mergeCountries = (curatedCountries, liveCountries) => {
-  if (!liveCountries.length) return curatedCountries
-
-  const countryMap = new Map(curatedCountries.map((country) => [country.slug, { ...country, cities: [...country.cities] }]))
-
-  liveCountries.forEach((liveCountry) => {
-    const existingCountry = countryMap.get(liveCountry.slug)
-
-    if (!existingCountry) {
-      return
-    }
-
-    const cityMap = new Map(existingCountry.cities.map((city) => [city.slug, city]))
-    liveCountry.cities.forEach((liveCity) => {
-      const existingCity = cityMap.get(liveCity.slug)
-      cityMap.set(liveCity.slug, {
-        ...existingCity,
-        ...liveCity,
-        image: liveCity.image?.src ? liveCity.image : existingCity?.image || liveCountry.heroImage || existingCountry.heroImage,
-      })
-    })
-
-    countryMap.set(liveCountry.slug, {
-      ...existingCountry,
-      ...liveCountry,
-      tagline: liveCountry.tagline || existingCountry.tagline,
-      heroImage: liveCountry.heroImage?.src ? liveCountry.heroImage : existingCountry.heroImage,
-      cities: Array.from(cityMap.values()).filter((city) => city.image?.src),
-    })
-  })
-
-  return Array.from(countryMap.values()).filter((country) => country.cities.length || country.heroImage?.src)
-}
 
 const getDisplayName = (name = '') => name.replace('Dubai / ', '')
 
@@ -119,9 +101,9 @@ const DestinationsListPage = () => {
     }
   }, [])
 
-  const countries = useMemo(() => mergeCountries(destinationCountries, backendCountries), [backendCountries])
+  const countries = useMemo(() => backendCountries, [backendCountries])
   const cityCount = countries.reduce((sum, country) => sum + country.cities.length, 0)
-  const countryNames = countries.map((country) => country.name).join(', ')
+  const countryNames = countries.length ? countries.map((country) => country.name).join(', ') : 'your backend destinations'
   const filteredCountries = useMemo(() => {
     const query = searchQuery.trim().toLowerCase()
 
@@ -164,7 +146,7 @@ const DestinationsListPage = () => {
               </h1>
 
               <p className="mt-4 max-w-2xl text-base font-semibold leading-8 text-dark-800 sm:text-lg">
-                Discover {cityCount} beautiful city experiences across {countryNames}. Choose your dream destination and start your journey with Bablons.
+                Discover {cityCount} city experiences from your backend across {countryNames}. Choose your dream destination and start your journey with Bablons.
               </p>
 
               <div className="mt-6 grid gap-3 rounded-2xl bg-white p-3 text-dark-900 shadow-2xl shadow-black/20 sm:grid-cols-[minmax(0,1fr)_180px_140px] lg:max-w-3xl">
@@ -288,7 +270,7 @@ const DestinationsListPage = () => {
         ) : null}
         {!loading && error && !backendCountries.length ? (
           <div className="mb-8 rounded-2xl border border-amber-200 bg-amber-50 p-4 text-center text-sm font-bold text-amber-800">
-            Showing curated destinations. {error}
+            Backend destinations are unavailable right now. {error}
           </div>
         ) : null}
         {filteredCountries.map((country) => (
@@ -303,8 +285,8 @@ const DestinationsListPage = () => {
         ))}
         {!loading && !filteredCountries.length ? (
           <div className="rounded-3xl border border-slate-200 bg-white p-8 text-center shadow-sm">
-            <p className="font-display text-2xl font-bold text-dark-900">No destination found</p>
-            <p className="mt-2 text-sm text-dark-500">Try another city or country name.</p>
+            <p className="font-display text-2xl font-bold text-dark-900">No backend destination found</p>
+            <p className="mt-2 text-sm text-dark-500">Add active city destinations from the admin panel to show them here.</p>
           </div>
         ) : null}
       </div>

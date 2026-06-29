@@ -32,8 +32,8 @@
   --bt-route-stroke: rgba(240, 195, 106, 0.55);
   --bt-route-stroke-dark: rgba(217, 111, 58, 0.4);
 
-  --header-nav-height: 100px;
-  --header-topbar-height: 60px;
+  --header-nav-height: 96px;
+  --header-topbar-height: 48px;
   --header-height-mobile: 104px;
   --header-height-desktop: calc(var(--header-topbar-height) + var(--header-nav-height));
 }
@@ -321,6 +321,10 @@
   }
 
   @media (min-width: 1024px) {
+    :root {
+      --header-nav-height: 88px;
+    }
+
     .site-header {
       min-height: var(--header-height-desktop);
     }
@@ -334,10 +338,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 76px;
-    height: 76px;
-    min-width: 76px;
-    min-height: 76px;
+    width: 72px;
+    height: 72px;
+    min-width: 72px;
+    min-height: 72px;
     overflow: visible;
     border-radius: 0;
     background: transparent;
@@ -346,10 +350,10 @@
   }
 
   .site-logo-img {
-    width: 100px;
-    height: 100px;
-    max-width: 100px;
-    max-height: 100px;
+    width: 72px;
+    height: 72px;
+    max-width: 72px;
+    max-height: 72px;
     display: block;
     object-fit: contain;
   }
@@ -359,6 +363,20 @@
   }
 
   @media (min-width: 1024px) {
+    .site-logo-frame {
+      width: 68px;
+      height: 68px;
+      min-width: 68px;
+      min-height: 68px;
+    }
+
+    .site-logo-img {
+      width: 68px;
+      height: 68px;
+      max-width: 68px;
+      max-height: 68px;
+    }
+
     .app-main {
       padding-top: var(--header-height-desktop);
     }

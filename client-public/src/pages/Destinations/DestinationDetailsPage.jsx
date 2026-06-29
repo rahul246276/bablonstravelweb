@@ -1,7 +1,6 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import Button from '../../components/common/Button/Button'
-import { findCityBySlug, getCityDetails } from './destinationDetailsHelpers'
 import DestinationOverview from './sections/DestinationOverview'
 import Attractions from './sections/Attractions'
 import Gallery from './sections/Gallery'
@@ -9,10 +8,11 @@ import RelatedPackages from './sections/RelatedPackages'
 import TravelTips from './sections/TravelTips'
 import { destinationService } from '../../services/destinationService'
 import ContactCTA from '../Home/sections/ContactCTASection'
+import herobg from '../../assets/images/Destinastion page bg.webp'
 
 
 const normalizeImage = (image, fallbackAlt) => ({
-  src: image?.src || image?.url || '',
+  src: image?.src || image?.url || herobg,
   alt: image?.alt || fallbackAlt,
 })
 
@@ -20,7 +20,34 @@ const normalizeAttractions = (attractions = []) =>
   attractions.map((attraction) => ({
     name: attraction.name || attraction.title,
     note: attraction.note || attraction.description,
+    image: normalizeImage(attraction.image, attraction.name || attraction.title),
   })).filter((attraction) => attraction.name)
+
+const COUNTRY_SLUG_ALIASES = {
+  dubai: 'dubai-uae',
+  uae: 'dubai-uae',
+  'united-arab-emirates': 'dubai-uae',
+}
+
+const getCountryKey = (slug = '') => COUNTRY_SLUG_ALIASES[slug] || slug
+const sameCountrySlug = (first = '', second = '') => getCountryKey(first) === getCountryKey(second)
+
+const getResolvedDetails = (city, country) => {
+  const backend = city.details || {}
+
+  return {
+    ...backend,
+    intro: backend.intro || `${city.name} is one of ${country.name}'s standout travel experiences.`,
+    highlights: backend.highlights?.length ? backend.highlights : [
+      'Custom itinerary planning',
+      'Hotel and transfer assistance',
+      'Guided sightseeing options',
+      'Visa and document guidance where applicable',
+    ],
+    attractions: backend.attractions?.length ? backend.attractions : [],
+    gallery: backend.gallery?.length ? backend.gallery : [],
+  }
+}
 
 const backendDestinationToView = (destination) => {
   if (!destination) return null
@@ -60,30 +87,22 @@ const backendDestinationToView = (destination) => {
 
 /**
  * Route: /destinations/:countrySlug/:citySlug
- * e.g. /destinations/dubai-uae/dubai
- *
- * This is the page CityCard.jsx links to from DestinationsListPage.
- * Both slugs are looked up together via findCityBySlug so a stale or
- * mistyped URL (wrong country/city pairing, or a slug that doesn't
- * exist) is caught in one place and shown a real not-found state,
- * rather than letting `undefined` propagate into child sections and
- * crash partway down the page.
+ * Every destination detail page is loaded from the backend. Static
+ * destination data is intentionally not used here, so deleting or
+ * adding cities in admin is reflected on the public site.
  */
 const DestinationDetailsPage = () => {
   const { countrySlug, citySlug } = useParams()
-  const staticResult = useMemo(() => findCityBySlug(countrySlug, citySlug), [countrySlug, citySlug])
   const routeKey = `${countrySlug}/${citySlug}`
   const [backendState, setBackendState] = useState({ key: '', result: null })
 
   useEffect(() => {
     let mounted = true
 
-    if (staticResult) return undefined
-
-    destinationService.get(citySlug)
+    destinationService.get(citySlug, { countrySlug })
       .then((item) => {
         if (!mounted) return
-        const result = item.countrySlug === countrySlug ? backendDestinationToView(item) : null
+        const result = sameCountrySlug(item.countrySlug, countrySlug) ? backendDestinationToView(item) : null
         setBackendState({ key: routeKey, result })
       })
       .catch(() => {
@@ -93,11 +112,11 @@ const DestinationDetailsPage = () => {
     return () => {
       mounted = false
     }
-  }, [citySlug, countrySlug, routeKey, staticResult])
+  }, [citySlug, countrySlug, routeKey])
 
   const backendResult = backendState.key === routeKey ? backendState.result : null
-  const loading = !staticResult && backendState.key !== routeKey
-  const result = staticResult || backendResult
+  const loading = backendState.key !== routeKey
+  const result = backendResult
 
   if (loading) {
     return (
@@ -130,7 +149,7 @@ const DestinationDetailsPage = () => {
   }
 
   const { city, country } = result
-  const details = getCityDetails(city.slug, city.name, country.name)
+  const details = getResolvedDetails(city, country)
   const cityWithDetails = { ...city, details }
 
   return (
