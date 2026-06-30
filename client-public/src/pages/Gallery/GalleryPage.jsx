@@ -1,73 +1,64 @@
 import { Link } from 'react-router-dom'
 import {
+  FaArrowRight,
   FaAward,
-  FaCameraRetro,
   FaCloudUploadAlt,
+  FaCameraRetro,
   FaGlobeAsia,
   FaHeart,
-  FaImage,
+  FaImages,
   FaMapMarkerAlt,
-  FaPaperPlane,
-  FaRegHeart,
   FaRegImages,
+  FaRoute,
 } from 'react-icons/fa'
 import galleryHeroBg from '../../assets/images/Bablons Tour Bg 2.png'
 import { ROUTES } from '../../constants/routes'
+import { galleryImages } from '../../constants/galleryImages'
 
-const photos = [
-  {
-    title: 'Silk Road Architecture',
-    location: 'Uzbekistan',
-    image: 'https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=1200&q=85',
-  },
-  {
-    title: 'Mountain Villages',
-    location: 'Georgia',
-    image: 'https://images.unsplash.com/photo-1565008576549-57569a49371d?auto=format&fit=crop&w=900&q=85',
-  },
-  {
-    title: 'Baku Skyline',
-    location: 'Azerbaijan',
-    image: 'https://images.unsplash.com/photo-1605538883669-825200433431?auto=format&fit=crop&w=900&q=85',
-  },
-  {
-    title: 'Istanbul Light',
-    location: 'Turkey',
-    image: 'https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?auto=format&fit=crop&w=900&q=85',
-  },
-  {
-    title: 'Island Calm',
-    location: 'Thailand',
-    image: 'https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&w=900&q=85',
-  },
-  {
-    title: 'Desert Evenings',
-    location: 'Dubai',
-    image: 'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=900&q=85',
-  },
-]
+const categories = ['All Frames', 'Cities', 'Nature', 'Culture', 'Luxury', 'Hidden Gems']
 
-const heroStats = [
-  { icon: FaGlobeAsia, value: '06+', label: 'Destinations', note: 'Handpicked wonders' },
-  { icon: FaRegImages, value: '250+', label: 'Premium photos', note: 'High quality gallery' },
-  { icon: FaAward, value: '100%', label: 'Authentic moments', note: 'Captured with passion' },
-]
+const GalleryCard = ({ item, index }) => {
+  const featureClass =
+    index === 0
+      ? 'sm:col-span-2 lg:row-span-2'
+      : index === 5 || index === 12
+        ? 'lg:col-span-2'
+        : index === 9
+          ? 'sm:row-span-2'
+          : ''
 
-const heroFeatures = [
-  { icon: FaCameraRetro, title: 'Premium Quality', text: 'Images' },
-  { icon: FaAward, title: 'Curated by', text: 'Travel Experts' },
-  { icon: FaCloudUploadAlt, title: 'New Galleries', text: 'Added Regularly' },
-  { icon: FaHeart, title: 'Save Your', text: 'Favorite Moments' },
-  { icon: FaPaperPlane, title: 'Share & Inspire', text: 'Fellow Travelers' },
-]
-
-const heroPolaroids = [
-  { title: 'Natural Beauty', image: photos[1].image, rotate: '-rotate-6', offset: 'lg:translate-y-8' },
-  { title: 'Timeless Cultures', image: photos[0].image, rotate: 'rotate-2', offset: 'lg:-translate-y-2' },
-  { title: 'Dreamy Escapes', image: photos[4].image, rotate: 'rotate-6', offset: 'lg:translate-y-10' },
-]
+  return (
+    <figure
+      className={`group relative min-h-[280px] overflow-hidden rounded-2xl bg-dark-900 shadow-[0_18px_48px_rgba(16,39,36,0.12)] transition duration-500 hover:-translate-y-1 hover:shadow-[0_30px_80px_rgba(16,39,36,0.18)] ${featureClass}`}
+    >
+      <img
+        src={item.src}
+        alt={item.title}
+        className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
+        loading={index < 4 ? 'eager' : 'lazy'}
+      />
+      <div className="absolute inset-0 bg-gradient-to-t from-dark-900/88 via-dark-900/20 to-transparent" />
+      <span className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full border border-white/40 bg-white/12 text-white backdrop-blur transition group-hover:bg-white group-hover:text-secondary-600">
+        <FaHeart className="h-4 w-4" />
+      </span>
+      <figcaption className="absolute inset-x-0 bottom-0 p-5 text-white">
+        <p className="mb-2 flex items-center gap-2 text-xs font-extrabold uppercase tracking-[0.08em] text-accent-300">
+          <FaMapMarkerAlt className="h-3.5 w-3.5" />
+          {item.location}
+        </p>
+        <h2 className="font-display text-2xl font-bold leading-tight">{item.title}</h2>
+      </figcaption>
+    </figure>
+  )
+}
 
 const GalleryPage = () => {
+  const heroPolaroids = [
+    { title: galleryImages[1].title, image: galleryImages[1].src, rotate: '-rotate-6', offset: 'lg:translate-y-8' },
+    { title: galleryImages[2].title, image: galleryImages[2].src, rotate: 'rotate-2', offset: 'lg:-translate-y-2' },
+    { title: galleryImages[3].title, image: galleryImages[3].src, rotate: 'rotate-6', offset: 'lg:translate-y-10' },
+  ]
+
   return (
     <div className="overflow-hidden bg-[#FAF8F4] text-dark-900">
       <section className="relative isolate overflow-hidden bg-dark-900 text-white">
@@ -91,7 +82,7 @@ const GalleryPage = () => {
             <h1 className="mt-8 max-w-3xl font-display text-[clamp(4rem,8vw,7.6rem)] font-bold leading-[0.88] text-white">
               The world.
               <span className="mt-3 block bg-gradient-to-r from-accent-200 via-[#f3bd62] to-secondary-300 bg-clip-text font-display italic text-transparent drop-shadow-[0_8px_18px_rgba(0,0,0,0.35)]">
-              Beautifull 
+                beautifully
               </span>
               captured.
             </h1>
@@ -103,24 +94,28 @@ const GalleryPage = () => {
             </p>
 
             <div className="mt-9 flex flex-col gap-4 sm:flex-row">
-              <Link
-                to={ROUTES.PACKAGES}
-                className="inline-flex min-h-[3.5rem] items-center justify-center gap-3 rounded-full bg-gradient-to-r from-accent-300 to-secondary-300 px-8 py-4 text-sm font-extrabold uppercase tracking-[0.06em] text-dark-900 shadow-[0_20px_55px_rgba(240,195,106,0.26)] transition hover:-translate-y-0.5 hover:from-accent-200 hover:to-secondary-200"
+              <a
+                href="#gallery-collection"
+                className="inline-flex min-h-[3.5rem] items-center justify-center gap-3 rounded-full bg-gradient-to-r from-accent-300 to-secondary-300 px-8 py-4 text-sm font-extrabold uppercase tracking-[0.06em] text-dark-900 shadow-[0_20px_55px_rgba(240,195,106,0.26)] transition hover:-translate-y-0.5"
               >
-                <FaImage />
+                <FaImages />
                 Explore Gallery
-              </Link>
+              </a>
               <Link
                 to={ROUTES.CONTACT}
                 className="inline-flex min-h-[3.5rem] items-center justify-center gap-3 rounded-full border border-white/35 bg-dark-900/20 px-8 py-4 text-sm font-extrabold uppercase tracking-[0.06em] text-white backdrop-blur-md transition hover:-translate-y-0.5 hover:bg-white hover:text-dark-900"
               >
-                <FaRegHeart />
-                My Favorites
+                Plan From Gallery
+                <FaArrowRight />
               </Link>
             </div>
 
             <div className="mt-10 grid gap-3 border border-white/16 bg-white/[0.08] p-4 shadow-[0_30px_90px_rgba(0,0,0,0.24)] backdrop-blur-xl sm:grid-cols-3 lg:max-w-3xl">
-              {heroStats.map((stat) => {
+              {[
+                { icon: FaGlobeAsia, value: '06+', label: 'Destinations', note: 'Handpicked wonders' },
+                { icon: FaRegImages, value: `${galleryImages.length}+`, label: 'Premium photos', note: 'High quality gallery' },
+                { icon: FaAward, value: '100%', label: 'Authentic moments', note: 'Captured with passion' },
+              ].map((stat) => {
                 const Icon = stat.icon
                 return (
                   <div key={stat.label} className="flex items-center gap-4 p-3">
@@ -136,7 +131,13 @@ const GalleryPage = () => {
             </div>
 
             <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
-              {heroFeatures.map((feature) => {
+              {[
+                { icon: FaCameraRetro, title: 'Premium Quality', text: 'Images' },
+                { icon: FaAward, title: 'Curated by', text: 'Travel Experts' },
+                { icon: FaCloudUploadAlt, title: 'New Galleries', text: 'Added Regularly' },
+                { icon: FaHeart, title: 'Save Your', text: 'Favorite Moments' },
+                { icon: FaRoute, title: 'Share & Inspire', text: 'Fellow Travelers' },
+              ].map((feature) => {
                 const Icon = feature.icon
                 return (
                   <div key={feature.title} className="flex items-center gap-3 text-white/88">
@@ -183,45 +184,41 @@ const GalleryPage = () => {
         </div>
       </section>
 
-      <section className="section-container py-14 lg:py-20">
-        <div className="mb-10 grid gap-6 lg:grid-cols-[1fr_auto] lg:items-end">
+      <section id="gallery-collection" className="mx-auto w-full max-w-[1680px] px-3 py-14 sm:px-5 lg:px-7 lg:py-20 2xl:px-8">
+        <div className="mb-8 grid gap-6 lg:grid-cols-[1fr_auto] lg:items-end">
           <div>
             <p className="section-eyebrow">
               <FaRegImages className="text-secondary-600" />
               Visual stories
             </p>
             <h2 className="mt-3 max-w-3xl font-display text-4xl font-bold leading-tight text-dark-900 md:text-5xl">
-              A closer look at the journeys we design
+              A premium gallery of places worth pausing for
             </h2>
           </div>
           <p className="max-w-sm text-base leading-7 text-dark-500">
-            Every frame is selected to help you imagine the pace, texture, and mood of your next holiday.
+            Every frame is selected to help visitors imagine the color, texture, and mood of the journey.
           </p>
         </div>
 
-        <div className="grid auto-rows-[280px] grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {photos.map((photo, index) => (
-            <figure
-              key={photo.title}
-              className={`group relative overflow-hidden bg-dark-900 shadow-card transition duration-500 hover:-translate-y-1 hover:shadow-card-hover ${
-                index === 0 ? 'sm:col-span-2 lg:row-span-2' : ''
-              } ${index === 3 ? 'lg:col-span-2' : ''}`}
+        <div className="mb-8 flex flex-wrap gap-3">
+          {categories.map((category, index) => (
+            <button
+              key={category}
+              type="button"
+              className={`inline-flex min-h-11 items-center rounded-full border px-5 text-xs font-extrabold transition ${
+                index === 0
+                  ? 'border-primary-900 bg-primary-900 text-white shadow-[0_14px_30px_rgba(16,39,36,0.18)]'
+                  : 'border-sand-200 bg-white text-dark-700 hover:border-secondary-200 hover:bg-secondary-50 hover:text-secondary-700'
+              }`}
             >
-              <img
-                src={photo.image}
-                alt={photo.title}
-                className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
-                loading={index === 0 ? 'eager' : 'lazy'}
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-dark-900/88 via-dark-900/16 to-transparent" />
-              <figcaption className="absolute inset-x-0 bottom-0 p-5 text-white">
-                <p className="mb-2 flex items-center gap-2 text-xs font-extrabold uppercase tracking-[0.08em] text-accent-300">
-                  <FaMapMarkerAlt className="h-3.5 w-3.5" />
-                  {photo.location}
-                </p>
-                <h2 className="font-display text-2xl font-bold leading-tight">{photo.title}</h2>
-              </figcaption>
-            </figure>
+              {category}
+            </button>
+          ))}
+        </div>
+
+        <div className="grid auto-rows-[280px] grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {galleryImages.map((item, index) => (
+            <GalleryCard key={item.src} item={item} index={index} />
           ))}
         </div>
       </section>
