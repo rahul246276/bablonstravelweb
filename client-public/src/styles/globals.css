@@ -338,10 +338,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 72px;
-    height: 72px;
-    min-width: 72px;
-    min-height: 72px;
+    width: 90px;
+    height: 90px;
+    min-width: 90px;
+    min-height: 90px;
     overflow: visible;
     border-radius: 0;
     background: transparent;
@@ -350,10 +350,10 @@
   }
 
   .site-logo-img {
-    width: 72px;
-    height: 72px;
-    max-width: 72px;
-    max-height: 72px;
+    width: 90px;
+    height: 90px;
+    max-width: 90px;
+    max-height: 90px;
     display: block;
     object-fit: contain;
   }
@@ -364,17 +364,17 @@
 
   @media (min-width: 1024px) {
     .site-logo-frame {
-      width: 68px;
-      height: 68px;
-      min-width: 68px;
-      min-height: 68px;
+      width: 90px;
+      height: 90px;
+      min-width: 90px;
+      min-height: 90px;
     }
 
     .site-logo-img {
-      width: 68px;
-      height: 68px;
-      max-width: 68px;
-      max-height: 68px;
+      width: 90px;
+      height: 90px;
+      max-width: 90px;
+      max-height: 90px;
     }
 
     .app-main {

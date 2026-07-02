@@ -105,6 +105,7 @@ const SearchPackagesSection = () => {
                 <option value="3">3 Travelers</option>
                 <option value="4">4 Travelers</option>
                 <option value="5+">5+ Travelers</option>
+                
               </select>
             </span>
             <FaChevronDown className="h-3 w-3 shrink-0 text-dark-500 transition group-focus-within:rotate-180" />

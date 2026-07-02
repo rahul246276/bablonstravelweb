@@ -1,4 +1,4 @@
-import destinationBg from '../../assets/images/Destinastion Page  Bg.png'
+import destinationBg from '../../assets/images/Hero Section Bg 3.png'
 import heroOne from '../../assets/images/Hero Section Bg 1.png'
 import heroTwo from '../../assets/images/Hero Section Bg 2.png'
 import heroThree from '../../assets/images/Hero Section Bg 3.png'

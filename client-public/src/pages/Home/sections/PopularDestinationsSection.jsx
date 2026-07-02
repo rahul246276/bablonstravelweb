@@ -492,5 +492,5 @@ const PopularDestinationsSection = () => {
     </section>
   )
 }
-
+console.log(normalizeImage);
 export default PopularDestinationsSection

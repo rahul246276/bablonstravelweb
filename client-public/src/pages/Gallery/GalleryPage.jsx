@@ -153,6 +153,7 @@ const GalleryPage = () => {
               })}
             </div>
           </div>
+          
 
           <div className="relative hidden min-h-[540px] items-end justify-center lg:flex">
             <div className="absolute right-6 top-10 h-28 w-28 rounded-full border border-accent-300/25" />

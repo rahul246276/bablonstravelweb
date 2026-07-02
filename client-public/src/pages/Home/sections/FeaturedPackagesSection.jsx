@@ -1,292 +1,293 @@
 import { Link } from 'react-router-dom'
+import { ROUTES } from '../../../constants/routes'
 import {
-  FaArrowLeft,
   FaArrowRight,
   FaBuilding,
-  FaCamera,
-  FaGlobeAsia,
-  FaHeadset,
+  FaCalendarCheck,
+  FaCar,
+  FaFire,
   FaHeart,
   FaHotel,
-  FaMapMarkerAlt,
+  FaMapMarkedAlt,
   FaMountain,
   FaPlane,
-  FaShieldAlt,
+  FaSearch,
+  FaShip,
   FaStar,
-  FaTags,
-  FaUmbrellaBeach,
+  FaSuitcaseRolling,
   FaUserTie,
+  FaUtensils,
 } from 'react-icons/fa'
-import { ROUTES } from '../../../constants/routes'
 
-const categories = [
-  { label: 'All Packages', icon: FaGlobeAsia, active: true },
-  { label: 'Asia', icon: FaUmbrellaBeach },
-  { label: 'Middle East', icon: FaBuilding },
-  { label: 'Europe', icon: FaBuilding },
-  { label: 'Caucasus', icon: FaMountain },
-  { label: 'Africa', icon: FaGlobeAsia },
-  { label: 'Island Escapes', icon: FaUmbrellaBeach },
+const tabs = [
+  { label: 'All', icon: FaMapMarkedAlt, active: true },
+  { label: 'Dubai', icon: FaBuilding },
+  { label: 'Thailand', icon: FaShip },
+  { label: 'Georgia', icon: FaMountain },
+  { label: 'Uzbekistan', icon: FaBuilding },
 ]
 
-const proofPoints = [
-  { icon: FaShieldAlt, title: 'Expertly Curated', label: 'By travel experts' },
-  { icon: FaTags, title: 'Best Price Guarantee', label: 'Competitive pricing' },
-  { icon: FaHeadset, title: '24/7 Travel Support', label: "We're here always" },
-  { icon: FaGlobeAsia, title: 'Trusted Worldwide', label: '10,000+ happy travellers' },
+const inclusions = [
+  { label: 'Flights*', icon: FaPlane },
+  { label: 'Hotels', icon: FaHotel },
+  { label: 'Transfers', icon: FaCar },
+  { label: 'Breakfast', icon: FaUtensils },
+  { label: 'Tour Manager', icon: FaUserTie },
 ]
+
+const featuredPackage = {
+  title: 'Thailand Premium Tour',
+  route: 'Bangkok - Pattaya - Phuket',
+  duration: '6N / 7D',
+  badge: 'Bestseller',
+  description:
+    'Experience crystal beaches, island hopping, premium stays, and vibrant city moments in one seamless Bablons itinerary.',
+  image:
+    'https://res.cloudinary.com/docgnkjn9/image/upload/v1782808011/bablons-travel/destinations/epbjumeut9qapj3pxkos.jpg',
+}
 
 const packages = [
   {
-    name: 'Uzbekistan Silk Road',
-    destination: 'Uzbekistan',
-    type: 'Heritage & Culture',
-    badge: 'Top Rated',
-    duration: '7 Days',
+    title: 'Dubai Premium Tour',
+    route: 'Dubai - Abu Dhabi',
+    duration: '5N / 6D',
+    tag: 'Trending',
+    icon: FaFire,
+    image:
+      'https://res.cloudinary.com/docgnkjn9/image/upload/v1782717769/bablons-travel/destinations/uzgbgcqcs2jgjg73sg8i.jpg',
+    tone: 'bg-secondary-500',
+  },
+  {
+    title: 'Thailand Premium Tour',
+    route: 'Bangkok - Pattaya - Phuket',
+    duration: '6N / 7D',
+    tag: 'Most Popular',
+    icon: FaHeart,
+    image:
+      'https://res.cloudinary.com/docgnkjn9/image/upload/v1782807660/bablons-travel/destinations/siglcnydp1mfc0cvcyvc.jpg',
+    tone: 'bg-rose-500',
+  },
+  {
+    title: 'Georgia Explorer Tour',
+    route: 'Tbilisi - Gudauri - Batumi',
+    duration: '6N / 7D',
+    tag: 'Top Rated',
+    icon: FaStar,
+    image:
+      'https://res.cloudinary.com/docgnkjn9/image/upload/v1782803773/bablons-travel/destinations/cm8jrm1zri3p8syytt3f.jpg',
+    tone: 'bg-primary-700',
+  },
+  {
+    title: 'Uzbekistan Silk Road Tour',
     route: 'Tashkent - Samarkand - Bukhara',
-    price: '$1,299',
-    rating: '4.8',
-    reviews: '245',
-    image: 'https://images.unsplash.com/photo-1518002054494-3a6f94352e9d?auto=format&fit=crop&w=900&q=80',
-    tone: 'primary',
-  },
-  {
-    name: 'Caucasus Mountain Escape',
-    destination: 'Georgia',
-    type: 'Nature & Adventure',
-    badge: 'Most Booked',
-    duration: '10 Days',
-    route: 'Tbilisi - Kazbegi - Kakheti',
-    price: '$1,599',
-    rating: '4.9',
-    reviews: '189',
-    image: 'https://images.unsplash.com/photo-1557589196-410b97900060?auto=format&fit=crop&w=900&q=80',
-    tone: 'indigo',
-  },
-  {
-    name: 'Dubai Luxury Break',
-    destination: 'Dubai',
-    type: 'Luxury & Leisure',
-    badge: 'Premium Pick',
-    duration: '5 Days',
-    route: 'Downtown - Marina - Desert Safari',
-    price: '$2,199',
-    rating: '4.7',
-    reviews: '312',
-    image: 'https://images.unsplash.com/photo-1518684079-3c830dcef090?auto=format&fit=crop&w=900&q=80',
-    tone: 'gold',
-  },
-  {
-    name: 'Thailand Tropical Escape',
-    destination: 'Thailand',
-    type: 'Beaches & Islands',
-    badge: 'Trending',
-    duration: '6 Days',
-    route: 'Phuket - Krabi - Phi Phi Islands',
-    price: '$1,099',
-    rating: '4.6',
-    reviews: '201',
-    image: 'https://images.unsplash.com/photo-1504214208698-ea1916a2195a?auto=format&fit=crop&w=900&q=80',
-    tone: 'primary',
+    duration: '6N / 7D',
+    tag: 'New Arrival',
+    icon: FaStar,
+    image:
+      'https://res.cloudinary.com/docgnkjn9/image/upload/v1782799415/bablons-travel/destinations/fsfxf9eqxkvbhkjzdxlf.jpg',
+    tone: 'bg-violet-600',
   },
 ]
 
-const valueProps = [
-  { icon: FaHotel, title: 'Handpicked Hotels', description: 'Premium stays for ultimate comfort' },
-  { icon: FaUserTie, title: 'Expert Local Guides', description: 'Knowledgeable, friendly & professional' },
-  { icon: FaCamera, title: 'Curated Experiences', description: 'Unique activities and authentic moments' },
-  { icon: FaTags, title: 'Best Price Guarantee', description: 'No hidden charges, best value always' },
-  { icon: FaHeadset, title: '24/7 Travel Support', description: "We're here for you, before & during your trip" },
+const steps = [
+  { title: 'Choose Your Tour', text: 'Select from our handpicked international tours', icon: FaSearch },
+  { title: 'Book With Ease', text: 'Secure your spot with a simple booking process', icon: FaCalendarCheck },
+  { title: 'Pack Your Bags', text: 'Get set for an unforgettable journey', icon: FaSuitcaseRolling },
+  { title: 'Enjoy Your Trip', text: 'Relax and create memories for a lifetime', icon: FaHeart },
 ]
-
-const toneClasses = {
-  primary: {
-    badge: 'bg-primary-800/88 text-white',
-    button: 'bg-primary-900 hover:bg-primary-800',
-  },
-  indigo: {
-    badge: 'bg-indigo-900/82 text-white',
-    button: 'bg-indigo-900 hover:bg-indigo-800',
-  },
-  gold: {
-    badge: 'bg-accent-600 text-white',
-    button: 'bg-accent-700 hover:bg-accent-800',
-  },
-}
 
 const FeaturedPackagesSection = () => {
   return (
     <section className="section-shell relative overflow-hidden bg-[#FFFCF7]">
-      <div className="absolute right-0 top-0 hidden h-96 w-[44rem] bg-[radial-gradient(circle_at_center,rgba(217,111,58,0.08),transparent_64%)] lg:block" />
-      <div className="absolute right-[8%] top-20 hidden h-56 w-[35rem] rounded-full border border-dashed border-sand-300/70 opacity-70 lg:block" />
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-64 bg-[linear-gradient(115deg,rgba(237,245,242,0.86),rgba(255,241,234,0.62),rgba(255,252,247,0))]" />
+      <div className="pointer-events-none absolute -right-28 top-8 hidden h-80 w-80 rounded-full bg-secondary-100/55 blur-3xl lg:block" />
+      <div className="pointer-events-none absolute -left-28 bottom-20 hidden h-80 w-80 rounded-full bg-primary-100/70 blur-3xl lg:block" />
 
       <div className="section-container relative">
-        <div className="section-header grid gap-8 lg:grid-cols-[1fr_0.65fr] lg:items-end">
-          <div>
-            <p className="section-eyebrow text-secondary-600">
-              <FaPlane className="h-4 w-4" />
-              Signature journeys
-            </p>
-            <h2 className="mt-4 max-w-4xl font-display text-4xl font-bold leading-[1.08] text-dark-900 md:text-5xl lg:text-6xl">
-              Extraordinary Journeys,
-              <span className="block">
-                Crafted for <span className="text-secondary-600">Unforgettable</span> Memories
-              </span>
-            </h2>
-            <p className="mt-5 max-w-2xl text-lg leading-8 text-dark-600">
-              Handpicked international packages with exceptional stays, immersive experiences, and seamless travel arrangements.
-            </p>
-          </div>
-
-          <div className="flex justify-start lg:justify-end">
-            <Link
-              to={ROUTES.PACKAGES}
-              className="inline-flex h-14 items-center justify-center gap-3 rounded-full bg-primary-900 px-8 text-sm font-extrabold text-white shadow-[0_18px_40px_rgba(16,39,36,0.22)] transition hover:-translate-y-0.5 hover:bg-primary-800"
-            >
-              View All Packages
-              <FaArrowRight />
-            </Link>
-          </div>
+        <div className="mx-auto max-w-4xl text-center">
+          <p className="font-display-label text-xl font-semibold text-dark-500 md:text-2xl">
+            Curated Experiences, Unforgettable Journeys <FaPlane className="ml-2 inline text-accent-500" />
+          </p>
+          <h2 className="mt-3 font-display text-4xl font-bold leading-[1.05] text-dark-900 md:text-6xl lg:text-7xl">
+            Handpicked International Tours
+          </h2>
+          <p className="mx-auto mt-4 max-w-2xl text-base font-medium leading-7 text-dark-500 md:text-xl">
+            Premium destinations, carefully curated for you.
+          </p>
         </div>
 
-        <div className="mb-9 grid gap-5 md:grid-cols-2 lg:max-w-4xl lg:grid-cols-4">
-          {proofPoints.map((item) => {
-            const Icon = item.icon
-
-            return (
-              <div key={item.title} className="flex items-center gap-4">
-                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-sand-200 bg-white text-secondary-600 shadow-sm">
-                  <Icon className="h-5 w-5" />
-                </span>
-                <div>
-                  <h3 className="text-sm font-extrabold text-dark-900">{item.title}</h3>
-                  <p className="mt-1 text-xs text-dark-500">{item.label}</p>
-                </div>
-              </div>
-            )
-          })}
-        </div>
-
-        <div className="mb-8 flex flex-wrap justify-center gap-4">
-          {categories.map((category) => {
-            const Icon = category.icon
+        <div className="mt-8 flex flex-wrap justify-center gap-3 md:gap-4">
+          {tabs.map((tab) => {
+            const Icon = tab.icon
 
             return (
               <button
-                key={category.label}
+                key={tab.label}
                 type="button"
-                className={`inline-flex h-12 min-w-[10rem] items-center justify-center gap-3 rounded-full border px-5 text-sm font-bold transition ${
-                  category.active
-                    ? 'border-primary-900 bg-primary-900 text-white shadow-[0_14px_32px_rgba(16,39,36,0.18)]'
-                    : 'border-sand-300 bg-white/70 text-dark-800 hover:border-primary-300 hover:bg-primary-50'
+                className={`inline-flex h-12 min-w-[8.5rem] items-center justify-center gap-3 rounded-full border px-5 text-sm font-extrabold shadow-sm transition hover:-translate-y-0.5 ${
+                  tab.active
+                    ? 'border-primary-900 bg-primary-900 text-white shadow-[0_18px_36px_rgba(16,39,36,0.2)]'
+                    : 'border-sand-200 bg-white/90 text-dark-800 hover:border-primary-200 hover:bg-primary-50'
                 }`}
               >
                 <Icon className="h-4 w-4" />
-                {category.label}
+                {tab.label}
               </button>
             )
           })}
         </div>
 
-        <div className="relative">
-          <button
-            type="button"
-            aria-label="Previous packages"
-            className="absolute -left-7 top-1/2 z-10 hidden h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-white text-dark-900 shadow-[0_14px_34px_rgba(16,39,36,0.16)] transition hover:-translate-x-0.5 hover:bg-primary-900 hover:text-white xl:flex"
-          >
-            <FaArrowLeft />
-          </button>
-          <button
-            type="button"
-            aria-label="Next packages"
-            className="absolute -right-7 top-1/2 z-10 hidden h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-white text-dark-900 shadow-[0_14px_34px_rgba(16,39,36,0.16)] transition hover:translate-x-0.5 hover:bg-primary-900 hover:text-white xl:flex"
-          >
-            <FaArrowRight />
-          </button>
+        <article className="mt-6 grid overflow-hidden rounded-card border border-white bg-white shadow-[0_24px_70px_rgba(16,39,36,0.12)] lg:grid-cols-[0.88fr_1.12fr]">
+          <div className="relative min-h-[19rem] overflow-hidden lg:min-h-[23rem]">
+            <img
+              src={featuredPackage.image}
+              alt={featuredPackage.title}
+              className="h-full w-full object-cover"
+              loading="lazy"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-dark-900/34 via-transparent to-transparent" />
+            <span className="absolute left-5 top-5 inline-flex items-center gap-2 rounded-full bg-primary-900 px-4 py-2 text-sm font-extrabold text-white shadow-lg">
+              <FaStar className="text-accent-300" />
+              {featuredPackage.badge}
+            </span>
+          </div>
 
-          <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
-            {packages.map((pkg) => {
-              const tone = toneClasses[pkg.tone] || toneClasses.primary
+          <div className="relative flex min-h-[19rem] flex-col justify-center overflow-hidden bg-[linear-gradient(135deg,#fffaf5_0%,#ffffff_56%,#fff2e5_100%)] p-6 md:p-8 lg:p-10">
+            <div className="pointer-events-none absolute bottom-0 right-0 hidden h-32 w-80 opacity-20 lg:block">
+              <div className="h-full w-full bg-[linear-gradient(135deg,transparent_20%,rgba(217,111,58,0.22)_20%,transparent_21%),linear-gradient(90deg,transparent_0%,rgba(16,39,36,0.18)_100%)]" />
+            </div>
+            <span className="w-fit rounded-full bg-sand-100 px-4 py-1.5 text-sm font-black text-dark-900">
+              {featuredPackage.duration}
+            </span>
+            <h3 className="mt-4 font-display text-3xl font-bold leading-tight text-dark-900 md:text-5xl">
+              {featuredPackage.title}
+            </h3>
+            <p className="mt-2 text-xl font-extrabold text-secondary-500">{featuredPackage.route}</p>
+
+            <div className="mt-6 flex flex-wrap gap-x-6 gap-y-3">
+              {inclusions.map((item) => {
+                const Icon = item.icon
+
+                return (
+                  <span key={item.label} className="inline-flex items-center gap-2 text-sm font-semibold text-dark-700">
+                    <Icon className="h-4 w-4 text-dark-800" />
+                    {item.label}
+                  </span>
+                )
+              })}
+            </div>
+
+            <div className="relative z-10 mt-7 grid gap-5 md:grid-cols-[1fr_auto] md:items-end">
+              <p className="max-w-xl text-sm leading-7 text-dark-600 md:text-base">{featuredPackage.description}</p>
+              <Link
+                to={ROUTES.PACKAGES}
+                className="inline-flex h-14 items-center justify-center gap-3 rounded-xl bg-primary-900 px-7 text-sm font-extrabold text-white shadow-[0_18px_38px_rgba(16,39,36,0.22)] transition hover:-translate-y-0.5 hover:bg-primary-800"
+              >
+                Explore Package
+                <FaArrowRight />
+              </Link>
+            </div>
+          </div>
+        </article>
+
+        <div className="mt-8 flex flex-wrap items-center justify-between gap-4">
+          <h3 className="font-display text-2xl font-bold text-dark-900 md:text-3xl">
+            <span className="mr-3 text-accent-600">-</span>
+            Popular International Packages
+          </h3>
+          <Link to={ROUTES.PACKAGES} className="inline-flex items-center gap-2 text-sm font-extrabold text-primary-900 transition hover:text-secondary-600">
+            View All Packages
+            <FaArrowRight className="h-3 w-3" />
+          </Link>
+        </div>
+
+        <div className="mt-5 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
+          {packages.map((pkg) => {
+            const TagIcon = pkg.icon
+
+            return (
+              <article
+                key={pkg.title}
+                className="group overflow-hidden rounded-2xl border border-sand-200 bg-white shadow-[0_18px_46px_rgba(16,39,36,0.1)] transition duration-500 hover:-translate-y-1 hover:shadow-[0_26px_70px_rgba(16,39,36,0.16)]"
+              >
+                <Link to={ROUTES.PACKAGES} className="relative block h-44 overflow-hidden bg-dark-900">
+                  <img
+                    src={pkg.image}
+                    alt={pkg.title}
+                    className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
+                    loading="lazy"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-dark-900/18 to-transparent" />
+                  <span className={`absolute left-4 top-4 inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-xs font-extrabold text-white ${pkg.tone}`}>
+                    <TagIcon className="h-3 w-3" />
+                    {pkg.tag}
+                  </span>
+                  <span className="absolute right-4 top-4 rounded-full bg-white/88 px-3 py-1 text-xs font-black text-dark-900 backdrop-blur">
+                    {pkg.duration}
+                  </span>
+                </Link>
+
+                <div className="p-5">
+                  <h4 className="font-display text-xl font-bold leading-tight text-dark-900">
+                    <Link to={ROUTES.PACKAGES} className="transition hover:text-secondary-600">
+                      {pkg.title}
+                    </Link>
+                  </h4>
+                  <p className="mt-1 text-sm font-medium text-dark-500">{pkg.route}</p>
+
+                  <div className="mt-5 grid grid-cols-4 gap-2 border-b border-sand-200 pb-4">
+                    {inclusions.slice(0, 4).map((item) => {
+                      const Icon = item.icon
+
+                      return (
+                        <span key={item.label} className="flex min-w-0 flex-col items-center gap-1 text-center text-[0.68rem] font-semibold text-dark-700">
+                          <Icon className="h-4 w-4 text-dark-800" />
+                          <span className="w-full truncate">{item.label}</span>
+                        </span>
+                      )
+                    })}
+                  </div>
+
+                  <Link
+                    to={ROUTES.PACKAGES}
+                    className="mt-4 inline-flex items-center gap-2 text-sm font-extrabold text-primary-900 transition group-hover:text-secondary-600"
+                  >
+                    View Tour
+                    <FaArrowRight className="h-3 w-3" />
+                  </Link>
+                </div>
+              </article>
+            )
+          })}
+        </div>
+
+        <div className="mt-6 rounded-card border border-sand-100 bg-white/72 px-5 py-7 shadow-[0_18px_48px_rgba(16,39,36,0.08)] backdrop-blur">
+          <div className="mb-6 flex items-center justify-center gap-5">
+            <span className="h-px w-12 bg-accent-400" />
+            <h3 className="font-display text-3xl font-bold text-dark-900">How it works</h3>
+            <span className="h-px w-12 bg-accent-400" />
+          </div>
+
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+            {steps.map((step, index) => {
+              const Icon = step.icon
 
               return (
-                <article key={pkg.name} className="group overflow-hidden rounded-[1.35rem] border border-sand-200 bg-white shadow-[0_20px_50px_rgba(16,39,36,0.12)] transition duration-500 hover:-translate-y-1 hover:shadow-[0_30px_70px_rgba(16,39,36,0.18)]">
-                  <div className="relative h-72 overflow-hidden">
-                    <img src={pkg.image} alt={pkg.name} className="h-full w-full object-cover transition duration-700 group-hover:scale-105" loading="lazy" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-dark-900/92 via-dark-900/22 to-transparent" />
-                    <div className="absolute inset-x-0 top-0 flex items-start justify-between p-4">
-                      <span className={`rounded-full px-3 py-1.5 text-xs font-extrabold uppercase tracking-[0.04em] ${tone.badge}`}>
-                        <FaStar className="mr-1 inline h-3 w-3" />
-                        {pkg.badge}
-                      </span>
-                      <button
-                        type="button"
-                        aria-label={`Save ${pkg.name}`}
-                        className="flex h-9 w-9 items-center justify-center rounded-full border border-white/35 bg-white/16 text-white backdrop-blur transition hover:bg-white hover:text-secondary-600"
-                      >
-                        <FaHeart />
-                      </button>
-                    </div>
-
-                    <div className="absolute inset-x-0 bottom-0 p-5 text-white">
-                      <p className="mb-2 flex items-center gap-2 text-xs font-extrabold uppercase tracking-[0.06em]">
-                        <FaMapMarkerAlt className="text-white" />
-                        {pkg.destination}
-                      </p>
-                      <h3 className="font-display text-2xl font-bold leading-tight">{pkg.name}</h3>
-                      <p className="mt-1 text-sm font-semibold text-accent-300">{pkg.type}</p>
-                      <div className="mt-4 flex flex-wrap items-center gap-2 text-xs font-medium text-white/88">
-                        <span className="rounded-full border border-white/28 bg-white/10 px-3 py-1.5 backdrop-blur">{pkg.duration}</span>
-                        <span>{pkg.route}</span>
-                      </div>
-                    </div>
+                <div key={step.title} className="relative flex items-center gap-4 lg:px-4">
+                  {index > 0 ? (
+                    <FaArrowRight className="absolute -left-5 top-8 hidden h-5 w-5 text-dark-300 lg:block" />
+                  ) : null}
+                  <span className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-secondary-50 text-secondary-600">
+                    <Icon className="h-7 w-7" />
+                  </span>
+                  <div>
+                    <h4 className="font-display text-base font-bold text-dark-900">{step.title}</h4>
+                    <p className="mt-1 text-sm leading-6 text-dark-600">{step.text}</p>
                   </div>
-
-                  <div className="p-5">
-                    <div className="grid grid-cols-[1fr_auto] items-center gap-5">
-                      <div>
-                        <p className="flex items-center gap-2 text-base font-extrabold text-dark-900">
-                          <FaStar className="text-accent-600" />
-                          {pkg.rating}
-                        </p>
-                        <p className="mt-2 text-sm text-dark-500">({pkg.reviews} reviews)</p>
-                      </div>
-                      <div className="border-l border-sand-200 pl-6 text-right">
-                        <p className="text-xs font-medium text-dark-500">Starting From</p>
-                        <p className="font-display text-3xl font-bold leading-none text-dark-900">{pkg.price}</p>
-                        <p className="mt-1 text-xs text-dark-500">Per Traveller</p>
-                      </div>
-                    </div>
-
-                    <Link
-                      to={ROUTES.PACKAGES}
-                      className={`mt-5 inline-flex h-12 w-full items-center justify-center gap-3 rounded-lg px-5 text-sm font-extrabold text-white transition ${tone.button}`}
-                    >
-                      Explore Journey
-                      <FaArrowRight />
-                    </Link>
-                  </div>
-                </article>
+                </div>
               )
             })}
           </div>
-        </div>
-
-        <div className="mx-auto mt-8 grid max-w-[78rem] overflow-hidden rounded-[1.35rem] border border-sand-200 bg-white/76 shadow-[0_18px_50px_rgba(16,39,36,0.08)] backdrop-blur sm:grid-cols-2 lg:grid-cols-5">
-          {valueProps.map((item) => {
-            const Icon = item.icon
-
-            return (
-              <div key={item.title} className="flex min-h-[7.5rem] items-center gap-4 border-b border-sand-200 px-6 py-5 last:border-b-0 sm:even:border-l lg:border-b-0 lg:border-l lg:first:border-l-0">
-                <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-primary-900 text-white">
-                  <Icon className="h-6 w-6" />
-                </span>
-                <div>
-                  <h3 className="text-base font-extrabold leading-tight text-dark-900">{item.title}</h3>
-                  <p className="mt-1 text-sm leading-5 text-dark-600">{item.description}</p>
-                </div>
-              </div>
-            )
-          })}
         </div>
       </div>
     </section>
